@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	mui.init({});
+	var subpages = ['login.html','index.html'];
+	var subpage_style = {top: '0px',bottom: '0px'};
+	mui.plusReady(function() {
+		var self = plus.webview.currentWebview();
+		if(localStorage.login_status==undefined){
+	    	var subviewA = plus.webview.create(subpages[0], subpages[0], subpage_style);
+			self.append(subviewA);
+			subviewA.show();
+	    }else{
+	    	var subviewB = plus.webview.create(subpages[1], subpages[1], subpage_style);
+			self.append(subviewB);
+	    	subviewB.show();
+	    }
+	});
+</script>
+	</body>
+</html>

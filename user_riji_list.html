@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>民情日记历史</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<a id="add_riji" onclick="return add_riji()" data-href="user_riji_add.html" class="head-box head-title fr">新增</a>
+					<div class="header-h1">民情日记历史</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="pst-r w-100 h-100" id="app">
+					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>-->
+					<div id="wrapper" class="wrapper">
+						<ul>
+							<li v-for="li in news" :data-id="li.id" @click="news_nk(li.id)">
+								<a class="renyuan-bar pad-lr-15 ys1 dbk">
+									<div class="renyuan-p" v-html="li.newtime"></div>
+									{{li.dtime1}}
+								</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true,
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();
+				
+				beautyshuju(num, page, 'no');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+				document.addEventListener('user_riji_add', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+
+			});
+		</script>
+		<script type="text/javascript">
+			var page = 1;
+			var num = 10;
+			var pagenum = num;
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: {},
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+				},
+				methods: {
+					news_nk: function(id) {
+						news_nk(id);
+					}
+				},
+			});
+
+			refresher.init({
+				id: "wrapper",
+				pullDownAction: Refresh,
+				pullUpAction: Load,
+				scrollAction: Ascroll,
+				scrollEndAction: AscrollEnd,
+			});
+
+			function beautyshuju(num, page, yno) {
+				if(localStorage.net == 'false') {
+					if(localStorage.on_user_riji_list != undefined) {
+						app.news = JSON.parse(localStorage.on_user_riji_list);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.news.length);
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+					}
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+								app.isActive = true;
+							}, 300);
+						} else {
+							setTimeout(function() {
+								app.isActive = true;
+							}, 300);
+						}
+					});
+				} else {
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					pagenum = parseInt(pagenum);
+					if(pagenum >= num || page == 1) {
+						getData(true, 'get', web_url() + '/?type=search&t=minqingriji&ordertype=dtime&orderby=desc&number=' + num + '&page=' + page + '&yonghuming=' + localStorage.yonghuming + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + rizi(), '', function(result) {
+							var data = data_chuli(JSON.parse(result.msg));
+							if(result.msg == '') {
+								if(page == 1) {
+									app.news = [];
+								}
+								pagenum = 0;
+							} else {
+								if(page == 1) {
+									app.news = data;
+								} else {
+									extend(app.news, data);
+								}
+								pagenum = data.length;
+							}
+							document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+							setParam('on_user_riji_list', JSON.stringify(app.news));
+							app.$nextTick(function() {
+								if(yno != 'no') {
+									setTimeout(function() {
+										wrapper.refresh();
+										app.isActive = true;
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
+									}, 300);
+								}
+								$('.vue_img').each(function() {
+									$(this).css('background-image', 'url(' + $(this).data('img') + ')');
+								});
+							});
+						});
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+						wrapper.refresh();
+					}
+				}
+
+			}
+
+			setTimeout(function() {
+				var timea_num = 0;
+				var timea = setInterval(function() {
+					timea_num++;
+					if(timea_num > 140) {
+						clearInterval(timea);
+					} else {
+						wrapper.refresh();
+					}
+				}, 50);
+			}, 100);
+
+			function Refresh() {
+				net_yno();
+				page = 1;
+				beautyshuju(num, page, 'yes');
+				pagenum = num;
+				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+				if(pagenum != 0) {
+					page++;
+				}
+			}
+
+			function Load() {
+				beautyshuju(num, page, 'yes');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+			}
+
+			function Ascroll() {
+
+			}
+
+			function AscrollEnd() {
+
+			}
+
+			function data_chuli(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].newtime = timeD(data[i].dtime1);
+				}
+				return data;
+			}
+
+			function news_nk(id) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_riji_add1_id', id);
+					openWindows("user_riji_add1.html");
+
+				}
+			}
+			
+			function add_riji()
+			{
+				var riji_list = JSON.parse(getParam("on_user_riji_list"));
+				var myDate = new Date();
+				var today = myDate.getFullYear() + "-" + Number(myDate.getMonth() + 1) + "-" + myDate.getDate();
+				console.log(today);
+				for(var i = 0; i < riji_list.length; i++) {
+					var riji_dtime = riji_list[i].dtime1;
+					if(riji_dtime.indexOf(today) == 0) {
+						console.log("今日已添加日记，直接修改");
+						net_yno();
+						if(localStorage.net == 'false') {
+							mui.toast('请检查网络');
+							return false;
+						} else {
+							localStorage.setItem('user_riji_add1_id', riji_list[i].id);
+							openWindows("user_riji_add1.html");
+return false;
+						}
+					}
+
+				}
+				openWindows("user_riji_add.html");
+			}
+		</script>
+		<script type="text/javascript">
+			//console.log(getDateDiff('2017-08-21 22:46:43'))
+		</script>
+	</body>
+
+</html>

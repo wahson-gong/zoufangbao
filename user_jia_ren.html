@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>成员列表</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+</head>
+<body>
+	<div class="mui-views" id="app">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl mui-action-back"></a>
+				<div class="header-h1"></div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="pad-tb-5">
+					
+					<a v-for="li in list" onclick="return link_ta(this)" :data-id="li.id" :data-huhao="li.hukoubianhao" class="bd-btm pad-lr-15 dbk">
+						<div class="renyuan-bar ys7">
+							<p class="renyuan-p">{{li.xingming}}</p>
+						</div>
+					</a>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		mui.init({
+			swipeBack: true
+		});
+		mui.plusReady(function(){ plus.nativeUI.closeWaiting();mui.currentWebview.show(); });
+    </script>
+	<script type="text/javascript">
+var app = new Vue({
+  	el: '#app',
+  	data: {
+    	list: [],
+  	}
+});
+getData(false,'get',web_url()+'/?type=search&t=renyuan&hukoubianhao='+localStorage.user_jia_ren_huhao+rizi(),'',function(result){
+	app.list=JSON.parse(result.msg);
+});
+function link_ta(obj){
+	var id=$(obj).data('id');
+	var huhao=$(obj).data('huhao');
+	setParam('user_renyuan_detail_id',id);
+	setParam('user_renyuan_detail_huhao',huhao);
+	openWindows('user_renyuan_detail.html');
+}
+	</script>
+</body>
+</html>

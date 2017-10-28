@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>选择入户家庭</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backB fl mui-action-back"></a>
+				<a id="today_zf" class="head-box head-title fr">今日走访</a>
+				<div class="header-h1"></div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="pad-15">
+					<div class="ck-bar">
+						<div class="ck-dm-h1 mar-b-10">民情记录</div>
+						<textarea class="ck-dm-area box-sizing" id="minqingjilu" placeholder="请输入民情记录..."></textarea>
+					</div>
+					<br />
+					<div class="renyuan-bar">
+						<p class="c-333"><!--<div class="fr upimg_btn" onclick="return imgupgrade()">上传</div>-->图片（最多8张）</p>
+					</div>
+					<div class="upimg-bar upimg-barA pad-t-10 clearfix"></div>
+					<div class="upimg-bar upimg-barB pad-t-10 clearfix">
+						<div class="upimg-li" onclick="return tx_ck()">
+							<div class="TU_A1 pad-b-100" style="background-image: url(images/up_img.png);"></div>
+						</div>
+					</div>
+					<input type="hidden" id="fangwutupian" name="zutu" />
+					<input type="hidden" id="fangwutupian_" name="zutu_" />
+					
+					
+					<br />
+					<div class="btn-ys1" onclick="return riji_add()">提交</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+	<ul class="mui-table-view li_nn">
+		<li class="mui-table-view-cell li_nn">
+			<a onclick="txA()">拍照上传</a>
+		</li>
+		<li class="mui-table-view-cell li_nn">
+			<a onclick="txB()">从相册选取</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view li_nn">
+		<li class="mui-table-view-cell li_nn">
+			<a onclick="return tx_ck()"><b>取消</b></a>
+		</li>
+	</ul>
+</div>	
+
+<div id="outimg" style="width: 100%;height: 100%;position: fixed;z-index: 9999;background: rgba(0,0,0,0.6);display: none;">
+	<div style="width: 100%;height: 100%;position: relative;">
+		<!-- Swiper -->
+		<div class="swiper-container" >
+		    <div class="swiper-wrapper">
+		        
+		    </div>
+		    <!-- Add Pagination -->
+		    <div class="swiper-pagination" style="bottom: 0px;font-size: 17px;line-height: 44px;color: #fff;"></div>
+		    <!--Add close-->
+		    <img class="close-img" src="images/close.png"/>
+		</div>
+	</div>
+</div>
+
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/uploadimage/demoa.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var webview_detail = null;
+    	var webview_detailA = null;
+   		document.addEventListener('plusready', function(){ net_yno(); });
+   		
+   		mui.init({
+			swipeBack: true
+		});
+		mui.plusReady(function() {
+			plus.nativeUI.closeWaiting();mui.currentWebview.show();
+			webview_detail = plus.webview.getWebviewById('user_riji_list.html');
+			webview_detailA = plus.webview.getWebviewById('user_riji_list_my.html');
+			net_yno();
+			if(localStorage.net=='false'){
+				if(localStorage.riji_jinri==undefined||localStorage.riji_jinri=='0'){
+					
+				}else{
+					openWindows('user_riji_list_my.html');
+				}
+			}else{
+				getData(true, 'get', web_url() + "/?type=search&t=minqingriji&liemingcheng=count(id)%20as%20count_id&sqlvalue=dtime{between}%27" + time_qian('') + "%27{and}%27" + time_end('') + "%27" + ",yonghuming='" + localStorage.yonghuming + "'" + rizi(), '', function(result) {
+					if(JSON.parse(result.msg)[0].count_id!='0'){
+						openWindows('user_riji_list_my.html');
+						setParam('riji_jinri',JSON.parse(result.msg)[0].count_id);
+					}
+				});
+			}
+		});
+		document.getElementById('today_zf').addEventListener('tap',function () {
+		    openWindows('user_zf_jinri.html?type=riji');    
+		});
+    </script>
+	<script type="text/javascript">
+function tx_ck(){
+	mui('#picture').popover('toggle');
+}
+function txA(){
+	cameraimages(8);
+	tx_ck();
+}
+function txB(){
+	galleryImgs(8);
+	tx_ck();
+}
+
+	    	
+	    $('.header-h1').text(timeB('')+'民情日记');
+	    function riji_add(){
+	    	net_yno();
+	    	var minqingjilu=document.getElementById("minqingjilu").value;
+	    		minqingjilu=minqingjilu.replace(/\s+/g,'');
+	    	if(minqingjilu==''){
+	    		alert('请输入民情记录！');
+	    		return false;
+	    	}
+	    	var zutu=document.getElementById("fangwutupian").value;
+	    		zutu=zutu.replace(/\s+/g,'');
+	    	if(zutu==''){
+	    		//alert('请上传图片！');
+	    		//return false;
+	    	}
+	    	plus.nativeUI.showWaiting("提交中...");
+	    	try{
+	    		imgupgrade();
+	    	}catch(e){
+	    		//TODO handle the exception
+	    	}
+	    	
+	    	var url1=web_url()+'/?type=add&t=minqingriji';
+			var data1='minqingjilu='+minqingjilu+'&zutu='+zutu+'&status='+'终审'+'&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun+'&suoshuzu='+JSON.parse(localStorage.ubase).msg[0].suoshuzu+"&yonghuming="+localStorage.yonghuming+rizi()+'&dtime='+timeA();
+			var data_url=url1+'&'+data1;console.log(data_url);
+			if(localStorage.net=='false'){
+				if(localStorage.data_add==undefined){
+					setParam('data_add','{"count":0,"list":[]}');
+				}
+				var data_add=JSON.parse(localStorage.data_add);
+				var add_list=data_add.list;
+				var add_count=parseInt(data_add.count);
+				data_add.count=add_count+1;
+				var add_listA={"url":data_url};
+				add_list.push(add_listA);
+				data_add.list=add_list;
+				setParam('data_add',JSON.stringify(data_add));
+				setParam('riji_jinri','1');
+				plus.nativeUI.closeWaiting();
+				mui.toast('日记已保存！');
+				mui.back();
+			}else{
+				getData(true,'post',url1,data1,function(msg){
+					setParam('riji_jinri','1');
+					mui.fire(webview_detail,'user_riji_add',localStorage.yonghuming);
+					mui.fire(webview_detailA,'user_riji_add',localStorage.yonghuming);
+					plus.nativeUI.closeWaiting();
+					mui.toast('提交成功！');
+					mui.back();
+				});
+			}
+	    }    
+	</script>
+</body>
+</html>

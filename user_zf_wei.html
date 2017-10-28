@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>长期未走访</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<a onclick="return linkA(this)" data-href="user_zf_wei_set.html" class="head-box head-title fr">加入计划</a>
+					<div class="header-h1">长期未走访</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r" id="app" style="overflow: hidden;">
+
+					<div class="wrapper" id="wrapper">
+						<ul v-cloak class="yistA_ul">
+							<li class="yistA" v-for="li in news" @click="zf_wei_nk(li.huji.id,li.huji.huhao)">
+								<div class="yistA_tu bg_tu">
+									<div class="wh-100 bg_tu" :style="'background-image:url('+img_href+li.huji.fangwutupian+');'"></div>
+								</div>
+								<div class="yistA_tt">
+									<p class="h1 mar-b-15">{{li.huji.huzhuxingming}}家走访</p>
+									<p class="h2">{{li.huji.newtime}}</p>
+								</div>
+								<div class="yistA_tp">
+									<span class="blue">{{li.zu.u1}}</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+//				plus.nativeUI.closeWaiting();
+//				mui.currentWebview.show();
+beautyshuju(num, page, 'no');
+			pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+			if(pagenum != '0') {
+				page++;
+			}
+			refresher.init({
+				id: "wrapper",
+				pullDownAction: Refresh,
+				pullUpAction: Load,
+				scrollAction: Ascroll,
+				scrollEndAction: AscrollEnd,
+			});
+			
+			
+			
+			});
+		</script>
+		<script type="text/javascript">
+			var page = 1;
+			var num = 20;
+			var pagenum = num;
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: [],
+					img_href: web_url() + '/',
+				},
+				methods: {
+					zf_wei_nk: function(id, huhao) {
+						zf_wei_nk(id, huhao);
+					}
+				},
+			});
+
+			function beautyshuju(num, page, yno) {
+				if(localStorage.net == 'false') {
+					if(localStorage.user_zf_wei_cun != undefined) {
+						app.news = JSON.parse(localStorage.user_zf_wei_cun);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.news.length);
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+					}
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+								app.isActive = true;
+							}, 300);
+						} else {
+							setTimeout(function() {
+								app.isActive = true;
+							}, 300);
+						}
+					});
+				} else {
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					pagenum = parseInt(pagenum);
+					if(pagenum >= num || page == 1) {
+						getData(true, 'get', web_url() + '/?type=changqiweizoufang&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + rizi(), '', function(result) {
+							if(result.msg == 'null') {
+								document.getElementById("wrapper").setAttribute('data-pagenum', '0');
+								wrapper.refresh();
+								return false;
+							}
+
+							var ss = cq_time(JSON.parse(result.msg));
+							if(result.msg == '') {
+								if(page == 1) {
+									app.news = [];
+								}
+								pagenum = 0;
+							} else {
+								if(page == 1) {
+									app.news = ss;
+									setParam('user_zf_wei_cun', JSON.stringify(ss));
+								} else {
+									extend(app.news, ss);
+								}
+								pagenum = ss.length;
+							}
+							document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+							app.$nextTick(function() {
+								if(yno != 'no') {
+									setTimeout(function() {
+										wrapper.refresh();
+									}, 300);
+								}
+							});
+						});
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+						wrapper.refresh();
+					}
+				}
+
+			}
+			
+
+			setTimeout(function() {
+				var timea_num = 0;
+				var timea = setInterval(function() {
+					timea_num++;
+					if(timea_num > 140) {
+						clearInterval(timea);
+					} else {
+						wrapper.refresh();
+					}
+				}, 50);
+			}, 100);
+			document.addEventListener('user_zf_add', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+			document.addEventListener('user_zf_add_sc', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+			document.addEventListener('user_zf_add_sca', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+			document.addEventListener('user_zf_add_wei', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+
+			function Refresh() {
+				net_yno();
+				page = 1;
+				beautyshuju(num, page, 'yes');
+				pagenum = num;
+				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+				if(pagenum != 0) {
+					page++;
+				}
+			}
+
+			function Load() {
+				beautyshuju(num, page, 'yes');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+			}
+
+			function Ascroll() {
+
+			}
+
+			function AscrollEnd() {
+
+			}
+			//时间
+			function cq_time(data) {
+				var n = data.length;
+				var stime = timeA();
+				for(var i = 0; i < n; i++) {
+					var tm = data[i].huji;
+					if(tm == undefined) {
+						console.log(JSON.stringify(data[i]));
+						data[i].huji.newtime = getDateDiff(stime);
+					} else {
+						data[i].huji.newtime = getDateDiff(tm.dtime);
+					}
+					var str = tm.fangwutupian;
+					if(str != '' && str != null) {
+						var imglist = str.replace(/{title}/g, "");
+						var imglist = imglist.split('{next}');
+						data[i].huji.fangwutupian = imglist[0];
+					}
+				}
+				return data;
+			}
+			//走访计划链接
+			function zf_wei_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_zf_add_wei_id', id);
+					localStorage.setItem('user_zf_add_wei_huhao', huhao);
+					openWindows('user_zf_add_wei.html');
+				}
+			}
+		</script>
+	</body>
+
+</html>

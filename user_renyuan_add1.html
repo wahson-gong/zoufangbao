@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>人员录入</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mui.picker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mui.picker.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mui.poppicker.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pullToRefresh.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backB fl mui-action-back"></a>
+				<a class="head-box head-title fr" onclick="return form_ck()">保存并上传</a>
+				<div class="header-h1">人员录入</div>
+			</div>
+		</div> 
+		<div class="mui-views" id="app" style="height: auto;top: 44px;">
+			<div class="mui-views-r" >
+
+<div v-bind:class="[isActive ? activeClass : '', errorClass]"><div class="table"><div class="table-cell"><span class="mui-spinnerA"></span></div></div></div>
+
+				<div class="pad-ys1">
+				<form id="ry_form">
+					<div class="renyuan-bar ys2">
+						<p class="c-333">个人基本信息</p>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">姓名<span>*</span></p>
+						<input type="text" name="xingming" id="xingming" class="renyuan-input ys2" placeholder="姓名" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">性别<span>*</span></p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="xingbie1"><input type="radio" name="xingbie" id="xingbie1" value="男"/>男</label></div>
+							<div class="fl mar-r-6"><label for="xingbie2"><input type="radio" name="xingbie" id="xingbie2" value="女"/>女</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<div class="renyuan-p clearfix">
+							<label class="fl">民族<span>*</span></label>
+							<select name="minzu" id="minzu" class="fl renyuan-slt mar-l-10">
+								<option value="">请选择</option>
+								<option :value="li.u1" v-for="li in minzu">{{li.u1}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">人员类别<span>*</span></p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="renyuanleibie1" class="dbk cursor" style="line-height: 30px;"><input type="radio" name="renyuanleibie" id="renyuanleibie1" value="普通人员"/>普通人员</label></div>
+							<div class="fl mar-r-6"><label for="renyuanleibie2" class="dbk cursor" style="line-height: 30px;"><input type="radio" name="renyuanleibie" id="renyuanleibie2" value="重点人员"/>重点人员</label></div>
+							<div class="fl mar-r-6"><label for="renyuanleibie3" class="dbk cursor" style="line-height: 30px;"><input type="radio" name="renyuanleibie" id="renyuanleibie3" value="贫困人员"/>贫困人员</label></div>
+							<div class="fl mar-r-6"><label for="renyuanleibie4" class="dbk cursor" style="line-height: 30px;"><input type="radio" name="renyuanleibie" id="renyuanleibie4" value="放心人员"/>放心人员</label></div>
+							<div class="fl mar-r-6"><label for="renyuanleibie5" class="dbk cursor" style="line-height: 30px;"><input type="radio" name="renyuanleibie" id="renyuanleibie5" value="党员"/>党员</label></div>
+						</div>
+					</div>
+					
+					<div class="renyuan-bar">
+						<p class="renyuan-p">出生日期<span>*</span></p>
+						<input type="text" name="chushengriqi" id="chushengriqi" data-startTime="1960-01-01" readonly="readonly" class="renyuan-input ys2 btn" placeholder="出生日期" value="1960-01-01" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">年龄<span>*</span></p>
+						<input type="text" id="nianling" readonly="readonly" class="renyuan-input ys2" placeholder="年龄" />
+					</div>
+					
+					<div class="renyuan-bar">
+						<p class="renyuan-p">所在户籍</p>
+						<input type="text" id="suozaihuji" name="suozaihuji" readonly="readonly" class="renyuan-input ys2" placeholder="所在户籍" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">居住情况</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="juzhuqingkuang1"><input type="radio" name="juzhuqingkuang" id="juzhuqingkuang1" value="常住"/>常住</label></div>
+							<div class="fl mar-r-6"><label for="juzhuqingkuang2"><input type="radio" name="juzhuqingkuang" id="juzhuqingkuang2" value="暂住"/>暂住</label></div>
+							<div class="fl mar-r-6"><label for="juzhuqingkuang3"><input type="radio" name="juzhuqingkuang" id="juzhuqingkuang3" value="人户分离"/>人户分离</label></div>
+							<div class="fl mar-r-6"><label for="juzhuqingkuang4"><input type="radio" name="juzhuqingkuang" id="juzhuqingkuang4" value="寄住"/>寄住</label></div>
+							<div class="fl mar-r-6"><label for="juzhuqingkuang5"><input type="radio" name="juzhuqingkuang" id="juzhuqingkuang5" value="未上户人员"/>未上户人员</label></div>
+							<div class="fl mar-r-6"><label for="juzhuqingkuang6"><input type="radio" name="juzhuqingkuang" id="juzhuqingkuang6" value="已去世，未销户"/>已去世，未销户</label></div>
+						</div>
+					</div>
+					
+					<div class="renyuan-bar">
+						<p class="renyuan-p">身份证号</p>
+						<input type="text" name="shenfenzhenghao" id="shenfenzhenghao" class="renyuan-input ys2" placeholder="身份证号" />
+					</div>
+					
+					<div class="renyuan-bar">
+						<div class="renyuan-p"><!--<div class="fr upimg_btn" onclick="return imgupgrade()">上传</div>-->头像</div>
+						<div class="upimg-bar pad-t-10 clearfix">
+							<div class="upimg-li upimg-barA" style="display: none;"></div>
+							<div class="upimg-li" onclick="return tx_ck()">
+								<div class="TU_A1 pad-b-100" style="background-image: url(images/up_img.png);"></div>
+							</div>
+						</div>
+						<input type="hidden" name="touxiang" id="touxiang" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">重点类别</p>
+						<div class="renyuan-rd">
+							<select name="zhongdianleibie" id="zhongdianleibie" class="renyuan-slt w-100">
+								<option value="">请选择</option>
+								<option value="危安类刑满释放人员及其家属">危安类刑满释放人员及其家属</option>
+								<option value="野阿訇">野阿訇</option>
+								<option value="野阿吉">野阿吉</option>
+								<option value="涉“六条线”人员的徒子徒孙">涉“六条线”人员的徒子徒孙</option>
+								<option value="本地持“瓦哈比”思想传承人员">本地持“瓦哈比”思想传承人员</option>
+								<option value="曾被教育转化的人员">曾被教育转化的人员</option>
+								<option value="境外“回流”人员">境外“回流”人员</option>
+								<option value="被判处死刑、被击毙、自爆身亡人员的亲属">被判处死刑、被击毙、自爆身亡人员的亲属</option>
+								<option value="国保三、四、五类人员">国保三、四、五类人员</option>
+								<option value="长期外出务工突然返乡人员">长期外出务工突然返乡人员</option>
+								<option value="严打以来曾被判处管制、拘役纳入社区矫治的人员">严打以来曾被判处管制、拘役纳入社区矫治的人员</option>
+								<option value="涉“7.5”“7.6”案件刑释解教、解脱人员及其家属">涉“7.5”“7.6”案件刑释解教、解脱人员及其家属</option>
+								<option value="过去使用智能手机，现在突然不用手机或改用非智能手机的人员">过去使用智能手机，现在突然不用手机或改用非智能手机的人员</option>
+								<option value="不与左邻右舍来往，平时很少走正门、行为诡秘的人员">不与左邻右舍来往，平时很少走正门、行为诡秘的人员</option>
+								<option value="过去热衷于向清真寺捐钱捐物或替清真寺收钱收物的人员">过去热衷于向清真寺捐钱捐物或替清真寺收钱收物的人员</option>
+								<option value="无正当理由突然变卖家产外出特别是举家外出人员">无正当理由突然变卖家产外出特别是举家外出人员</option>
+								<option value="家庭用电异常的人员">家庭用电异常的人员</option>
+								<option value="违反计划生育，超生的人员">违反计划生育，超生的人员</option>
+								<option value="懂电焊、制爆技术的人员">懂电焊、制爆技术的人员</option>
+								<option value="无正当理由不愿享受各类惠民政策、不参加基础组织安排的各类活动">无正当理由不愿享受各类惠民政策、不参加基础组织安排的各类活动</option>
+							</select>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">身份证签发时间</p>
+						<input type="text" name="shenfenzhengqianfariqi" id="shenfenzhengqianfariqi"  data-startTime="1960-01-01"  readonly="readonly" class="renyuan-input ys2 btn" placeholder="身份证签发时间" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">身份证到期时间</p>
+						<input type="text" name="shenfenzhengdaoqiriqi" id="shenfenzhengdaoqiriqi" data-startTime="now_time"   data-endTime="20"  readonly="readonly" class="renyuan-input ys2 btn" placeholder="身份证到期时间" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">身份证有效期（年）</p>
+						<input type="text" name="shenfenzhengyouxiaoqi" id="shenfenzhengyouxiaoqi" class="renyuan-input ys2" placeholder="身份证有效期（年）" />
+					</div>
+					
+					<div class="renyuan-bar">
+						<p class="renyuan-p">身份证地址</p>
+						<input type="text" name="shenfenzhengdizhi" id="shenfenzhengdizhi" class="renyuan-input ys2" placeholder="身份证地址" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">籍贯信息</p>
+						<input type="text" id="suozaidiqu" name="suozaidiqu" readonly="readonly" class="renyuan-input" placeholder="省市县" />
+						<input type="text" name="jiguanxiangxidizhi" id="jiguanxiangxidizhi" class="renyuan-input ys2" placeholder="详细地址（无详细地址填“无”）" />
+						<input type="text" name="jiguan" id="jiguan" class="renyuan-input ys2" placeholder="籍贯"/>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">其他居住地</p>
+						<input type="text" name="qitajuzhudi" id="qitajuzhudi" class="renyuan-input ys2" placeholder="其他居住地" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">身高（数字）</p>
+						<input type="text" name="shengao" id="shengao" class="renyuan-input ys2" placeholder="身高（数字）" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">文化程度</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="wenhuachengdu1"><input type="radio" name="wenhuachengdu" id="wenhuachengdu1" value="高中"/>高中</label></div>
+							<div class="fl mar-r-6"><label for="wenhuachengdu2"><input type="radio" name="wenhuachengdu" id="wenhuachengdu2" value="中专"/>中专</label></div>
+							<div class="fl mar-r-6"><label for="wenhuachengdu3"><input type="radio" name="wenhuachengdu" id="wenhuachengdu3" value="大专"/>大专</label></div>
+							<div class="fl mar-r-6"><label for="wenhuachengdu4"><input type="radio" name="wenhuachengdu" id="wenhuachengdu4" value="大学本科"/>大学本科</label></div>
+							<div class="fl mar-r-6"><label for="wenhuachengdu5"><input type="radio" name="wenhuachengdu" id="wenhuachengdu5" value="研究生"/>研究生</label></div>
+							<div class="fl mar-r-6"><label for="wenhuachengdu6"><input type="radio" name="wenhuachengdu" id="wenhuachengdu6" value="初中以下"/>初中以下</label></div>
+							<div class="fl mar-r-6"><label for="wenhuachengdu7"><input type="radio" name="wenhuachengdu" id="wenhuachengdu7" value="文盲或半文盲"/>文盲或半文盲</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">婚姻状况</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="hunyinzhuangkuang1"><input type="radio" name="hunyinzhuangkuang" id="hunyinzhuangkuang1" value="已婚"/>已婚</label></div>
+							<div class="fl mar-r-6"><label for="hunyinzhuangkuang2"><input type="radio" name="hunyinzhuangkuang" id="hunyinzhuangkuang2" value="未婚"/>未婚</label></div>
+							<div class="fl mar-r-6"><label for="hunyinzhuangkuang3"><input type="radio" name="hunyinzhuangkuang" id="hunyinzhuangkuang3" value="离异"/>离异</label></div>
+							<div class="fl mar-r-6"><label for="hunyinzhuangkuang4"><input type="radio" name="hunyinzhuangkuang" id="hunyinzhuangkuang4" value="其他"/>其他</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">政治面貌</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="zhengzhimianmao1"><input type="radio" name="zhengzhimianmao" id="zhengzhimianmao1" value="群众"/>群众</label></div>
+							<div class="fl mar-r-6"><label for="zhengzhimianmao2"><input type="radio" name="zhengzhimianmao" id="zhengzhimianmao2" value="党员"/>党员</label></div>
+							<div class="fl mar-r-6"><label for="zhengzhimianmao3"><input type="radio" name="zhengzhimianmao" id="zhengzhimianmao3" value="团员"/>团员</label></div>
+							<div class="fl mar-r-6"><label for="zhengzhimianmao4"><input type="radio" name="zhengzhimianmao" id="zhengzhimianmao4" value="民主党派"/>民主党派</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">宗教信仰</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="zongjiaoxinyang1"><input type="radio" name="zongjiaoxinyang" id="zongjiaoxinyang1" value="无宗教信仰"/>无宗教信仰</label></div>
+							<div class="fl mar-r-6"><label for="zongjiaoxinyang2"><input type="radio" name="zongjiaoxinyang" id="zongjiaoxinyang2" value="佛教"/>佛教</label></div>
+							<div class="fl mar-r-6"><label for="zongjiaoxinyang3"><input type="radio" name="zongjiaoxinyang" id="zongjiaoxinyang3" value="伊斯兰教"/>伊斯兰教</label></div>
+							<div class="fl mar-r-6"><label for="zongjiaoxinyang4"><input type="radio" name="zongjiaoxinyang" id="zongjiaoxinyang4" value="其他"/>其他</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">宗教职务</p>
+						<input type="text" name="zongjiaozhiwu" id="zongjiaozhiwu" class="renyuan-input ys2" placeholder="宗教职务" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">宗教氛围是否浓厚</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="zongjiaofenwei1"><input type="radio" name="zjnonghou" id="zongjiaofenwei1" value="是"/>是</label></div>
+							<div class="fl mar-r-6"><label for="zongjiaofenwei2"><input type="radio" name="zjnonghou" id="zongjiaofenwei2" value="否"/>否</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">曾用名</p>
+						<input type="text" name="zengyongming" id="zengyongming" class="renyuan-input ys2" placeholder="曾用名" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">兵役情况</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="bingyiqingkuang1"><input type="radio" name="bingyiqingkuang" id="bingyiqingkuang1" value="未服兵役"/>未服兵役</label></div>
+							<div class="fl mar-r-6"><label for="bingyiqingkuang2"><input type="radio" name="bingyiqingkuang" id="bingyiqingkuang2" value="退役"/>退役</label></div>
+							<div class="fl mar-r-6"><label for="bingyiqingkuang3"><input type="radio" name="bingyiqingkuang" id="bingyiqingkuang3" value="现役"/>现役</label></div>
+							<div class="fl mar-r-6"><label for="bingyiqingkuang4"><input type="radio" name="bingyiqingkuang" id="bingyiqingkuang4" value="军官预备役"/>军官预备役</label></div>
+							<div class="fl mar-r-6"><label for="bingyiqingkuang5"><input type="radio" name="bingyiqingkuang" id="bingyiqingkuang5" value="士兵预备役"/>士兵预备役</label></div>
+							<div class="fl mar-r-6"><label for="bingyiqingkuang6"><input type="radio" name="bingyiqingkuang" id="bingyiqingkuang6" value="其他"/>其他</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">是否残疾</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="shifoucanji1"><input type="radio" name="shifoucanji" id="shifoucanji1" value="是"/>是</label></div>
+							<div class="fl mar-r-6"><label for="shifoucanji2"><input type="radio" name="shifoucanji" id="shifoucanji2" value="否"/>否</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">职业</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="zhiye1"><input type="radio" name="zhiye" id="zhiye1" value="务农"/>务农</label></div>
+							<div class="fl mar-r-6"><label for="zhiye2"><input type="radio" name="zhiye" id="zhiye2" value="公职"/>公职</label></div>
+							<div class="fl mar-r-6"><label for="zhiye3"><input type="radio" name="zhiye" id="zhiye3" value="经商"/>经商</label></div>
+							<div class="fl mar-r-6"><label for="zhiye4"><input type="radio" name="zhiye" id="zhiye4" value="务工"/>务工</label></div>
+							<div class="fl mar-r-6"><label for="zhiye5"><input type="radio" name="zhiye" id="zhiye5" value="上学"/>上学</label></div>
+							<div class="fl mar-r-6"><label for="zhiye6"><input type="radio" name="zhiye" id="zhiye6" value="退休"/>退休</label></div>
+							<div class="fl mar-r-6"><label for="zhiye7"><input type="radio" name="zhiye" id="zhiye7" value="宗教教职"/>宗教教职</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">固定电话</p>
+						<input type="text" name="gudingdianhua" id="gudingdianhua" class="renyuan-input ys2" placeholder="固定电话" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">手机</p>
+						<input type="text" name="shouji" id="shouji" class="renyuan-input ys2" placeholder="手机" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">护照编号</p>
+						<input type="text" name="huzhaobianhao" id="huzhaobianhao" class="renyuan-input ys2" placeholder="护照编号" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">是否有犯罪史</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="fanzuishi1"><input type="radio" name="fanzuishi" id="fanzuishi1" value="是"/>是</label></div>
+							<div class="fl mar-r-6"><label for="fanzuishi2"><input type="radio" name="fanzuishi" id="fanzuishi2" value="否"/>否</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">是否有亲戚在国外</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="sfyqqzgw1"><input type="radio" name="sfyqqzgw" id="sfyqqzgw1" value="是"/>是</label></div>
+							<div class="fl mar-r-6"><label for="sfyqqzgw2"><input type="radio" name="sfyqqzgw" id="sfyqqzgw2" value="否"/>否</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">监护人姓名（16岁以下必填）</p>
+						<input type="text" name="jianhurenxingming" id="jianhurenxingming" class="renyuan-input ys2" placeholder="监护人姓名（16岁以下必填）" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">监护人身份证号</p>
+						<input type="text" name="jianhurenshenfenzhenghao" id="jianhurenshenfenzhenghao" class="renyuan-input ys2" placeholder="监护人身份证号" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">监护人联系方式</p>
+						<input type="text" name="jianhurenlianxifangshi" id="jianhurenlianxifangshi" class="renyuan-input ys2" placeholder="监护人联系方式" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">户口类别</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="hukouleibie1"><input type="radio" name="hukouleibie" id="hukouleibie1" value="家庭户"/>家庭户</label></div>
+							<div class="fl mar-r-6"><label for="hukouleibie2"><input type="radio" name="hukouleibie" id="hukouleibie2" value="集体户"/>集体户</label></div>
+							<div class="fl mar-r-6"><label for="hukouleibie3"><input type="radio" name="hukouleibie" id="hukouleibie3" value="其他"/>其他</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">户口性质</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="hukouxingzhi1"><input type="radio" name="hukouxingzhi" id="hukouxingzhi1" value="农业户口"/>农业户口</label></div>
+							<div class="fl mar-r-6"><label for="hukouxingzhi2"><input type="radio" name="hukouxingzhi" id="hukouxingzhi2" value="非农业户口"/>非农业户口</label></div>
+							<div class="fl mar-r-6"><label for="hukouxingzhi3"><input type="radio" name="hukouxingzhi" id="hukouxingzhi3" value="其他"/>其他</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar" style="display: none;">
+						<p class="renyuan-p">户口编号</p>
+						<input type="hidden" name="hukoubianhao" id="hukoubianhao"  class="renyuan-input ys2" placeholder="户口编号" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">暂住理由</p>
+						<input type="text" name="zanzhuliyou" id="zanzhuliyou" class="renyuan-input ys2" placeholder="暂住理由" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">血型</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="xuexing1"><input type="radio" name="xuexing" id="xuexing1" value="A"/>A</label></div>
+							<div class="fl mar-r-6"><label for="xuexing2"><input type="radio" name="xuexing" id="xuexing2" value="B"/>B</label></div>
+							<div class="fl mar-r-6"><label for="xuexing3"><input type="radio" name="xuexing" id="xuexing3" value="AB"/>AB</label></div>
+							<div class="fl mar-r-6"><label for="xuexing4"><input type="radio" name="xuexing" id="xuexing4" value="O"/>O</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">机动车数量</p>
+						<input type="text" name="jidongcheshuliang" id="jidongcheshuliang" class="renyuan-input ys2" placeholder="机动车数量" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">机动车品牌</p>
+						<input type="text" name="jidongchepinpai" id="jidongchepinpai" class="renyuan-input ys2" placeholder="机动车品牌" />
+					</div>
+					
+					<div class="renyuan-bar">
+						<p class="renyuan-p">机动车颜色</p>
+						<input type="text" name="jidongcheyanse" id="jidongcheyanse" class="renyuan-input ys2" placeholder="机动车颜色" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">车牌</p>
+						<input type="text" name="chepai" id="chepai" class="renyuan-input ys2" placeholder="车牌" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">刀具数量</p>
+						<input type="text" name="daojushuliang" id="daojushuliang" class="renyuan-input ys2" placeholder="刀具数量" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">刀具描述</p>
+						<input type="text" name="daojumiaoshu" id="daojumiaoshu" class="renyuan-input ys2" placeholder="刀具描述" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">管制器具</p>
+						<input type="text" name="guanzhiqiju" id="guanzhiqiju" class="renyuan-input ys2" placeholder="管制器具" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">电脑数量</p>
+						<input type="text" name="dnshuliang" id="dnshuliang" class="renyuan-input ys2" placeholder="电脑数量" />
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">是否宽带</p>
+						<div class="renyuan-rd clearfix">
+							<div class="fl mar-r-6"><label for="shifoukuandai1"><input type="radio" name="shifoukuandai" id="shifoukuandai1" value="是"/>是</label></div>
+							<div class="fl mar-r-6"><label for="shifoukuandai2"><input type="radio" name="shifoukuandai" id="shifoukuandai2" value="否"/>否</label></div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="renyuan-p">备注</p>
+						<input type="text" name="beizhu" id="beizhu" class="renyuan-input ys2" placeholder="备注" />
+					</div>
+					<input type="hidden" name="suoshucun" id="suoshucun" />
+					<input type="hidden" name="suoshuzu" id="suoshuzu" />
+					<input type="hidden" name="status" id="status" value="终审" />
+					<input type="hidden" name="yonghuming" id="yonghuming" />
+				</form>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+	<ul class="mui-table-view li_nn">
+		<li class="mui-table-view-cell li_nn">
+			<a onclick="txA()">拍照上传</a>
+		</li>
+		<li class="mui-table-view-cell li_nn">
+			<a onclick="txB()">从相册选取</a>
+		</li>
+	</ul>
+	<ul class="mui-table-view li_nn">
+		<li class="mui-table-view-cell li_nn">
+			<a onclick="return tx_ck()"><b>取消</b></a>
+		</li>
+	</ul>
+</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/uploadimage/img_up.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var webview_detail = null;
+   		document.addEventListener('plusready', function(){ net_yno(); });
+   		mui.init({
+			swipeBack: true
+		});
+		mui.plusReady(function() {
+			plus.nativeUI.closeWaiting();mui.currentWebview.show();
+			webview_detail = plus.webview.getWebviewById('user_cun_ren.html');
+		});
+    </script>
+	<script type="text/javascript">
+document.addEventListener('user_ry_set', function(event) {
+    var id = event.detail.id;
+    document.getElementById("suozaihuji").value=event.detail.jia;
+    document.getElementById("hukoubianhao").value=event.detail.huhao;
+});	
+
+document.getElementById("suoshucun").value=JSON.parse(localStorage.ubase).msg[0].suoshucun;
+document.getElementById("suoshuzu").value=JSON.parse(localStorage.ubase).msg[0].suoshuzu;
+document.getElementById("yonghuming").value=localStorage.yonghuming;
+var app = new Vue({
+  	el: '#app',
+  	data: {
+    	minzu: [],
+    	isActive:false,
+    	activeClass:'active',
+    	errorClass:'status',
+  	}
+});	
+document.getElementById('suozaihuji').addEventListener('tap',function () {
+    openWindows('user_ry_set.html');    
+});
+document.addEventListener('plusready', function(){ 
+	net_yno();
+	if(localStorage.net=='false'){
+		app.minzu=JSON.parse(localStorage.data_minzu);
+		app.$nextTick(function(){
+			app.isActive=true;
+		});
+	}else{
+		if(localStorage.data_minzu!=undefined){
+			app.minzu=JSON.parse(localStorage.data_minzu);
+			app.$nextTick(function(){
+				app.isActive=true;
+			});
+		}
+		//民族
+		getData(true,'get',web_url()+'/?type=search&t=canshu&ordertype=id&orderby=asc&number=60&page=1&classid=66','',function(result){
+			setParam('data_minzu',result.msg);
+			app.minzu=JSON.parse(result.msg);
+			app.$nextTick(function(){
+				app.isActive=true;
+			});
+		});
+	}
+});
+
+//
+function tx_ck(){
+	mui('#picture').popover('toggle');
+}
+function txA(){
+	cameraimages(1);
+	tx_ck();
+}
+function txB(){
+	galleryImgs(1);
+	tx_ck();
+}
+//表单验证
+function form_ck(){
+	plus.nativeUI.showWaiting("提交中...");
+	var suozaihuji=document.getElementById("suozaihuji").value;
+	var juzhuqingkuang=$("input[name='juzhuqingkuang']:checked").val();
+	var xingming=document.getElementById("xingming").value;
+		xingming=xingming.replace(/\s+/g,'');
+	if(xingming==''){
+		alert('请填写姓名');
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var xingbie=$("input[name='xingbie']:checked").val();
+	if(xingbie==undefined){
+		alert('请选择性别');
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var minzu=document.getElementById("minzu").value;
+	if(minzu==''){
+		alert('请选择民族');
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var isSfz = from_zz('身份证');
+	var shenfenzhenghao = $("input[name='shenfenzhenghao']").val();
+		shenfenzhenghao=shenfenzhenghao.replace(/\s+/g,'');
+	if (!isSfz.test(shenfenzhenghao)&&shenfenzhenghao!="") {
+		alert("请正确填写身份证号");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var renyuanleibie=$("input[name='renyuanleibie']:checked").val();
+	if(renyuanleibie==undefined){
+		alert('请选择人员类别');
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var touxiang=document.getElementById("touxiang").value;
+	var zhongdianleibie=document.getElementById("zhongdianleibie").value;
+	var shenfenzhengqianfariqi=document.getElementById("shenfenzhengqianfariqi").value;
+	var shenfenzhengdaoqiriqi=document.getElementById("shenfenzhengdaoqiriqi").value;
+	var shenfenzhengyouxiaoqi=document.getElementById("shenfenzhengyouxiaoqi").value;
+	var chushengriqi=document.getElementById("chushengriqi").value;
+	if(chushengriqi==''){
+		alert('请选择出生日期');
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var shenfenzhengdizhi=document.getElementById("shenfenzhengdizhi").value;
+		shenfenzhengdizhi=shenfenzhengdizhi.replace(/\s+/g,'');
+	var jiguan=document.getElementById("jiguan").value;
+	var jiguanxiangxidizhi=document.getElementById("jiguanxiangxidizhi").value;
+		jiguanxiangxidizhi=jiguanxiangxidizhi.replace(/\s+/g,'');
+	var qitajuzhudi=document.getElementById("qitajuzhudi").value;
+		qitajuzhudi=qitajuzhudi.replace(/\s+/g,'');
+	var iszs = from_zz('正数');
+	var shengao = $("input[name='shengao']").val();
+		shengao=shengao.replace(/\s+/g,'');
+	if (!iszs.test(shengao)&&shengao!="") {
+		alert("请正确填写身高");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var wenhuachengdu=$("input[name='wenhuachengdu']:checked").val();
+	var hunyinzhuangkuang=$("input[name='hunyinzhuangkuang']:checked").val();
+	var zhengzhimianmao=$("input[name='zhengzhimianmao']:checked").val();
+	var zongjiaoxinyang=$("input[name='zongjiaoxinyang']:checked").val();
+	var zongjiaozhiwu=document.getElementById("zongjiaozhiwu").value;
+		zongjiaozhiwu=zongjiaozhiwu.replace(/\s+/g,'');
+	var zjnonghou=$("input[name='zjnonghou']:checked").val();
+	var zengyongming=document.getElementById("zengyongming").value;
+		zengyongming=zengyongming.replace(/\s+/g,'');
+	var bingyiqingkuang=$("input[name='bingyiqingkuang']:checked").val();
+	var shifoucanji=$("input[name='shifoucanji']:checked").val();
+	var zhiye=$("input[name='zhiye']:checked").val();
+	var isDianhua = from_zz('电话');
+	var gudingdianhua = $("input[name='gudingdianhua']").val();
+		gudingdianhua=gudingdianhua.replace(/\s+/g,'');
+	if (!isDianhua.test(gudingdianhua)&&gudingdianhua!="") {
+		alert("请正确填写电话号码!例如:85530019");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var isMobile = from_zz('手机');
+	var shouji = $("input[name='shouji']").val();
+		shouji=shouji.replace(/\s+/g,'');
+	if (!isMobile.test(shouji)&&shouji!="") {
+		alert("请正确填写手机号码!例如:18381047337");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var huzhaobianhao=document.getElementById("huzhaobianhao").value;
+		huzhaobianhao=huzhaobianhao.replace(/\s+/g,'');
+	var fanzuishi=$("input[name='fanzuishi']:checked").val();
+	var sfyqqzgw=$("input[name='sfyqqzgw']:checked").val();
+	var nianling=document.getElementById("nianling").value;
+		nianling=nianling.replace(/\s+/g,'');
+		nianling=parseInt(nianling);
+	if(nianling<18){
+		var jianhurenxingming=document.getElementById("jianhurenxingming").value;
+			jianhurenxingming=jianhurenxingming.replace(/\s+/g,'');
+		if(jianhurenxingming==''){
+			alert('请填写监护人姓名');
+			plus.nativeUI.closeWaiting();
+			return false;
+		}
+		var jianhurenshenfenzhenghao=document.getElementById("jianhurenshenfenzhenghao").value;
+			jianhurenshenfenzhenghao=jianhurenshenfenzhenghao.replace(/\s+/g,'');
+		if(jianhurenshenfenzhenghao==''){
+			alert('请填写监护人身份证号');
+			plus.nativeUI.closeWaiting();
+			return false;
+		}
+		var jianhurenlianxifangshi=document.getElementById("jianhurenlianxifangshi").value;
+			jianhurenlianxifangshi=jianhurenlianxifangshi.replace(/\s+/g,'');
+		if(jianhurenlianxifangshi==''){
+			alert('请填写监护人联系方式');
+			plus.nativeUI.closeWaiting();
+			return false;
+		}
+	}
+	var hukouleibie=$("input[name='hukouleibie']:checked").val();
+	var hukouxingzhi=$("input[name='hukouxingzhi']:checked").val();
+	var zanzhuliyou=document.getElementById("zanzhuliyou").value;
+		zanzhuliyou=zanzhuliyou.replace(/\s+/g,'');
+	var xuexing=$("input[name='xuexing']:checked").val();
+	var iszzs = from_zz('正整数');
+	var jidongcheshuliang = $("input[name='jidongcheshuliang']").val();
+		jidongcheshuliang=jidongcheshuliang.replace(/\s+/g,'');
+	if (!iszzs.test(jidongcheshuliang)&&jidongcheshuliang!="") {
+		alert("请正确填写机动车数量");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var jidongchepinpai=document.getElementById("jidongchepinpai").value;
+		jidongchepinpai=jidongchepinpai.replace(/\s+/g,'');
+	var jidongcheyanse=document.getElementById("jidongcheyanse").value;
+		jidongcheyanse=jidongcheyanse.replace(/\s+/g,'');
+	var chepai=document.getElementById("chepai").value;
+		chepai=chepai.replace(/\s+/g,'');
+	var daojushuliang = $("input[name='daojushuliang']").val();
+		daojushuliang=daojushuliang.replace(/\s+/g,'');
+	if (!iszzs.test(daojushuliang)&&daojushuliang!='') {
+		alert("请正确填写刀具数量");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var daojumiaoshu=document.getElementById("daojumiaoshu").value;
+		daojumiaoshu=daojumiaoshu.replace(/\s+/g,'');
+	var guanzhiqiju=document.getElementById("guanzhiqiju").value;
+		guanzhiqiju=guanzhiqiju.replace(/\s+/g,'');
+	var dnshuliang = $("input[name='dnshuliang']").val();
+		dnshuliang=dnshuliang.replace(/\s+/g,'');
+	if (!iszzs.test(dnshuliang)&&dnshuliang!='') {
+		alert("请正确填电脑数量");
+		plus.nativeUI.closeWaiting();
+		return false;
+	}
+	var shifoukuandai=$("input[name='shifoukuandai']:checked").val();
+	var beizhu=document.getElementById("beizhu").value;
+		beizhu=beizhu.replace(/\s+/g,'');
+		try{
+			//上传头像
+			imgupgrade();
+		}catch(e){
+			//TODO handle the exception
+		}
+		
+		
+	var formData=$('#ry_form').serialize();
+	var url1=web_url()+"/?type=add&t=renyuan&yonghuming="+localStorage.yonghuming;
+	var data1=formData+rizi();
+	var data_url=url1+'&'+data1;
+	if(localStorage.net=='false'){
+		if(localStorage.data_add==undefined){
+			setParam('data_add','{"count":0,"list":[]}');
+		}
+		var data_add=JSON.parse(localStorage.data_add);
+		var add_list=data_add.list;
+		var add_count=parseInt(data_add.count);
+		data_add.count=add_count+1;
+		var add_listA={"url":data_url};
+		add_list.push(add_listA);
+		data_add.list=add_list;
+		setParam('data_add',JSON.stringify(data_add));
+	}else{
+		getData(false,'post',url1,data1,function(msg){
+			plus.nativeUI.closeWaiting();
+			mui.toast("提交成功");
+			mui.fire(webview_detail,'user_renyuan_add',localStorage.yonghuming);
+			mui.back();
+		});
+		plus.nativeUI.closeWaiting();
+	}
+	
+}
+
+var btns = mui('.btn');
+　	btns.each(function(i,btn){
+　　	btn.addEventListener('tap',function(){
+		var result=$(this).attr('id');
+		var year=new Date().getFullYear() ; //年
+		var  month=new Date().getMonth()+1; //月
+		var day=new Date().getDate();//日
+		//截止的时间
+		if($("#"+result).attr("data-endTime"))
+	    {
+	    	 year=parseInt(year)+parseInt($("#"+result).attr("data-endTime"));
+	    } 
+		 var dtPicker = new mui.DtPicker({"type":"date","beginYear":1900,"endYear":year,"endMonth":month,"endDay":day});
+	    //开始的时间
+		if($("#"+result).attr("data-startTime")=="now_time")
+	    {
+	    	 dtPicker.setSelectedValue(year+"-"+month+"-"+day);
+	    }else
+	    { 
+	    	 dtPicker.setSelectedValue("1960-01-01");
+	    }
+	    
+	　　	dtPicker.show(function(rs){
+			//btn.val(rs.text);
+			document.getElementById(result).value=rs.text;
+			if(result=='chushengriqi'){
+				$('#nianling').val(nianling(rs.text));
+			}
+　　　　　　 dtPicker.dispose();
+		});
+　	},false);
+});
+var sr=document.getElementById("chushengriqi").value;
+$('#nianling').val(nianling(sr));
+
+if(localStorage.add_sanji==undefined){
+//	data_two('17');
+}
+function data_two(id){
+	getData(true,'get',web_url()+'/?type=search&t=canshu&classid='+id,'',function(result){
+		var newdata=two_chuli(JSON.parse(result.msg));
+		setParam('add_sanji',newdata);
+	});
+}
+function two_chuli(data){
+	var n=data.length;
+	var newdata="";
+	for (var i=0;i<n;i++) {
+		getData(false,'get',web_url()+'/?type=search&t=canshu&classid='+data[i].id,'',function(result){
+			var newdata=two_chuli(JSON.parse(result.msg));
+			setParam('newdata_'+data[i].id,newdata);
+		});
+		if(eval('localStorage.newdata_'+data[i].id)=='[]'){
+			var ls_data='{"value":"'+data[i].id+'","text":"'+data[i].u1+'"}';
+		}else{
+			var ls_data='{"value":"'+data[i].id+'","text":"'+data[i].u1+'","children":'+eval('localStorage.newdata_'+data[i].id)+'}';
+		}
+		if(newdata==''){
+			newdata=ls_data;
+		}else{
+			newdata=newdata+','+ls_data;
+		}
+	}
+	newdata="["+newdata+']';
+	return newdata;
+}
+
+var _getParam = function(obj, param) {
+	return obj[param] || '';
+};
+//var cityData3=JSON.parse(localStorage.add_sanji);
+var cityPicker3 = new mui.PopPicker({
+	layer: 3
+});
+cityPicker3.setData(cityData3);
+var showCityPickerButton = document.getElementById('suozaidiqu');
+var cityResult7 = document.getElementById('jiguan');
+var cityResult3 = document.getElementById('suozaidiqu');
+var cityResult5 = document.getElementById('jiedao');
+
+showCityPickerButton.addEventListener('tap', function(event) {
+	cityPicker3.show(function(items) {
+//		cityResult3.value = _getParam(items[0], 'text') + "-" + _getParam(items[1], 'text');
+//		cityResult5.value = _getParam(items[2], 'text') + "-" + _getParam(items[3], 'text');
+//		cityResult7.value=_getParam(items[3], 'value');
+		cityResult3.value = _getParam(items[0], 'text') + "-" + _getParam(items[1], 'text') + "-" + _getParam(items[2], 'text');
+	});
+}, false);
+	</script>
+</body>
+</html>

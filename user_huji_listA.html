@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>长期未走访</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+    <link rel="stylesheet" type="text/css" href="css/pullToRefresh.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl mui-action-back"></a>
+				<a onclick="return linkA(this)" data-href="user_huji_add.html" class="head-box head-title fr ys1">新增</a>
+				<div class="head-ss">
+					<div class="search pst-r">
+						<div class="search-cv search-cvA"><img src="images/icon-search.png" class="search-cv-img">搜索</div>
+						<div class="search-cv search-cvB"><img src="images/icon-search0.png" class="search-cv-img" onclick="return onKeydown()" />搜索</div>
+						<input type="text" class="search-input box-sizing pad-lr-10" placeholder="请输入关键词" >
+					</div>
+				</div>
+				<!--<div class="header-h1">户籍列表</div>-->
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r" id="app">
+<div class="wrapper" id="wrapper">
+	<ul>
+		<li v-for="li in news" :data-id='li.id' :data-huhao='li.huhao' onclick="return news_nk(this)" v-cloak>
+			<div class="ry-bar dbk">
+				<div class="ry-bar-img">
+					<div class="TU_A1 pad-b-100" :data-id='li.fangwutupian'>
+						
+					</div>
+				</div>
+				<div class="ry-bar-right">
+					<p class="ry-bar-h1 ys1">{{li.huzhuxingming}}家</p>
+					<div class="ry-bar-txt ys1">
+						<p>上次走访：时间或日期</p>
+						<p class="h-20 over-one w-b72">成员：XXX,XXX,XXXXXXXXXX</p>
+					</div>
+					<div class="ry-bar-tips">
+						<span class="ys1" v-if="li.hujileixing=='放心户'">{{li.hujileixing}}</span>
+						<span class="ys2" v-else-if="li.hujileixing=='一般户'">{{li.hujileixing}}</span>
+						<span class="ys3" v-else-if="li.hujileixing=='贫困户'">{{li.hujileixing}}</span>
+						<span class="ys4" v-else-if="li.hujileixing=='重点户'">{{li.hujileixing}}</span>
+						<span class="ys5" v-else-if="li.hujileixing=='其他'">{{li.hujileixing}}</span>
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+				
+				
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		mui.init({
+			swipeBack: true
+		});
+    </script>
+	<script type="text/javascript">
+var page=1;
+var num=10;
+var pagenum=num;
+var u1='';
+var app = new Vue({
+  	el: '#app',
+  	data: {
+    	news: {},
+  	},
+  	methods:{
+  		
+  	}
+});
+function beautyshuju(num,page,yno){
+	pagenum=document.getElementById("wrapper").getAttribute('data-pagenum');
+	pagenum=parseInt(pagenum);
+	if(pagenum>=num||page==1){
+		getData(false,'get',web_url()+'/?type=search&t=huji&ordertype=dtime&orderby=desc&number='+num+'&page='+page+'&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun+rizi(),'',function(result){
+			var data=data_chuli(JSON.parse(result.msg));
+			if(result.msg==''){
+				if(page==1){
+					app.news=[];
+				}
+				pagenum=0;
+			}else{
+				if(page==1){
+					app.news=data;
+				}else{
+					extend(app.news,data);
+				}
+				pagenum=data.length;
+			}
+			document.getElementById("wrapper").setAttribute('data-pagenum',pagenum);
+			app.$nextTick(function(){
+				if(yno!='no'){
+					setTimeout(function(){
+						wrapper.refresh();
+					},300);
+				}
+				$('.vue_img').each(function(){
+					$(this).css('background-image','url('+$(this).data('img')+')');
+				});
+			});
+		});
+	}else{
+		document.getElementById("wrapper").setAttribute('data-pagenum',0);
+		wrapper.refresh();
+	}
+}
+beautyshuju(num,page,'no');
+pagenum=document.getElementById("wrapper").getAttribute('data-pagenum');
+if(pagenum!='0'){page++;}
+document.addEventListener('user_riji_add', function(event) {
+    var id = event.detail;console.log(id);
+    Refresh();
+});
+	refresher.init({
+		id:"wrapper",
+		pullDownAction:Refresh,
+		pullUpAction:Load,
+		scrollAction:Ascroll,
+		scrollEndAction:AscrollEnd,
+	});
+function Refresh() {
+	page=1;
+	beautyshuju(num,page,'yes');
+	pagenum=num;
+	document.getElementById("wrapper").setAttribute('data-pagenum',pagenum);
+	if(pagenum!=0){page++;}
+}
+function Load() {
+	beautyshuju(num,page,'yes');
+	pagenum=document.getElementById("wrapper").getAttribute('data-pagenum');
+	if(pagenum!='0'){page++;}
+}
+function Ascroll(){
+	
+}
+function AscrollEnd(){
+	
+}
+function data_chuli(data){
+	var n=data.length;
+	for (var i=0;i<n;i++) {
+		data[i].newtime=timeD(data[i].dtime1);
+	}
+	return data;
+}
+function news_nk(obj){
+	var id=$(obj).data('id');
+	localStorage.setItem('user_huji_detail_id',id);
+	openWindows('user_huji_detail.html');
+}	
+function onKeydown(){
+	var bt=$('.search-input').val();
+		bt=bt.replace(/\s+/g,'');
+	if(bt==''){
+		alert('请输入搜索关键字');
+		return false;
+	}else{
+		u1=",sl_renyuan.xingming{like}%27{bfb}"+bt+"{bfb}%27";
+	}
+	console.log(u1);
+	page=1;
+	beautyshuju(num,page,'yes',u1);
+	pagenum=num;
+	document.getElementById("wrapper").setAttribute('data-pagenum',pagenum);
+	if(pagenum!=0){page++;}
+	$('.search-input').val('');
+	$('.search').removeClass('on');
+}
+	</script>
+</body>
+</html>

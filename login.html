@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+	</head>
+
+	<body>
+		<div class="pst-f p-lt wh-100">
+			<div class="pst-r wh-100">
+				<p class="login-yu">汉语</p>
+				<div class="table">
+					<div class="table-cell">
+						<div class="login-cv">
+							<div class="login-tx">
+								<div class="TU_A1 pad-b-100" style="background-image: url(images/touxiang.png);">
+
+								</div>
+							</div>
+							<br />
+							<div class="login-bar bd-btm">
+								<p class="login-l">账号</p>
+								<input type="text" id="yonghuming" class="login-input" placeholder="请输入账号" />
+							</div>
+							<div class="login-bar bd-btm">
+								<p class="login-l">密码</p>
+								<input type="password" id="mima" class="login-input" placeholder="请输入密码" />
+							</div>
+							<br />
+							<input type="button" id="login" onclick="return login()" class="login-submit mar-b-10" value="登录" />
+							<p class="t_c">
+								<a href="" class="login-link">忘记密码</a>
+							</p>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				plus.nativeUI.closeWaiting();
+				mui.currentWebview.show();
+				var old_back = mui.back;
+				mui.back = function() {
+					mui.confirm('退出应用？', '操作提示', ['确定', '取消'], function(v) {
+						if(v.index == 0) {
+							plus.runtime.quit();
+						}
+					});
+				}
+				if(localStorage.yonghuming!=undefined){
+					document.getElementById("yonghuming").value=localStorage.yonghuming;
+				}
+				
+				
+				//document.getElementById("mima").value=localStorage.mima;
+			});
+			$('.t_c').click(function() {
+				mui.alert('请联系驻村管理员！');
+				return false;
+			});
+			document.addEventListener('login_action', function(event) {
+				//document.getElementById("yonghuming").value = '';
+				//document.getElementById("mima").value = '';
+			});
+			function login() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				}
+				var yhm = document.getElementById("yonghuming").value;
+				yhm = yhm.replace(/\s+/g, '');
+				var mima = document.getElementById("mima").value;
+				mima = mima.replace(/\s+/g, '');
+				if(yhm == '') {
+					alert('请输入用户名！');
+					return false;
+				}
+				if(mima == '') {
+					alert('请输入密码！');
+					return false;
+				}
+				plus.nativeUI.showWaiting("登录中...");
+				getData(false, 'get', web_url() + "/?type=login&t=user&yonghuming=" + yhm + "&mima=" + mima, '', function(result) {
+					if(result.status == 'true') {
+						setParam('ubase', JSON.stringify(result));
+						setParam('login_status', 'true');
+						setParam('login_token', result.msg[0].token);
+						setParam('yonghuming', yhm);
+						setParam('mima', mima);
+						getData(false, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshucun, '', function(result) {
+							setParam('login_suoshucun_txt', JSON.parse(result.msg)[0].u1);
+						});
+						getData(false, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshuzu, '', function(result) {
+							setParam('login_suoshuzu_txt', JSON.parse(result.msg)[0].u1);
+						});
+
+						plus.nativeUI.closeWaiting();
+
+						//var webview_home = plus.webview.getWebviewById('index.html');
+						//mui.fire(webview_home, 'login', yhm);
+
+						//document.getElementById("yonghuming").value = '';
+						//document.getElementById("mima").value = '';
+						setParam('login_action', 'yes');
+						//plus.webview.show('index.html');
+						plus.nativeUI.showWaiting("登录成功，正在初始化...");
+						openWindows('index.html');
+						plus.nativeUI.closeWaiting();
+					} else {
+						mui.toast(result.msg);
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
+			//{"status":"true","msg":[{"id":"1","dtime":"2017-08-21 00:00:00","yonghuming":"123456","mima":"e10adc3949ba59abbe56e057f20f883e","xingming":null,"suoshucun":null,"suoshuzu":null,"shouzimu":null,"token":"apZjaZaZ"}]}
+		</script>
+	</body>
+
+</html>

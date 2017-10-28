@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>关于我们</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+	</head>
+
+	<body>
+		<div class="mui-views" id="app">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<div class="header-h1">关于我们</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r">
+
+					<div class="pad-tb-5 pad-lr-10">
+
+						<div class="newsd-txt" v-html="content">
+
+						</div>
+
+					</div>
+					
+					<div class="pst-f w-100" style="left:0px;bottom:20px;text-align: center;font-size: 13px;color: #666;">
+						<div class="pad-lr-15">
+							{{jianjie}}
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();
+				getData(true, 'get', web_url() + '/?type=search&t=article&status=终审&sort_id=71&ordertype=dtime&number=1&page=1' + rizi(), '', function(result) {
+					var content = HTMLDecode(JSON.parse(result.msg)[0].content);
+					content = img_htmlB(content);
+					app.content = content;
+					document.title = JSON.parse(result.msg)[0].biaoti;
+					$('.header-h1').text(document.title);
+					app.jianjie=JSON.parse(result.msg)[0].jianjie;
+				});
+			});
+		</script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					content: "",
+					jianjie: "",
+				}
+			});
+		</script>
+	</body>
+
+</html>

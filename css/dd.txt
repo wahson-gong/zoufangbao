@@ -1,0 +1,35 @@
+wwwroot/application/controllers/home/IndexController.class
+接口程序在这里；接口程序在这里
+http://fhj.cdweni.com/?type=search&t=article&liemingcheng=biaoti,id&number=5
+https://www.kancloud.cn/fzw8600030/sile/295067 接口参数都是对照冯个之前做的来做的
+我把基础的查询语句发给你。你可以在先有的基础上修改 //输出json 
+// 		    $temp_model = new Model("moxing");//连接数据库
+// 		    $temp_arr=$temp_model->select($_sql);//执行查询，返回的是数组
+// 		    //var_dump($temp_model->select($_sql));// 等同于Response.write(sql);
+// 		    //$print($temp_model->select($_sql));// 等同于Response.write(sql);
+// 		    $rdata['msg']=json_encode($temp_arr);//复制给接口返回的json
+后台：
+http://fhj.cdweni.com/index.php?p=admin&c=login&a=login
+账号密码是 admin 123456
+ftp:
+211.149.187.138 fanghuiju fanghuiju
+mysql:
+211.149.187.138 端口：3306 fanghuiju fanghuiju
+
+
+
+/appsearch.aspx?type=search&sqlvalue=yonghuming{like}'{bfb}14{bfb}'&t=yuangong&liemingcheng=*&number=2&ordertype=dtime&orderby=desc
+输出内容
+select top 2 * from sl_yuangong where yonghuming like '%14%' order by dtime desc
+这个就是模糊查询
+sqlvalue=yonghuming{like}'{bfb}14{bfb}'
+
+
+计划名称，户籍id，走访时间，用户名，计划状态
+今日计划：计划状态【不包含已走访，查询未走访】
+入户人员：所属小组的人员，【多选】
+户籍；人员，民情日记【只能显示本村的】
+民情日记【只能修改自己添加】
+户籍；人员，录入【全村的工作人员都能修改本村】
+走访记录；民情日记【只能修改自己添加】
+走访记录；民情日记【只能查看本村的】

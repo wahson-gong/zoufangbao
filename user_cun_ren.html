@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>村内人员</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<a onclick="return linkA(this)" data-href="user_renyuan_add.html" class="head-box head-title fr ys1">新增</a>
+					<div class="head-ss">
+						<div class="search pst-r">
+							<div class="search-cv search-cvA"><img src="images/icon-search.png" class="search-cv-img">搜索</div>
+							<div class="search-cv search-cvB" onclick="plus.nativeUI.showWaiting('搜索中...');  onKeydown();plus.nativeUI.closeWaiting();"><img src="images/icon-search0.png" class="search-cv-img" />搜索</div>
+							<input type="text" class="search-input box-sizing pad-lr-10" placeholder="请输入关键词" />
+						</div>
+					</div>
+					<!--<div class="header-h1">村内人员</div>-->
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r" id="app">
+					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>-->
+					<div class="wrapper" id="wrapper">
+						<ul v-cloak class="yistA_ul">
+							<li class="yistA" v-for="li in news" @click="news_nk(li.id,li.hukoubianhao)">
+								<div class="yistA_tu bg_tu">
+									<div class="wh-100 bg_tu" :style="'background-image:url('+img_href+li.touxiang+');'"></div>
+								</div>
+								<div class="yistA_tt">
+									<p class="h1 mar-b-12">{{li.xingming}}</p>
+									<p class="h2 mar-b-13">{{li.newtime}} {{li.xingbie}}</p>
+									<p class="h3">{{li.minzu}}</p>
+								</div>
+								<div class="yistA_tp tp1">
+									<span class="green" v-if="li.renyuanleibie=='普通人员'">{{li.renyuanleibie}}</span>
+									<span class="zi" v-else-if="li.renyuanleibie=='其他'">{{li.renyuanleibie}}</span>
+									<span class="red" v-else-if="li.renyuanleibie=='党员'">{{li.renyuanleibie}}</span>
+									<span class="redk" v-else-if="li.renyuanleibie=='重点人员'">{{li.renyuanleibie}}</span>
+									<span class="orange" v-else-if="li.renyuanleibie=='贫困人员'">{{li.renyuanleibie}}</span>
+									<span class="blue" v-else="li.renyuanleibie=='放心人员'">{{li.renyuanleibie}}</span>
+
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();	
+
+				beautyshuju(num, page, 'no', '');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+				document.addEventListener('user_renyuan_add', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				refresher.init({
+					id: "wrapper",
+					pullDownAction: Refresh,
+					pullUpAction: Load,
+					scrollAction: Ascroll,
+					scrollEndAction: AscrollEnd,
+				});
+				setTimeout(function() {
+					var timea_num = 0;
+					var timea = setInterval(function() {
+						timea_num++;
+						if(timea_num > 140) {
+							clearInterval(timea);
+						} else {
+							wrapper.refresh();
+						}
+					}, 50);
+				}, 100);
+			});
+		</script>
+		<script type="text/javascript">
+			var page = 1;
+			var num = 10;
+			var pagenum = num;
+			var u1 = '';
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: [],
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+					img_href: web_url() + '/',
+				},
+				methods: {
+					news_nk: function(id, huhao) {
+						news_nk(id, huhao);
+					}
+				},
+			});
+
+			function beautyshuju(num, page, yno, u1) {
+				if(localStorage.net == 'false') {
+					if(localStorage.on_user_cun_ren != undefined) {
+						app.news = JSON.parse(localStorage.on_user_cun_ren);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.news.length);
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+					}
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+								app.isActive = true;
+							}, 300);
+						} else {
+							setTimeout(function() {
+								app.isActive = true;
+							}, 300);
+						}
+					});
+				} else {
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					pagenum = parseInt(pagenum);
+					if(pagenum >= num || page == 1) {
+//web_url() + '/?type=search&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&sqlvalue=suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + u1 + '' + rizi()
+						getData(true, 'get', web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi(), '', function(result) {
+							//console.log(web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi());
+							var data = data_chuli(JSON.parse(result.msg));
+							if(result.msg == '') {
+								if(page == 1) {
+									app.news = [];
+								}
+								pagenum = 0;
+							} else {
+								if(page == 1) {
+									app.news = data;
+								} else {
+									extend(app.news, data);
+								}
+								pagenum = data.length;
+							}
+							document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+							setParam('on_user_cun_ren', JSON.stringify(app.news));
+							app.$nextTick(function() {
+								if(yno != 'no') {
+									setTimeout(function() {
+										wrapper.refresh();
+										app.isActive = true;
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
+									}, 300);
+								}
+							});
+						});
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+						wrapper.refresh();
+					}
+				}
+			}
+			
+			function Refresh() {
+				net_yno();
+				page = 1;
+				beautyshuju(num, page, 'yes', '');
+				pagenum = num;
+				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+				if(pagenum != 0) {
+					page++;
+				}
+			}
+
+			function Load() {
+				beautyshuju(num, page, 'yes', '');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+			}
+
+			function Ascroll() {
+
+			}
+
+			function AscrollEnd() {
+
+			}
+
+			function data_chuli(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].newtime = time_d1(data[i].chushengriqi);
+				}
+				return data;
+			}
+
+			function news_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_cun_ren_detail_id', id);
+					localStorage.setItem('user_cun_ren_detail_huhao', huhao);
+					openWindows('user_cun_ren_detail.html');
+				}
+			}
+
+			function onKeydown() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					var bt = $('.search-input').val();
+					bt = bt.replace(/\s+/g, '');
+					if(bt == '') {
+						u1 = '';
+						//alert('请输入搜索关键字');
+						//return false;
+					} else {
+						var str="{like}%27{bfb}" + bt + "{bfb}%27";
+						u1 = "&sqlvalue=xingming" + str + "/shenfenzhenghao"+str+"/shouji"+str;
+					}
+					console.log(u1);
+					page = 1;
+					beautyshuju(num, page, 'yes', u1);
+					pagenum = num;
+					document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+					if(pagenum != 0) {
+						page++;
+					}
+					$('.search-input').val('');
+					$('.search').removeClass('on');
+				}
+			}
+		</script>
+	</body>
+
+</html>

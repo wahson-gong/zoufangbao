@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>今日走访计划</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<a onclick="return linkA(this)" data-href="user_zf_set.html" class="head-box head-title fr">新增</a>
+					<div class="header-h1">走访计划</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r" id="app">
+
+					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>-->
+					<div class="wrapper" id="wrapper">
+						<ul v-cloak class="yistA_ul">
+							<li class="yistA" v-for="li in news" @click="zf_jihua_nk(li.jh_id,li.huhao)">
+								<div class="yistA_tu bg_tu">
+									<div class="wh-100 bg_tu" :style="'background-image:url('+img_href+li.fangwutupian+');'"></div>
+								</div>
+								<div class="yistA_tt">
+									<p class="h1 mar-b-15">{{li.u1}}-{{li.allxingming}}家</p>
+									<p class="h2">{{li.newtime}}</p>
+								</div>
+								<div class="yistA_tp">
+									<span class="orange">{{li.zoufangzhuangtai}}</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();
+				beautyshuju(num, page, 'no');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+				document.addEventListener('user_zf_add', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				document.addEventListener('user_riji_add', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				document.addEventListener('user_zf_set', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				refresher.init({
+					id: "wrapper",
+					pullDownAction: Refresh,
+					pullUpAction: Load,
+					scrollAction: Ascroll,
+					scrollEndAction: AscrollEnd,
+				});
+
+			});
+		</script>
+		<script type="text/javascript">
+			var page = 1;
+			var num = 10;
+			var pagenum = num;
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: [],
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+					img_href: web_url() + '/',
+				},
+				methods: {
+					zf_jihua_nk: function(id, huhao) {
+						zf_jihua_nk(id, huhao);
+					}
+				},
+			});
+			//"sl_zoufangjihua.dtime{between}'"+time_qian('')+"'{and}'"+wx_time()
+			function beautyshuju(num, page, yno) {
+				if(localStorage.net == 'false') {
+					if(localStorage.on_user_zf_jihua_list != undefined) {
+						app.news = JSON.parse(localStorage.on_user_zf_jihua_list);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.news.length);
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+					}
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+								app.isActive = true;
+							}, 300);
+						} else {
+							setTimeout(function() {
+								app.isActive = true;
+							}, 300);
+						}
+					});
+				} else {
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					pagenum = parseInt(pagenum);
+					if(pagenum >= num || page == 1) {
+						getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_huji.fangwutupian,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=" + num + "&page=" + page + "&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+							var data = data_chuli(JSON.parse(result.msg));
+							if(result.msg == '') {
+								if(page == 1) {
+									app.news = [];
+								}
+								pagenum = 0;
+							} else {
+								if(page == 1) {
+									app.news = data;
+								} else {
+									extend(app.news, data);
+								}
+								pagenum = data.length;
+							}
+							document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+							setParam('on_user_zf_jihua_list', JSON.stringify(app.news));
+							app.$nextTick(function() {
+								if(yno != 'no') {
+									setTimeout(function() {
+										wrapper.refresh();
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
+									}, 300);
+								}
+								$('.vue_img').each(function() {
+									$(this).css('background-image', 'url(' + $(this).data('img') + ')');
+								});
+							});
+						});
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+						wrapper.refresh();
+					}
+				}
+
+			}
+
+			setTimeout(function() {
+				var timea_num = 0;
+				var timea = setInterval(function() {
+					timea_num++;
+					if(timea_num > 140) {
+						clearInterval(timea);
+					} else {
+						wrapper.refresh();
+					}
+				}, 50);
+			}, 100);
+
+			function Refresh() {
+				net_yno();
+				page = 1;
+				beautyshuju(num, page, 'yes');
+				pagenum = num;
+				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+				if(pagenum != 0) {
+					page++;
+				}
+			}
+
+			function Load() {
+				beautyshuju(num, page, 'yes');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+			}
+
+			function Ascroll() {
+
+			}
+
+			function AscrollEnd() {
+
+			}
+			//走访计划时间处理
+			function data_chuli(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].newtime = timeF(data[i].ntime);
+					var str = data[i].fangwutupian;
+					if(str != '' && str != null) {
+						var imglist = str.replace(/{title}/g, "");
+						var imglist = imglist.split('{next}');
+						data[i].fangwutupian = imglist[0];
+					}
+				}
+				return data;
+			}
+			//走访计划链接
+			function zf_jihua_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_zf_add_id', id);
+					localStorage.setItem('user_zf_add_huhao', huhao);
+					openWindows('user_zf_add.html');
+				}
+			}
+		</script>
+	</body>
+
+</html>

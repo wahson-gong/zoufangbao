@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>个人设置</title>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl mui-action-back"></a>
+				<div class="header-h1">个人设置</div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="pad-tb-5">
+					
+					<div class="renyuan-bar renyuan-div pad-lr-15 clearfix">
+						<input type="text" class="renyuan-input fr" id="xingming" placeholder="请输入姓名" value="" />
+						<p class="renyuan-p">姓名</p>
+					</div>
+					<div class="renyuan-bar renyuan-div pad-lr-15 clearfix">
+						<input type="text" readonly="readonly" id="suozaidiqu" class="renyuan-input fr" placeholder="请选择工作组" value="" />
+						<p class="renyuan-p">变更工作组</p>
+					</div>	
+					
+					<br />
+					<div class="pad-lr-15">
+						<div class="btn-ys1" onclick="return geren_set()">提交</div>
+					</div>
+					
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var webview_detail =null;
+   		mui.init({
+			swipeBack: true
+		});
+		mui.plusReady(function(){ 
+			plus.nativeUI.closeWaiting();mui.currentWebview.show();
+			document.getElementById("xingming").value=JSON.parse(localStorage.ubase).msg[0].xingming;
+			document.getElementById("suozaidiqu").value=localStorage.login_suoshuzu_txt;
+			
+			webview_detail = plus.webview.getWebviewById(home_id());
+			
+			
+			if(localStorage.dataA_dizhiA == undefined && localStorage.net) {
+				data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
+			}
+			
+			
+		});
+		
+			function geren_set(){
+				var xm=document.getElementById("xingming").value;
+				//alert(xm);return false;
+				xm=xm.replace(/\s+/g,"");
+				if(xm.length==0){ 
+					mui.toast('请输入姓名');
+					return false;
+				}else if(xm.length>20){
+					mui.toast('姓名最多输入20字');
+					return false;
+				}
+				mui.fire(webview_detail, 'user_geren_set', xm);
+				var data = JSON.parse(localStorage.ubase);
+				data.msg[0].xingming = xm;
+				setParam('ubase', JSON.stringify(data));
+				var data1="&xingming="+xm;
+				user_edit(data1);
+			}
+
+			function data_two(id) {
+				getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + id, '', function(result) {
+					var newdata = two_chuli(JSON.parse(result.msg));
+					setParam('dataA_dizhiA', newdata);
+				});
+			}
+
+			function two_chuli(data) {
+				var n = data.length;
+				var newdata = "";
+				for(var i = 0; i < n; i++) {
+					getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + data[i].id, '', function(result) {
+						var newdata = two_chuli(JSON.parse(result.msg));
+						setParam('newdata_' + data[i].id, newdata);
+					});
+					if(eval('localStorage.newdata_' + data[i].id) == '[]') {
+						var ls_data = '{"value":"' + data[i].id + '","text":"' + data[i].u1 + '"}';
+					} else {
+						var ls_data = '{"value":"' + data[i].id + '","text":"' + data[i].u1 + '","children":' + eval('localStorage.newdata_' + data[i].id) + '}';
+					}
+					if(newdata == '') {
+						newdata = ls_data;
+					} else {
+						newdata = newdata + ',' + ls_data;
+					}
+				}
+				newdata = "[" + newdata + ']';
+				return newdata;
+			}
+			var _getParam = function(obj, param) {
+				return obj[param] || '';
+			};
+			
+			
+			var cityData3 = JSON.parse(localStorage.dataA_dizhiA.replace(/undefined/g,"[]"));
+			var cityPicker3 = new mui.PopPicker();
+			cityPicker3.setData(cityData3);
+			var showCityPickerButton = document.getElementById('suozaidiqu');
+			showCityPickerButton.addEventListener('tap', function(event) {
+				cityPicker3.show(function(items) {
+					if(_getParam(items[0], 'value') == '') {
+						mui.toast('请选项组');
+						return false;
+					} else {
+						mui.fire(webview_detail, 'user_geren_set', _getParam(items[0], 'text'));
+						var data = JSON.parse(localStorage.ubase);
+						setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+						data.msg[0].suoshuzu = _getParam(items[0], 'value');
+						setParam('ubase', JSON.stringify(data));
+						var data1='&suoshuzu=' + _getParam(items[0], 'value');
+						user_edit(data1);
+						document.getElementById("suozaidiqu").value=localStorage.login_suoshuzu_txt;
+					}
+				});
+			}, false);
+			
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>我的工作组</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<div class="header-h1">我的工作组</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r">
+
+					<div class="pad-tb-5">
+
+						<a onclick="return linkA(this)" data-href="user_riji_list.html" class="bd-btm pad-lr-15 dbk">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p">我的民情日记</p>
+							</div>
+						</a>
+						<a onclick="return linkA(this)" data-href="user_zf_zuijin.html" class="bd-btm pad-lr-15 dbk">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p">我的走访</p>
+							</div>
+						</a>
+						<a onclick="setParam('index_search','');return linkA(this)" data-href="user_cun_ren.html" class="bd-btm pad-lr-15 dbk">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p"><span class="fr ys1 ys3" id="renyuan"></span>村内人员</p>
+							</div>
+						</a>
+						<a onclick="return linkA(this)" data-href="user_huji_list.html" class="bd-btm pad-lr-15 dbk">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p"><span class="fr ys1 ys3" id="huji"></span>村内户籍</p>
+							</div>
+						</a>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();
+				getData(true, 'get', web_url() + "/?type=search&t=renyuan&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
+					document.getElementById("renyuan").innerText = JSON.parse(result.msg)[0].count_id;
+				});
+				getData(true, 'get', web_url() + "/?type=search&t=huji&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
+					document.getElementById("huji").innerText = JSON.parse(result.msg)[0].count_id;
+				});
+
+			});
+		</script>
+		<script type="text/javascript">
+		</script>
+	</body>
+
+</html>

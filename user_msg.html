@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>意见反馈</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl mui-action-back"></a>
+				<div class="header-h1">意见反馈</div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="pad-15">
+					
+					<div class="renyuan-bar ys2">
+						<p class="c-333">联系方式</p>
+						<input type="number" id="shouji" class="renyuan-input ys1 box-sizing" placeholder="请输入手机号">
+					</div>
+					<div class="mar-b-10">
+						<p class="riji-h1">反馈内容</p>
+						<textarea id="neirong" class="riji-area box-sizing" placeholder="请输入反馈内容"></textarea>
+					</div>
+					
+					<br />
+					
+					<div class="btn-ys1" onclick="return fankui()">提交</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		mui.init({
+			swipeBack: true
+		});
+		mui.plusReady(function(){ plus.nativeUI.closeWaiting();mui.currentWebview.show(); });
+    </script>
+<script type="text/javascript">
+function fankui(){
+	var shouji=document.getElementById("shouji").value;
+	shouji=shouji.replace(/\s+/g,'');
+	var isMobile = /^1+\d{10}$/;
+	if (!isMobile.test(shouji)) {
+		mui.toast("请正确填写联系方式!例如:18315764179");
+		return false;
+	}
+	var neirong=document.getElementById("neirong").value;
+	neirong=neirong.replace(/\s+/g,'');
+	if(neirong==''){
+		mui.toast('请您输入反馈内容！');
+		return false;
+	}
+	if(neirong.length>400){
+		mui.toast('反馈内容最多输入400字！');
+		return false;
+	}
+	var url1=web_url()+'/?type=add&t=fankui';
+	var data1='lianxifangshi='+shouji+'&fankuineirong='+neirong+"&yonghuming="+localStorage.yonghuming+rizi() + "&dtime="+timeA();
+	//console.log(url1+'&'+data1);
+	getData(true,'post',url1,data1,function(msg){
+		mui.toast('提交成功！');
+		mui.back();
+	});
+}
+</script>
+</body>
+</html>

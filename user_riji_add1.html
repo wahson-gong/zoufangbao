@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>民情日记</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA" style="background: bisque;">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backB fl mui-action-back"></a>
+					<a class="head-box head-title fr mui-action-back">民情历史</a>
+					<div class="header-h1"></div>
+				</div>
+			</div>
+			<div class="mui-views" id="app" style="height: auto;top: 44px;">
+				<div class="mui-views-r">
+
+					<div class="ck-cov">
+						<div class="mar-b-5 actionA">
+							<div class="ck-bar">
+								<div class="ck-dm-h1 rt">今日走访&nbsp;&nbsp;&nbsp;
+									<div class="span"><span id="huji_num"></span> 家</div>
+								</div>
+							</div>
+							<div class="ck-ap">
+								<div class="ck-ap-p" v-for="li in zoufangjilu" :data-id="li.huji.id" :data-huhao="li.huji.huhao" onclick="return news_nk(this)">&nbsp;&nbsp;&nbsp;{{li.huji.allxingming}}家</div>
+							</div>
+						</div>
+						<div class="ck-bar">
+							<div class="ck-dm-h1 mar-b-10">民情记录</div>
+							<textarea class="ck-dm-area box-sizing" id="minqingjilu" placeholder="请输入民情记录...">{{news.minqingjilu}}</textarea>
+						</div>
+					</div>
+
+					<div class="pad-10" v-cloak>
+						<div class="renyuan-bar">
+							<p class="c-333">
+								<!--<div class="fr upimg_btn" style="display: none;" onclick="return imgupgrade()">上传</div>-->图片（最多8张）</p>
+							<div class="upimg-bar upimg-barA pad-t-10 clearfix">
+
+							</div>
+							<div class="upimg-bar upimg-barB pad-t-10 clearfix" style="display: none;">
+								<div class="upimg-li" onclick="return tx_ck()">
+									<div class="TU_A1 pad-b-100" style="background-image: url(images/up_img.png);"></div>
+								</div>
+							</div>
+
+							<input type="hidden" id="fangwutupian" name="zutu" :value="news.zutu" />
+							<input type="hidden" id="fangwutupian_" name="zutu_" :value="news.zutu" />
+						</div>
+						<br />
+						<div class="ck-bar">
+							<div class="ck-dm-h1">记录员&nbsp;&nbsp;&nbsp;
+								<div class="span">{{user.xingming}}</div>
+							</div>
+						</div>
+						<br />
+						<div class="btn-ys1" onclick="return riji_edit()" style="display: none;">提交</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txA()">拍照上传</a>
+				</li>
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txB()">从相册选取</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="return tx_ck()"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="outimg" style="width: 100%;height: 100%;position: fixed;z-index: 9999;background: rgba(0,0,0,0.6);display: none;">
+			<div style="width: 100%;height: 100%;position: relative;">
+				<!-- Swiper -->
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination" style="bottom: 0px;font-size: 17px;line-height: 44px;color: #fff;"></div>
+					<!--Add close-->
+					<img class="close-img" src="images/close.png" />
+				</div>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/demoa.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var webview_detail = null;
+			var webview_detailA = null;
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+//				plus.nativeUI.closeWaiting();
+//				mui.currentWebview.show();
+                shuju();
+
+				webview_detail = plus.webview.getWebviewById('user_riji_list.html');
+				webview_detailA = plus.webview.getWebviewById('user_riji_list_my.html');
+			});
+
+			function tx_ck() {
+				mui('#picture').popover('toggle');
+			}
+
+			function txA() {
+				cameraimages(8);
+				tx_ck();
+			}
+
+			function txB() {
+				galleryImgs(8);
+				tx_ck();
+			}
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: {},
+					user: {},
+					zoufangjilu: [],
+					huji: [],
+				}
+			});
+			
+
+			function shuju() {
+				console.log(localStorage.user_riji_add1_id);
+				getData(true, 'get', web_url() + '/?type=search&t=minqingriji&status=终审&id=' + localStorage.user_riji_add1_id + rizi(), '', function(result) {
+					var data = JSON.parse(result.msg)[0];
+					app.news = data_chuli(data);
+					zutu(app.news.zutu);
+					//日记标题
+					$('.header-h1').text(timeB(data.dtime1) + '民情日记');
+					//日记修改判断
+					if(localStorage.yonghuming == data.yonghuming) {
+						$('.btn-ys1,.upimg_btn').show();
+					}
+					//user
+					getData(true, 'get', web_url() + "/?type=search&t=user&yonghuming=" + data.yonghuming + rizi(), '', function(result) {
+						app.user = JSON.parse(result.msg)[0];
+					});
+					//今日走访
+					var times = timeF(data.dtime1);
+					//用户姓名
+					var user_xingming = JSON.parse(localStorage.ubase).msg[0].xingming;
+					var url_a = web_url() + "/?type=zoufangjilu&t=zoufangjilu&status=终审&ordertype=dtime&number=200&page=1&sqlvalue=dtime{between}'" + times + " 00:00'{and}'" + times + " 23:59',ruhurenyuan{like}'{bfb}" + user_xingming + "{bfb}'" + rizi();
+					var data_a = '';
+					getData(true, 'get', url_a, data_a, function(result) {
+						var jilu = JSON.parse(result.msg);
+						app.zoufangjilu = jilu;
+						var n = jilu.length;
+						$('#huji_num').text(n);
+					});
+
+				});
+			}
+
+			function zutu(str) {
+				if(str != '' && str != null) {
+					var imglist = str.replace(/{title}/g, "");
+					var imglist = imglist.split('{next}');
+					$('#fangwutupian_').data('num', imglist.length);
+					if(imglist.length < 3) {
+						$('.upimg-barB').show();
+					} else {
+						$('.upimg-barB').hide();
+					}
+					for(i = 0; i < imglist.length; i++) {
+						$('.upimg-barA').append('<div class=\"upimg-li\"><div class=\"upimg-li-close\" onclick=\"return close_imgB(this)\"></div><div onclick=\"return out_img(this)\" class=\"TU_A1 pad-b-100\" style=\"background-image: url(' + web_url() + '/' + imglist[i] + ');\"></div></div>');
+						//console.log(web_url()+'/'+imglist[i]);
+					}
+				} else {
+					$('.upimg-barB').show();
+				}
+			}
+
+			function close_imgB(obj) {
+				var str = document.getElementById("fangwutupian_").value;
+				var imglist = str.replace(/{title}/g, "");
+				var imglist = imglist.split('{next}');
+				var index = $(obj).parent('.upimg-li').index();
+				imglist.splice(index, 1);
+				if(imglist.length < 8) {
+					$('.upimg-barB').show();
+				} else {
+					$('.upimg-barB').hide();
+				}
+				var newimg = dd(imglist);
+				document.getElementById("fangwutupian_").value = newimg;
+				document.getElementById("fangwutupian").value = newimg;
+				$(obj).parent('.upimg-li').remove();
+			}
+
+			function dd(imglist) {
+				var end_str = '';
+				for(var i = 0; i < imglist.length; i++) {
+					if(end_str == '') {
+						end_str = imglist[i] + '{title}';
+					} else {
+						end_str = end_str + '{next}' + imglist[i] + '{title}'
+					}
+				}
+				console.log(end_str);
+				return end_str;
+			}
+
+			function data_chuli(data) {
+				data.newtime = timeD(data.dtime1);
+				return data;
+			}
+			$('.actionA').click(function() {
+				$(this).siblings('.ck-ap').toggle();
+			});
+			//修改测试
+			function riji_edit() {
+				imgupgrade();
+				var minqingjilu = document.getElementById("minqingjilu").value;
+				var zutu = document.getElementById("fangwutupian").value;
+				var url_a = web_url() + '/?type=edit&t=minqingriji&status=终审&id=' + localStorage.user_riji_add1_id + rizi();
+				var data_a = 'minqingjilu=' + minqingjilu + '&zutu=' + zutu;
+				getData(false, 'post', url_a, data_a, function(result) {
+					mui.toast('修改成功！');
+					mui.fire(webview_detail, 'user_riji_add', localStorage.yonghuming);
+					mui.fire(webview_detailA, 'user_riji_add', localStorage.yonghuming);
+					mui.back();
+				});
+			}
+
+			function news_nk(obj) {
+				var id = $(obj).data('id');
+				var huhao = $(obj).data('huhao');
+				localStorage.setItem('user_huji_detail_id', id);
+				localStorage.setItem('user_huji_detail_huhao', huhao);
+				openWindows('user_huji_detail.html');
+			}
+		</script>
+	</body>
+
+</html>

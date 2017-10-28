@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>设置</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl mui-action-back"></a>
+				<div class="header-h1">设置</div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="pad-tb-5">
+					
+					<div id="clear" class="bd-btm pad-lr-15">
+						<div class="renyuan-bar ys7">
+							<p class="renyuan-p">清除缓存</p>
+						</div>
+					</div>
+					<a id="fankui" class="bd-btm pad-lr-15 dbk">
+						<div class="renyuan-bar ys7">
+							<p class="renyuan-p">意见反馈</p>
+						</div>
+					</a>	
+					<div class="renyuan-bar pad-lr-15">
+						<p class="renyuan-p"><label class="fr">汉语</label>语言</p>
+					</div>
+					<a id="about" class="bd-btm pad-lr-15 dbk">
+						<div class="renyuan-bar ys7">
+							<p class="renyuan-p">关于我们</p>
+						</div>
+					</a>
+					<a id="geren" class="bd-btm pad-lr-15 dbk">
+						<div class="renyuan-bar ys7">
+							<p class="renyuan-p">个人设置</p>
+						</div>
+					</a>	
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var webview_detail =null;
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   			document.getElementById('fankui').addEventListener('tap',function () {
+   			    openWindows('user_msg.html');    
+   			});
+   			document.getElementById('about').addEventListener('tap',function () {
+   			    openWindows('article_detail.html');    
+   			});
+   			document.getElementById('geren').addEventListener('tap',function () {
+   			    openWindows('user_geren_set.html');    
+   			});
+   		});
+   		mui.init({
+			swipeBack: true
+		});
+		mui.plusReady(function(){ 
+			plus.nativeUI.closeWaiting();mui.currentWebview.show();
+			webview_detail = plus.webview.getWebviewById(home_id());
+		});
+		document.getElementById('clear').addEventListener('tap',function () {
+		  	plus.nativeUI.showWaiting("正在清理");//这里是开始显示原生等待框
+		   	locs_del();//localStorage clear
+		   	mui.fire(webview_detail, 'user_set', localStorage.yonghuming);
+		    plus.nativeUI.closeWaiting();
+		    mui.toast("缓存清理完成");
+		    
+		});
+    </script>
+</body>
+</html>

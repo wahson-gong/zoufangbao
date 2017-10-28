@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>走访宝</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+	</head>
+
+	<body>
+		<div class="gengxin-bar" id="gengxin-bar">
+			<div class="table">
+				<div class="table-cell">
+					<p>检测更新成功升级中。。。</p>
+				</div>
+			</div>
+		</div>
+		<div id="app">
+			<div class="mui-views">
+				<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+					<div class="table">
+						<div class="table-cell"><span class="mui-spinnerA"></span></div>
+					</div>
+				</div>-->
+				<div class="header hdA">
+					<div class="header-A1 clearfix">
+						<a class="head-box head-menu fl" v-on:click="menu_top"></a>
+						<a class="head-box head-sm fr" href="tianyi://open.app"></a>
+						<div class="header-h1">走访宝</div>
+					</div>
+				</div>
+				<div class="mui-views" style="height: auto;top: 44px;">
+					<div class="mui-views-r">
+
+						<div class="wrapper" id="wrapper">
+							<ul style="list-style: none;">
+								<li style="list-style: none;">
+
+									<div class="banner TU_A1 pst-r">
+										<div class="mui-views">
+											<div class="table">
+												<div class="table-cell pad-lr-15">
+													<div class="search pst-r">
+														<div class="search-cv search-cvA"><img src="images/icon-search.png" class="search-cv-img" />搜索人员</div>
+														<div class="search-cv search-cvB" onclick="return onKeydown()"><img src="images/icon-search0.png" class="search-cv-img" />搜索</div>
+														<input type="text" class="search-input box-sizing pad-lr-10" placeholder="请输入人员关键词" />
+													</div>
+													<div class="banner-txt">
+														<p class="banner-t1">鄯善&nbsp;&nbsp;&nbsp;晴&nbsp;&nbsp;&nbsp;23℃&nbsp;&nbsp;&nbsp;风力3级</p>
+														<div class="banner-t2">
+															<p>今日已走访<span v-cloak>{{today_num}}</span>户</p>
+															<p>本周已走访<span v-cloak>{{week_num}}</span>户</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="bg-ys1"></div>
+
+									<div class="m-h1 pad-lr-15 clearfix">
+										<a onclick="return linkA(this)" data-href="user_zf_jihua_list.html" class="m-h1-more fr">更多</a>
+										<p class="m-h1-t"><img src="images/nav-4.png" />&nbsp;&nbsp;走访计划<span v-cloak>({{zf_num}}户)</span></p>
+									</div>
+
+									<div class="pad-tb-5" v-cloak>
+
+										<div class="list-d1 list-d2 clearfix pad-lr-15 zf_jihua" v-for="li in zf_jihua" @click="zf_jihua_nk(li.jh_id,li.huhao)">
+											<p class="list-d1-r t_r fr">{{li.zoufangzhuangtai}}</p>
+											<p class="list-d1-t t_l fl">{{li.u1}}-{{li.allxingming}}家</p>
+											<p class="list-d1-t t_c fl">{{li.newtime}}</p>
+										</div>
+
+									</div>
+
+									<div class="bg-ys1"></div>
+
+									<div class="menu-d1 table ys1">
+										<a onclick="return linkA(this)" data-href="user_zf_history.html" class="table-cell cursor">
+											<img src="images/nav-0.png" />
+											<p>走访记录</p>
+										</a>
+										<a onclick="return linkA(this)" data-href="user_riji_list.html" class="table-cell cursor">
+											<img src="images/nav-1.png" />
+											<p>民情日记</p>
+										</a>
+										<a onclick="setParam('index_search','');return linkA(this)" data-href="user_cun_ren.html" class="table-cell cursor">
+											<img src="images/nav-2.png" />
+											<p>人员录入</p>
+										</a>
+										<a onclick="return linkA(this)" data-href="user_huji_list.html" class="table-cell cursor">
+											<img src="images/nav-3.png" />
+											<p>户籍录入</p>
+										</a>
+									</div>
+
+									<div class="bg-ys1"></div>
+
+									<div class="m-h1 pad-lr-15 clearfix">
+										<a onclick="return linkA(this)" data-href="user_zf_zuijin.html" class="m-h1-more fr">更多</a>
+										<p class="m-h1-t"><img src="images/nav-5.png" />&nbsp;&nbsp;今日走访</p>
+									</div>
+
+									<div class="pad-tb-5" v-cloak>
+										<a v-for="li in zuijin_zf" class="list-d1 list-d2 clearfix pad-lr-15 dbk" @click="zf_jilu_nk(li.id,li.huhao)">
+											<p class="list-d1-t t_l fl">{{li.zu.u1}}-{{li.huji.allxingming}}家</p>
+											<p class="list-d1-t t_c fl">{{li.newtime}}</p>
+											<p class="list-d1-t t_r fl">{{li.jiluren}}</p>
+										</a>
+									</div>
+
+									<div class="bg-ys1"></div>
+
+									<div class="m-h1 pad-lr-15 clearfix">
+										<a onclick="return linkA(this)" data-href="user_zf_wei.html" class="m-h1-more fr">更多</a>
+										<p class="m-h1-t"><img src="images/nav-7.png" />&nbsp;&nbsp;长期未走访家庭</p>
+									</div>
+
+									<div class="pad-tb-5" v-cloak>
+										<div class="list-d1 list-d2 clearfix pad-lr-15" v-for="li in wei_zf" @click="zf_wei_nk(li.huji.id,li.huji.huhao)">
+											<p class="list-d1-t t_l fl">{{li.cun.u1}}-{{li.huji.allxingming}}家</p>
+											<p class="list-d1-t t_c fl">{{li.huji.hujileixing}}</p>
+											<p class="list-d1-t t_r fl">{{li.huji.newtime}}</p>
+										</div>
+									</div>
+
+									<div class="bg-ys1"></div>
+
+									<div class="m-h1 pad-lr-15 clearfix">
+										<a onclick="return linkA(this)" data-href="news_list.html" class="m-h1-more fr">更多</a>
+										<p class="m-h1-t"><img src="images/nav-6.png" />&nbsp;&nbsp;新闻</p>
+									</div>
+
+									<div class="bg-ys2 pad-lr-15 pad-tb-10" v-cloak>
+										<a class="dbk news-hot" v-for="li in news" @click="news_nk(li.id)" style="padding-bottom: 10px;">
+											<div class="news-hm-img dbk mar-b-10 bg_tu" style="padding-bottom: 50%;position: relative;">
+												<div class="pst-a wh-100 p-lt" :style="'background-image: url('+li.suolutu+')'"></div>
+											</div>
+											<p class="news-hot-h1 c-666">{{li.biaoti}}</p>
+											<p class="news-hot-h2 c-999">{{li.dtime}}</p>
+											<p class="news-hot-h3 c-999 over-two">{{li.jianjie}}</p>
+										</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="box-show" v-on:click="menu_top"></div>
+			<div class="menu-bar" id="menu-bar">
+				<div class="table pst-r">
+					<div class="table-cell">
+						<div class="user-tx-bar">
+							<div class="TU_A1 pad-b-100" id="user_tx" onclick="return tx_ck()"></div>
+						</div>
+						<p class="user-xm t_c">{{user_xingming}}</p>
+						<p class="user-cun t_c" id="suozaidiqu">{{user_suoshucun}}{{user_suoshuzu}}</p>
+						<br />
+						<a onclick="return linkA(this)" data-href="user_my_gzz.html" class="menu-li clearfix pad-lr-15">
+							<p class="menu-li-h2 fr">{{user_suoshuzu}}</p>
+							<p class="menu-li-h1"><img src="images/m1.png" class="menu-li-img" />&nbsp;&nbsp;我的工作组</p>
+						</a>
+						<a onclick="return linkA(this)" data-href="user_zf_zuijin.html" class="menu-li clearfix pad-lr-15">
+							<p class="menu-li-h2 fr">本月 <span v-cloak>{{yue_num}}</span>家</p>
+							<p class="menu-li-h1"><img src="images/m2.png" class="menu-li-img" />&nbsp;&nbsp;我的走访历史</p>
+						</a>
+						<a onclick="return linkA(this)" data-href="user_riji_list.html" class="menu-li clearfix pad-lr-15">
+							<p class="menu-li-h2 ys1 fr">{{user_suoshucun}}</p>
+							<p class="menu-li-h1"><img src="images/m3.png" class="menu-li-img" />&nbsp;&nbsp;我的民情日记</p>
+						</a>
+						<a onclick="return linkA(this)" data-href="user_zf_jihua_list_my.html" class="menu-li clearfix pad-lr-15">
+							<p class="menu-li-h2 fr">最近计划</p>
+							<p class="menu-li-h1"><img src="images/m4.png" class="menu-li-img" />&nbsp;&nbsp;我的走访计划</p>
+						</a>
+						<a class="menu-li clearfix pad-lr-15" onclick="return data_up()">
+							<p class="menu-li-h2 fr">新增{{add_num}} 修改{{edit_num}}</p>
+							<p class="menu-li-h1"><img src="images/m5.png" class="menu-li-img" />&nbsp;&nbsp;上传数据</p>
+						</a>
+
+						<div class="clearfix menu-btm">
+							<a id="yhm_set" class="menu-btm-li"><img class="menu-btm-li-img" src="images/m6.png" />&nbsp;&nbsp;设置</a>
+							<a id="yhm_login" class="menu-btm-li"><img class="menu-btm-li-img" src="images/m7.png" />&nbsp;&nbsp;<label id="yhm_login_text">退出登录</label></a>
+							<div class="menu-btm-li"><span id="tianqi_btm0"></span> <label id="tianqi_btm1"></label></div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txA()">拍照上传</a>
+				</li>
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txB()">从相册选取</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="return tx_ck()"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+
+		<input type="hidden" name="touxiang" id="touxiang" />
+
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/img_tx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var num = 20;
+			var page = 1;
+			mui.init({
+				gestureConfig: {
+					swipe: true,
+				}
+			});
+			var app = new Vue({
+				el: '#app',
+				data: {
+					user_xingming: '',
+					user_suoshucun: '',
+					user_suoshuzu: '',
+					user_touxiang: '',
+					zf_jihua: [],
+					zf_num: 0,
+					news: {},
+					zuijin_zf: [],
+					wei_zf: [],
+					today_num: 0,
+					week_num: 0,
+					yue_num: 0,
+					edit_num: '0',
+					add_num: '0',
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+				},
+				methods: {
+					menu_top: function() {
+						$('.box-show,.menu-bar').toggleClass('on');
+					},
+					menu_down: function() {
+						$('.box-show,.menu-bar').removeClass('on');
+					},
+					zf_jihua_nk: function(id, huhao) {
+						zf_jihua_nk(id, huhao);
+					},
+					zf_jilu_nk: function(id, huhao) {
+						zf_jilu_nk(id, huhao);
+					},
+					zf_wei_nk: function(id, huhao) {
+						zf_wei_nk(id, huhao);
+					},
+				}
+			});
+			mui.plusReady(function() {
+				//plus.nativeUI.closeWaiting();mui.currentWebview.show();
+				//登录验证
+				if(localStorage.ubase == undefined) {
+					openWindows('login.html');
+				}
+				var curr = plus.webview.currentWebview();
+				setParam('home', curr.id);
+				if(localStorage.data_edit == undefined) {
+					setParam('data_edit', '{"count":0,"list":[]}');
+				}
+				if(localStorage.data_add == undefined) {
+					setParam('data_add', '{"count":0,"list":[]}');
+				}
+
+				doubleBack(); /*连续两次按返回键，则退出应用*/
+				var subWebview = mui.preload({
+					url: 'tianqi1.html',
+					id: 'tianqi1.html',
+				});
+				home_view();
+				//右划
+				document.getElementById('menu-bar').addEventListener('swiperight', function() {
+					app.menu_top();
+				});
+				document.getElementById('app').addEventListener('swiperight', function() {
+					app.menu_top();
+				});
+				//左滑
+				document.getElementById('app').addEventListener('swipeleft', function() {
+					app.menu_down();
+				});
+				//登录
+				document.addEventListener('login', function(event) {
+					var webview_home = plus.webview.getWebviewById('login.html');
+					mui.fire(webview_home, 'login_action', 'yes');
+					var id = event.detail;
+					Refresh();
+				});
+				//走访记录【从走访计划添加】
+				document.addEventListener('user_zf_add', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				//走访记录【直接新增走访记录】
+				document.addEventListener('user_zf_add_sca', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				//走访计划设置
+				document.addEventListener('user_zf_set', function(event) {
+					var id = event.detail;
+					console.log(id);
+					Refresh();
+				});
+				//长期未走访
+				document.addEventListener('user_zf_add_wei', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
+				//个人设置
+				document.addEventListener('user_geren_set', function(event) {
+					var id = event.detail;
+					app.user_xingming = JSON.parse(localStorage.ubase).msg[0].xingming;
+					app.user_suoshuzu = localStorage.login_suoshuzu_txt;
+					app.edit_num = JSON.parse(localStorage.data_edit).count;
+					app.add_num = JSON.parse(localStorage.data_add).count;
+				});
+				//清除数据
+				document.addEventListener('user_set', function(event) {
+					app.edit_num = JSON.parse(localStorage.data_edit).count;
+					app.add_num = JSON.parse(localStorage.data_add).count;
+				});
+
+				getDD();
+
+				//所属村【所属组列表】
+				if(localStorage.dataA_dizhiA == undefined && localStorage.net) {
+					data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
+				}
+				var _getParam = function(obj, param) {
+					return obj[param] || '';
+				};
+ 
+				
+				//网络检查
+				net_yno();
+				//检查更新
+				//console.log(localStorage.net+"   "+sessionStorage.getItem('upgrade'))
+				if(sessionStorage.getItem('upgrade') != '1' && localStorage.net == 'true') {
+					plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+						checkUpdate(inf.version);
+						sessionStorage.setItem('upgrade', '1');
+					});
+				}
+
+			});
+
+//加载所属组
+data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
+
+           //缓存数据上传
+			function data_up() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					var data_edit = JSON.parse(localStorage.data_edit);
+					var data_add = JSON.parse(localStorage.data_add);
+					if(data_edit.count == '0' && data_add.count == '0') {
+						mui.toast('暂无缓存数据');
+						return false;
+					} else {
+						//plus.nativeUI.showWaiting("上传数据中...");
+						if(data_edit.count != '0') {
+							data_sc(data_edit.list, 'edit');
+						}
+						if(data_add.count != '0') {
+							data_sc(data_add.list, 'add');
+						}
+						//app.edit_num = 0;
+						//app.add_num = 0;
+						setParam('data_edit', '{"count":0,"list":[]}');
+						setParam('data_add', '{"count":0,"list":[]}');
+						mui.toast('数据已上传');
+						//plus.nativeUI.closeWaiting();
+					}
+				}
+			}
+
+			function data_sc(data, type) {
+				for(var i = 0; i < data.length; i++) {
+					var nn = data.length - i;
+					if(type == 'add') {
+						app.add_num = nn;
+						console.log(nn);
+						console.log(type);
+					} else if(type == 'edit') {
+						app.edit_num = nn;
+						console.log(nn);
+						console.log(type);
+					}
+					if(data[i].zfjh == undefined) {
+						getData(false, 'post', data[i].url, '', function(msg) {});
+					} else {
+						var url_b = web_url() + "/?type=search&t=zoufangjihua&huhao=" + data[i].jh_huhao;
+						getData(false, 'get', url_b, '', function(result) {
+							if(result.msg == '[]') {
+								getData(false, 'post', data[i].url, '', function(msg) {});
+							}
+						});
+					}
+				}
+			}
+			//天气数据处理
+			function findWeather() {
+				var a = '0';
+				var int = self.setInterval(function() {
+					if(a == '0' && localStorage.tianqi != undefined) {
+						var tianqi = JSON.parse(localStorage.tianqi);
+						document.getElementById("tianqi_btm0").innerText = tianqi.tgd1 + '℃';
+						document.getElementById("tianqi_btm1").innerText = tianqi.citytq;
+						var tq0 = tianqi.citytq + "&nbsp;&nbsp;&nbsp;" + tianqi.status1 + "&nbsp;&nbsp;&nbsp;" + tianqi.tgd1 + "℃" + "&nbsp;&nbsp;&nbsp;" + tianqi.direction1 + tianqi.power1 + "级";
+						$('.banner-t1').html(tq0);
+
+						var url1 = web_url() + "/?type=search&t=tianqibeijing&leixing=" + tianqi.status1 + rizi();
+						if(localStorage.net == 'false') {
+							$('.banner').css('background-image', 'url(' + localStorage.tianqi_img + ')');
+						} else {
+							getData(true, 'get', url1, '', function(mmm) {
+								if(mmm.status = 'true') {
+									var img_url = img_chuli(JSON.parse(mmm.msg)[0].suoluetu);
+									setParam('tianqi_img', img_url);
+									$('.banner').css('background-image', 'url(' + img_url + ')');
+								}
+							});
+						}
+						clearInterval(int);
+					}
+				}, 1000);
+			}
+			//数据图片处理
+			function data_chuli(data) {
+				var str = data.suolutu;
+				data.suolutu = img_chuli(str);
+				return data;
+			}
+			//新闻详细链接
+			function news_nk(id) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('news_detail_id', id);
+					openWindows('news_detail.html');
+				}
+			}
+			//走访计划链接
+			function zf_jihua_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_zf_add_id', id);
+					localStorage.setItem('user_zf_add_huhao', huhao);
+					openWindows('user_zf_add.html');
+				}
+			}
+			//走访记录链接
+			function zf_jilu_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_zf_add_sc_id', id);
+					localStorage.setItem('user_zf_add_sc_huhao', huhao);
+					openWindows('user_zf_add_sc.html');
+				}
+			}
+			//长期未走访链接
+			function zf_wei_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_zf_add_wei_id', id);
+					localStorage.setItem('user_zf_add_wei_huhao', huhao);
+					openWindows('user_zf_add_wei.html');
+				}
+			}
+			//时间
+			function cq_time(data) {
+				var n = data.length;
+				var stime = timeA();
+				for(var i = 0; i < n; i++) {
+					var tm = data[i].huji;
+					if(tm == undefined) {
+						console.log(JSON.stringify(data[i]));
+						data[i].huji.newtime = getDateDiff(stime);
+					} else {
+						data[i].huji.newtime = getDateDiff(tm.dtime);
+					}
+					data[i].huji.newtime = getDateDiff(tm.dtime);
+				}
+				return data;
+			}
+			//时间
+			function xw_time(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].suolutu = img_chuli(data[i].suolutu);
+				}
+				return data;
+			}
+			//时间
+			function zj_time(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].newtime = getDateDiff(data[i].dtime1);
+				}
+				return data;
+			}
+			//走访计划时间处理
+			function tmF_chuli(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].newtime = timeF(data[i].ntime);
+				}
+				return data;
+			}
+			//点击设置
+			document.getElementById('yhm_set').addEventListener('tap', function() {
+				openWindows('user_set.html');
+			});
+			//搜索
+			function onKeydown() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					var bt = $('.search-input').val();
+					bt = bt.replace(/\s+/g, '');
+					if(bt == '') {
+						alert('请输入搜索关键字');
+						return false;
+					} else {
+						setParam('index_search', bt);
+					}
+					$('.search-input').val('');
+					$('.search').removeClass('on');
+					openWindows('user_cun_ren.html');
+				}
+			}
+
+			function tx_ck() {
+				mui('#picture').popover('toggle');
+			}
+
+			function txA() {
+				cameraimages();
+				tx_ck();
+			}
+
+			function txB() {
+				galleryImgs(1);
+				tx_ck();
+			}
+
+			function data_two(id) {
+				getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + id, '', function(result) {
+					var newdata = two_chuli(JSON.parse(result.msg));
+					setParam('dataA_dizhiA', newdata);
+				});
+			}
+			
+			 
+
+			function two_chuli(data) {
+				var n = data.length;
+				var newdata = "";
+				for(var i = 0; i < n; i++) {
+					getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + data[i].id, '', function(result) {
+						var newdata = two_chuli(JSON.parse(result.msg));
+						try{
+							setParam('newdata_' + data[i].id, newdata);
+						}catch(e){
+							//TODO handle the exception
+						}
+					});
+					if(eval('localStorage.newdata_' + data[i].id) == '[]') {
+						var ls_data = '{"value":"' + data[i].id + '","text":"' + data[i].u1 + '"}';
+					} else {
+						var ls_data = '{"value":"' + data[i].id + '","text":"' + data[i].u1 + '","children":' + eval('localStorage.newdata_' + data[i].id) + '}';
+					}
+					if(newdata == '') {
+						newdata = ls_data;
+					} else {
+						newdata = newdata + ',' + ls_data;
+					}
+				}
+				newdata = "[" + newdata + ']';
+				return newdata;
+			}
+
+			setTimeout(function() {
+				var timea_num = 0;
+				var timea = setInterval(function() {
+					timea_num++;
+					if(timea_num > 140) {
+						clearInterval(timea);
+					} else {
+						wrapper.refresh();
+					}
+				}, 200);
+			}, 100);
+
+			refresher.init({
+				id: "wrapper",
+				pullDownAction: Refresh,
+				pullUpAction: Load,
+				scrollAction: Ascroll,
+				scrollEndAction: AscrollEnd,
+			});
+
+			function Refresh() {
+				page = 1;
+				getDD();
+			}
+
+			function Load() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					news(num, page, 'yes');
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					if(pagenum != '20') {
+						page++;
+					}
+				}
+			}
+
+			function Ascroll() {}
+
+			function AscrollEnd() {}
+
+			//首页数据
+			function getDD() {
+				app.user_xingming = JSON.parse(localStorage.ubase).msg[0].xingming;
+				app.user_suoshucun = localStorage.login_suoshucun_txt;
+				app.user_suoshuzu = localStorage.login_suoshuzu_txt;
+				app.edit_num = JSON.parse(localStorage.data_edit).count;
+				app.add_num = JSON.parse(localStorage.data_add).count;
+				//天气
+				findWeather();
+				//新闻
+				num = 20;
+				page = 1;
+				news(num, page, 'no');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '20') {
+					page++;
+				}
+
+				if(localStorage.net == 'false') {
+					app.zf_num = localStorage.hm_zf_num;
+					app.zf_jihua = JSON.parse(localStorage.hm_zf_jihua);
+					app.zuijin_zf = JSON.parse(localStorage.hm_zuijin_zf);
+					app.wei_zf = JSON.parse(localStorage.hm_wei_zf);
+					app.today_num = localStorage.hm_today_num;
+					app.week_num = localStorage.hm_week_num;
+					app.yue_num = localStorage.hm_yue_num;
+
+				} else {
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=count(sl_zoufangjihua.id)%20as%20count_id&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+						app.zf_num = JSON.parse(result.msg)[0].count_id;
+						setParam('hm_zf_num', app.zf_num);
+					});
+					//走访计划 "sl_zoufangjihua.dtime{between}'"+time_qian('')+"'{and}'"+wx_time();
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+						app.zf_jihua = [];
+						var jdata = JSON.parse(result.msg);
+						var datat = [];
+						extendA(datat, jdata, 3);
+						app.zf_jihua = tmF_chuli(datat);
+						setParam('hm_zf_jihua', JSON.stringify(app.zf_jihua));
+					});
+					var wk = week_time().split('*');
+					//最近走访
+					getData(true, 'get', web_url() + '/?type=zoufangjilu&t=zoufangjilu&number=3&page=1' + '&sqlvalue=suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",dtime{between}%27" + wk[4] + "%27{and}%27" + wk[5] + "%27" + ",FIND_IN_SET(" + JSON.parse(localStorage.ubase).msg[0].id + " dh bianhao)/yonghuming='" + localStorage.yonghuming + "'" + rizi(), '', function(result) {
+						app.zuijin_zf = zj_time(JSON.parse(result.msg));
+						setParam('hm_zuijin_zf', JSON.stringify(app.zuijin_zf));
+					});
+					//长期未走访
+					getData(true, 'get', web_url() + '/?type=changqiweizoufang&number=3&page=1&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + rizi(), '', function(result) {
+						app.wei_zf = cq_time(JSON.parse(result.msg));
+						setParam('hm_wei_zf', JSON.stringify(app.wei_zf));
+					});
+					//本日走访数
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjilu&liemingcheng=count(id)%20as%20count_id&sqlvalue=dtime{between}%27" + time_qian('') + "%27{and}%27" + time_end('') + "%27" + ',suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",FIND_IN_SET(" + JSON.parse(localStorage.ubase).msg[0].id + " dh bianhao)/yonghuming='" + localStorage.yonghuming + "'" + rizi(), '', function(result) {
+						app.today_num = JSON.parse(result.msg)[0].count_id;
+						setParam('hm_today_num', app.today_num);
+					});
+					//本周走访数
+
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjilu&liemingcheng=count(id)%20as%20count_id&sqlvalue=dtime{between}%27" + wk[0] + " 00:00:00%27{and}%27" + wk[1] + " 23:59:59%27" + ',suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",FIND_IN_SET(" + JSON.parse(localStorage.ubase).msg[0].id + " dh bianhao)/yonghuming='" + localStorage.yonghuming + "'" + rizi(), '', function(result) {
+						app.week_num = JSON.parse(result.msg)[0].count_id;
+						setParam('hm_week_num', app.week_num);
+					});
+					//本月走访数
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjilu&liemingcheng=count(id)%20as%20count_id&sqlvalue=dtime{between}%27" + wk[2] + " 00:00:00%27{and}%27" + wk[3] + " 23:59:59%27" + ",FIND_IN_SET(" + JSON.parse(localStorage.ubase).msg[0].id + " dh bianhao)/yonghuming='" + localStorage.yonghuming + "'" + rizi(), '', function(result) {
+						app.yue_num = JSON.parse(result.msg)[0].count_id;
+						setParam('hm_yue_num', app.yue_num);
+					});
+
+					load_userInfo();
+
+				}
+				setTimeout(function() {
+					app.isActive = true;
+					wrapper.refresh();
+				}, 300);
+			}
+
+			//获取新闻列表
+			function news(num, page, yno) {
+				if(localStorage.net == 'false') {
+					app.news = JSON.parse(localStorage.news_list);
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+							}, 300);
+						}
+					});
+				} else {
+					getData(true, 'get', web_url() + '/?type=search&t=article&liemingcheng=id,biaoti,suolutu,dtime,jianjie&status=终审&sort_id=17&shouyezhanshi=是&ordertype=dtime&orderby=desc&number=' + num + '&page=' + page + rizi(), '', function(result) {
+						var data = xw_time(JSON.parse(result.msg));
+						if(result.msg == '') {
+							if(page == 1) {
+								app.news = [];
+							}
+							pagenum = 0;
+						} else {
+							if(page == 1) {
+								app.news = data;
+							} else {
+								extend(app.news, data);
+							}
+							pagenum = data.length;
+						}
+						document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+						setParam('news_list', JSON.stringify(app.news));
+						app.$nextTick(function() {
+							if(yno != 'no') {
+								setTimeout(function() {
+									wrapper.refresh();
+								}, 300);
+							}
+						});
+					});
+				}
+			}
+			//点击退出登录
+			document.getElementById('yhm_login').addEventListener('tap', function() {
+				mui.confirm('退出登录？', '操作提示', ['确定', '取消'], function(v) {
+					if(v.index == 0) {
+						delParam('login_status');
+						delParam('login_token');
+						delParam('ubase');
+						delParam('login_suoshucun_txt');
+						delParam('login_suoshuzu_txt');
+						//delParam('yonghuming');
+						mui.toast('退出成功！');
+						app.menu_top();
+						plus.webview.show('login.html');
+						openWindows('login.html');
+					}
+				});
+			});
+
+			//setInterval ("load_userInfo()", 1000);
+
+			function load_userInfo() {
+				//更新用户
+				getData(true, 'get', web_url() + "/?type=chaxunyuangong&t=user&yonghuming=" + getParam("yonghuming") + "&mima=" + getParam("mima"), '', function(result) {
+					if(result.status == 'true') {
+
+						//setParam('ubase', JSON.stringify(result));
+						app.user_xingming = result.msg[0].xingming;
+						app.user_suoshucun = result.msg[0].suoshucun;
+						app.user_suoshuzu = result.msg[0].suoshuzu;
+						app.user_touxiang = result.msg[0].touxiang;
+						setParam("login_suoshuzu_txt", app.user_suoshuzu);
+						setParam("login_suoshucun_txt", app.user_suoshucun);
+						console.log(result.msg[0].touxiang);
+						if(app.user_touxiang.indexOf('http') < 0) {
+							app.user_touxiang = web_url() + "/" + app.user_touxiang;
+						}
+						$('#user_tx').css('background-image', 'url(' + app.user_touxiang + ')');
+						console.log(app.user_touxiang);
+						
+						var cityData3 = JSON.parse(localStorage.dataA_dizhiA.replace(/undefined/g,"[]"));
+				var cityPicker3 = new mui.PopPicker();
+				cityPicker3.setData(cityData3);
+				var showCityPickerButton = document.getElementById('suozaidiqu');
+				showCityPickerButton.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+						if(_getParam(items[0], 'value') == '') {
+							mui.toast('请选项组');
+							return false;
+						} else {
+							var data = JSON.parse(localStorage.ubase);
+							app.user_suoshuzu = _getParam(items[0], 'text');
+							setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+							data.msg[0].suoshuzu = _getParam(items[0], 'value');
+							setParam('ubase', JSON.stringify(data));
+							var data1 = '&suoshuzu=' + _getParam(items[0], 'value');
+							user_edit(data1);
+							app.edit_num = JSON.parse(localStorage.data_edit).count;
+						}
+					});
+				}, false);
+
+
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

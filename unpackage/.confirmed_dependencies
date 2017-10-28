@@ -1,0 +1,1091 @@
+{
+	"user_zf_zuijin.html": {
+		"href": "user_zf_zuijin.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"user_huji_list.html",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"images/news.png",
+			"js/vue.min.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"images/wutu.jpg",
+			"images/b4.png",
+			"images/icon-right.png",
+			"images/icon-left.png",
+			"images/loading.png"
+		],
+		"refer": [
+			"user_huji_list.html",
+			"user_zf_add_sc.html",
+			"user_zf_add_sca.html",
+			"user_list.html",
+			"user_list1.html"
+		],
+		"priority": 0
+	},
+	"user_riji_add.html": {
+		"href": "user_riji_add.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/news.png",
+			"images/up_img.png",
+			"images/icon-close.png",
+			"js/mui.min.js",
+			"images/icon-left.png",
+			"user_riji_list.html",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/binaryajax.js",
+			"js/uploadimage/demoa.js",
+			"images/close.png"
+		],
+		"refer": [
+			"user_riji_list.html",
+			"user_zf_today.html",
+			"user_zf_jinri.html",
+			"user_list1.html"
+		],
+		"priority": 0
+	},
+	"user_riji_list.html": {
+		"href": "user_riji_list.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/icon-right.png",
+			"user_riji_add.html",
+			"images/icon-left.png",
+			"index.html",
+			"js/mui.min.js",
+			"js/vue.min.js",
+			"css/pullToRefresh.css",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"user_riji_add1.html",
+			"user_my_gzz.html",
+			"images/loading.png"
+		],
+		"refer": [
+			"user_riji_add.html",
+			"index.html",
+			"user_riji_add1.html",
+			"user_my_gzz.html",
+			"user_list1.html"
+		],
+		"priority": 0
+	},
+	"user_zf_mingri.html": {
+		"href": "user_zf_mingri.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"index.html",
+			"images/news.png",
+			"images/icon-right.png",
+			"images/icon-left.png"
+		],
+		"refer": [
+			"index.html"
+		],
+		"priority": 0
+	},
+	"user_zf_add.html": {
+		"href": "user_zf_add.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"user_zf_today.html",
+			"images/icon-close.png",
+			"images/up_img.png",
+			"images/news.png",
+			"images/icon-left.png",
+			"js/mui.min.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/vue.min.js",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/binaryajax.js",
+			"js/uploadimage/demoa.js",
+			"images/close.png"
+		],
+		"refer": [
+			"user_zf_today.html"
+		],
+		"priority": 0
+	},
+	"user_zf_today.html": {
+		"href": "user_zf_today.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/news.png",
+			"images/b4.png",
+			"index.html",
+			"user_zf_add.html",
+			"user_zf_set.html",
+			"images/icon-right.png",
+			"images/icon-left.png",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"js/vue.min.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"images/wutu.jpg"
+		],
+		"refer": [
+			"user_zf_add.html",
+			"index.html",
+			"user_zf_set.html",
+			"user_zf_add_sca.html",
+			"user_zf_add_sc.html"
+		],
+		"priority": 0
+	},
+	"user_zf_wei.html": {
+		"href": "user_zf_wei.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"index.html",
+			"user_zf_set.html",
+			"images/news.png",
+			"images/icon-right.png",
+			"js/vue.min.js",
+			"js/pullToRefresh.js",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"js/iscroll.min.js",
+			"images/icon-left.png",
+			"images/b4.png",
+			"images/wutu.jpg",
+			"images/nopic.jpg"
+		],
+		"refer": [
+			"user_zf_add.html",
+			"index.html",
+			"user_zf_set.html",
+			"user_zf_add_sc.html",
+			"user_list1.html",
+			"user_zf_wei_set.html",
+			"user_zf_add_wei.html"
+		],
+		"priority": 0
+	},
+	"user_renyuan_add.html": {
+		"href": "user_renyuan_add.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/a1.png",
+			"images/news.png",
+			"images/up_img.png",
+			"user_cun_ren.html",
+			"js/mui.min.js",
+			"images/icon-left.png",
+			"js/vue.min.js",
+			"js/uploadimage/img_up.js",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/binaryajax.js",
+			"images/icon-close.png",
+			"js/mui.picker.js",
+			"css/mui.picker.css",
+			"css/mui.min.css",
+			"js/mui.poppicker.js",
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css",
+			"css/mui.css",
+			"css/mui.poppicker.css",
+			"images/loading.png",
+			"js/pullToRefresh.js",
+			"css/pullToRefresh.css",
+			"js/iscroll.min.js",
+			"js/city.data-3.js",
+			"images/cicon-1.png",
+			"images/bicon-9.png",
+			"images/bicon-8.png",
+			"images/bicon-2.png",
+			"images/bicon-1.png",
+			"images/bicon-4.png",
+			"images/bicon-5.png",
+			"images/bicon-10.png",
+			"js/uploadimage/img_up2.js",
+			"images/bicon-11.png",
+			"images/bicon-12.png",
+			"images/bicon-13.png",
+			"images/xj.png",
+			"images/bicon-6.png",
+			"images/bicon-7.png",
+			"images/bicon-14.png",
+			"images/bicon-3.png",
+			"images/wutu.jpg"
+		],
+		"refer": [
+			"user_cun_ren.html",
+			"user_ry_set.html",
+			"user_list1.html"
+		],
+		"priority": 0
+	},
+	"user_huji_add.html": {
+		"href": "user_huji_add.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/news.png",
+			"images/up_img.png",
+			"user_huji_list.html",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/mui.min.js",
+			"images/icon-close.png",
+			"images/icon-left.png",
+			"js/uploadimage/img_up.js",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/binaryajax.js",
+			"js/uploadimage/demoa.js",
+			"images/close.png",
+			"images/loading.png",
+			"css/pullToRefresh.css",
+			"js/vue.min.js",
+			"js/pullToRefresh.js",
+			"js/iscroll.min.js",
+			"images/bicon-9.png",
+			"images/10.1_03.png",
+			"images/bicon-1.png",
+			"images/bicon-4.png",
+			"images/bicon-10.png",
+			"images/10_03.png",
+			"images/bicon-14.png"
+		],
+		"refer": [
+			"user_huji_list.html"
+		],
+		"priority": 0
+	},
+	"user_set.html": {
+		"href": "user_set.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/icon-right.png",
+			"user_msg.html",
+			"images/icon-left.png",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"user_msg.html",
+			"article_detail.html",
+			"user_geren_set.html"
+		],
+		"priority": 0
+	},
+	"index.html": {
+		"href": "index.html",
+		"resources": [
+			"css/swiper.min.css",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/nav-4.png",
+			"images/nav-0.png",
+			"images/nav-1.png",
+			"images/nav-2.png",
+			"images/nav-3.png",
+			"images/nav-5.png",
+			"images/nav-6.png",
+			"images/news.png",
+			"images/nav-7.png",
+			"images/m1.png",
+			"images/m2.png",
+			"images/m3.png",
+			"images/m4.png",
+			"images/m5.png",
+			"images/m6.png",
+			"images/m7.png",
+			"images/icon-search.png",
+			"images/touxiang.png",
+			"js/vue.min.js",
+			"images/icon-sm.png",
+			"images/icon-sun.png",
+			"images/banner.jpg",
+			"images/icon-menu.png",
+			"news_list.html",
+			"js/mui.min.js",
+			"login.html",
+			"user_zf_today.html",
+			"user_zf_detail.html",
+			"css/pullToRefresh.css",
+			"js/pullToRefresh.js",
+			"js/iscroll.min.js",
+			"images/wutu.jpg",
+			"user_riji_list.html",
+			"user_zf_mingri.html",
+			"user_cun_ren.html",
+			"user_zf_wei.html",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/binaryajax.js",
+			"css/mui.min.css",
+			"images/icon-search0.png",
+			"js/uploadimage/img_up.js",
+			"js/uploadimage/img_tx.js",
+			"images/loading.png",
+			"js/weather.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"js/mui.picker.js",
+			"css/mui.picker.css",
+			"user_list.html",
+			"images/8_16.png"
+		],
+		"refer": [
+			"user_zf_zuijin.html",
+			"user_riji_list.html",
+			"user_zf_mingri.html",
+			"user_zf_today.html",
+			"user_zf_wei.html",
+			"user_renyuan_add.html",
+			"user_huji_add.html",
+			"user_set.html",
+			"news_list.html",
+			"news_detail.html",
+			"login.html",
+			"user_zf_detail.html",
+			"user_zf_history.html",
+			"user_huji_list.html",
+			"user_cun_ren.html",
+			"user_zf_add.html",
+			"user_zf_jihua_list.html",
+			"user_zf_add_sc.html",
+			"user_my_gzz.html",
+			"user_riji_list_my.html",
+			"user_zf_jihua_list_my.html",
+			"tianqi1.html",
+			"new_file.html",
+			"user_list.html",
+			"user_list1.html",
+			"user_zf_add_sca.html",
+			"user_zf_add_wei.html",
+			"tianqi.html"
+		],
+		"priority": 0
+	},
+	"news_list.html": {
+		"resources": [
+			"images/news.png",
+			"images/icon-left.png",
+			"js/jquery-1.11.2.min.js",
+			"css/swiper.min.css",
+			"js/swiper.min.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"index.html",
+			"js/mui.min.js",
+			"css/pullToRefresh.css",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"images/wutu.jpg",
+			"images/loading.png"
+		],
+		"refer": [
+			"index.html",
+			"news_detail.html",
+			"user_list1.html"
+		]
+	},
+	"news_detail.html": {
+		"resources": [
+			"images/icon-left.png",
+			"js/jquery-1.11.2.min.js",
+			"css/swiper.min.css",
+			"js/swiper.min.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"js/mui.min.js"
+		],
+		"refer": []
+	},
+	"login.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"css/swiper.min.css",
+			"images/touxiang.png",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"index.html",
+			"user_list1.html"
+		]
+	},
+	"user_zf_detail.html": {
+		"resources": [
+			"images/icon-close.png",
+			"images/up_img.png",
+			"images/icon-up.png",
+			"user_zf_history.html"
+		],
+		"refer": [
+			"user_zf_history.html"
+		]
+	},
+	"user_riji_add1.html": {
+		"resources": [
+			"images/icon-up.png",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"images/news.png",
+			"images/icon-close.png",
+			"css/swiper.min.css",
+			"images/up_img.png",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"images/icon-left.png",
+			"css/jcx.css",
+			"user_riji_list.html",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/binaryajax.js",
+			"js/uploadimage/demoa.js",
+			"images/icon-right.png",
+			"js/swiper.min.js",
+			"images/close.png",
+			"images/cicon-1.png"
+		],
+		"refer": [
+			"user_riji_list.html",
+			"user_huji_detail.html",
+			"user_list1.html"
+		]
+	},
+	"user_zf_history.html": {
+		"resources": [
+			"images/b4.png",
+			"user_zf_detail.html",
+			"images/news.png",
+			"images/icon-right.png",
+			"images/icon-left.png",
+			"user_zf_add.html",
+			"user_zf_add_sc.html",
+			"js/jquery-1.11.2.min.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"js/pullToRefresh.js",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/iscroll.min.js",
+			"css/jcx.css",
+			"images/wutu.jpg",
+			"images/loading.png"
+		],
+		"refer": [
+			"user_zf_detail.html",
+			"user_zf_add.html",
+			"user_zf_add_sc.html",
+			"user_zf_add_sca.html",
+			"user_list1.html"
+		]
+	},
+	"user_huji_list.html": {
+		"resources": [
+			"user_huji_add.html",
+			"images/icon-right.png",
+			"js/swiper.min.js",
+			"user_zf_zuijin.html",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/jcx.js",
+			"css/jcx.css",
+			"images/news.png",
+			"images/icon-left.png",
+			"css/pullToRefresh.css",
+			"js/vue.min.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"images/icon-search.png",
+			"images/wutu.jpg",
+			"images/icon-search0.png",
+			"images/loading.png"
+		],
+		"refer": [
+			"user_huji_add.html",
+			"user_zf_zuijin.html",
+			"user_huji_detail.html",
+			"user_list.html",
+			"user_list1.html"
+		]
+	},
+	"user_cun_ren.html": {
+		"resources": [
+			"index.html",
+			"images/news.png",
+			"user_renyuan_add.html",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"images/icon-right.png",
+			"css/swiper.min.css",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"images/icon-left.png",
+			"images/icon-search.png",
+			"js/pullToRefresh.js",
+			"css/pullToRefresh.css",
+			"js/iscroll.min.js",
+			"images/wutu.jpg",
+			"images/icon-search0.png",
+			"images/loading.png"
+		],
+		"refer": [
+			"index.html",
+			"user_renyuan_add.html",
+			"user_cun_ren_detail.html",
+			"user_list.html",
+			"user_list1.html",
+			"user_ren_add.html",
+			"user_cun_ren.html"
+		]
+	},
+	"user_zf_set.html": {
+		"resources": [
+			"user_zf_today.html",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"images/icon-left.png",
+			"user_zf_wei.html",
+			"images/loading.png",
+			"images/icon-search.png",
+			"images/icon-search0.png",
+			"css/pullToRefresh.css",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"images/8_07.png",
+			"images/8_11.png",
+			"images/8_03.png",
+			"images/8_13.png"
+		],
+		"refer": [
+			"user_zf_today.html",
+			"user_zf_wei.html"
+		]
+	},
+	"user_zf_jihua_list.html": {
+		"resources": [
+			"images/news.png",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"images/icon-right.png",
+			"css/swiper.min.css",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/icon-left.png",
+			"images/b4.png",
+			"css/jcx.css",
+			"js/vue.min.js",
+			"css/pullToRefresh.css",
+			"js/pullToRefresh.js",
+			"js/iscroll.min.js",
+			"images/loading.png",
+			"images/wutu.jpg"
+		],
+		"refer": [
+			"user_zf_set.html",
+			"user_zf_add.html",
+			"user_list.html",
+			"user_list1.html"
+		]
+	},
+	"user_zf_add_sc.html": {
+		"resources": [
+			"images/icon-up.png",
+			"images/icon-close.png",
+			"images/up_img.png",
+			"js/swiper.min.js",
+			"images/news.png",
+			"images/icon-left.png",
+			"user_zf_history.html",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"css/swiper.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/vue.min.js",
+			"images/icon-right.png",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/binaryajax.js",
+			"js/uploadimage/demoa.js",
+			"images/close.png",
+			"js/uploadimage/img_up.js",
+			"images/cicon-1.png"
+		],
+		"refer": [
+			"user_zf_history.html"
+		]
+	},
+	"user_my_gzz.html": {
+		"resources": [
+			"js/swiper.min.js",
+			"user_riji_list.html",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/jcx.js",
+			"css/jcx.css",
+			"images/icon-right.png",
+			"images/icon-left.png"
+		],
+		"refer": [
+			"user_riji_list.html",
+			"user_huji_list.html",
+			"user_cun_ren.html",
+			"user_zf_history.html",
+			"user_zf_zuijin.html",
+			"user_list1.html",
+			"user_riji_list_my.html"
+		]
+	},
+	"article_detail.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/vue.min.js",
+			"js/jquery-1.11.2.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"css/swiper.min.css",
+			"images/icon-left.png"
+		],
+		"refer": []
+	},
+	"home.html": {
+		"resources": [
+			"js/mui.min.js",
+			"login.html",
+			"js/jcx.js",
+			"js/jquery-1.11.2.min.js",
+			"index.html",
+			"css/mui.min.css",
+			"css/jcx.css",
+			"tianqi1.html",
+			"user_list.html",
+			"images/loading.png",
+			"css/swiper.min.css",
+			"img/720X1280.png"
+		],
+		"refer": [
+			"login.html",
+			"index.html",
+			"tianqi1.html",
+			"user_list.html",
+			"user_list1.html"
+		]
+	},
+	"user_ry_set.html": {
+		"resources": [
+			"js/vue.min.js",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/jcx.js",
+			"images/icon-left.png",
+			"css/jcx.css",
+			"images/loading.png",
+			"css/pullToRefresh.css",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"images/icon-search.png",
+			"images/icon-search0.png",
+			"images/8_14.png",
+			"images/8_16.png",
+			"images/8_15.png"
+		],
+		"refer": []
+	},
+	"user_cun_ren_detail.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"css/jcx.css",
+			"js/uploadimage/img_up.js",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/binaryajax.js",
+			"images/up_img.png",
+			"images/icon-left.png",
+			"images/icon-close.png",
+			"images/close.png",
+			"js/swiper.min.js",
+			"css/mui.css",
+			"css/mui.picker.min.css",
+			"js/mui.picker.min.js",
+			"js/mui.picker.js",
+			"css/mui.picker.css",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"images/loading.png",
+			"js/city.data-3.js",
+			"images/bicon-9.png",
+			"images/bicon-8.png",
+			"images/bicon-2.png",
+			"images/bicon-1.png",
+			"images/bicon-4.png",
+			"images/bicon-5.png",
+			"images/bicon-10.png",
+			"js/uploadimage/img_up2.js",
+			"images/bicon-11.png",
+			"images/bicon-12.png",
+			"images/bicon-13.png",
+			"images/xj.png",
+			"images/bicon-6.png",
+			"images/bicon-7.png",
+			"images/bicon-14.png",
+			"images/bicon-3.png",
+			"images/wutu.jpg",
+			"images/cicon-1.png"
+		],
+		"refer": [
+			"user_ry_set.html",
+			"user_cun_ren.html",
+			"user_list1.html"
+		]
+	},
+	"user_huji_detail.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/jquery-1.11.2.min.js",
+			"js/jcx.js",
+			"css/mui.picker.css",
+			"js/uploadimage/exif.js",
+			"js/uploadimage/canvasResize.js",
+			"js/mui.min.js",
+			"js/mui.poppicker.js",
+			"js/uploadimage/binaryajax.js",
+			"css/swiper.min.css",
+			"js/uploadimage/demoa.js",
+			"css/mui.poppicker.css",
+			"css/jcx.css",
+			"images/up_img.png",
+			"images/icon-left.png",
+			"js/vue.min.js",
+			"images/icon-close.png",
+			"images/close.png",
+			"js/swiper.min.js",
+			"images/loading.png",
+			"images/bicon-9.png",
+			"images/10.1_03.png",
+			"images/bicon-1.png",
+			"images/bicon-4.png",
+			"images/bicon-10.png",
+			"images/bicon-14.png"
+		],
+		"refer": [
+			"user_huji_list.html"
+		]
+	},
+	"user_msg.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"css/jcx.css",
+			"images/icon-left.png"
+		],
+		"refer": []
+	},
+	"user_riji_list_my.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/jquery-1.11.2.min.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"css/jcx.css",
+			"css/pullToRefresh.css",
+			"images/icon-right.png",
+			"css/swiper.min.css",
+			"images/loading.png",
+			"images/icon-left.png"
+		],
+		"refer": [
+			"user_riji_add1.html",
+			"user_riji_add.html"
+		]
+	},
+	"user_zf_jihua_list_my.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"css/pullToRefresh.css",
+			"css/swiper.min.css",
+			"images/icon-left.png",
+			"css/jcx.css",
+			"images/wutu.jpg"
+		],
+		"refer": [
+			"user_list.html",
+			"user_zf_add.html",
+			"user_zf_set.html"
+		]
+	},
+	"user_zf_add_sca.html": {
+		"resources": [
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"js/uploadimage/binaryajax.js",
+			"css/swiper.min.css",
+			"js/uploadimage/demoa.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/jcx.css",
+			"images/icon-close.png",
+			"images/up_img.png",
+			"images/icon-up.png",
+			"images/icon-left.png",
+			"js/swiper.min.js",
+			"images/close.png"
+		],
+		"refer": [
+			"user_ry_set.html",
+			"user_list1.html"
+		]
+	},
+	"user_zf_jinri.html": {
+		"resources": [
+			"images/wutu.jpg",
+			"images/b4.png",
+			"css/pullToRefresh.css",
+			"images/icon-right.png",
+			"css/swiper.min.css",
+			"js/vue.min.js",
+			"js/iscroll.min.js",
+			"js/pullToRefresh.js",
+			"css/jcx.css",
+			"js/jquery-1.11.2.min.js",
+			"js/jcx.js",
+			"js/mui.min.js",
+			"images/icon-left.png"
+		],
+		"refer": [
+			"user_zf_add_sca.html"
+		]
+	},
+	"new_file.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.css",
+			"css/jcx.css"
+		],
+		"refer": []
+	},
+	"user_list.html": {
+		"resources": [
+			"css/pullToRefresh.css",
+			"images/icon-right.png",
+			"css/swiper.min.css",
+			"images/icon-left.png",
+			"images/wutu.jpg",
+			"images/icon-search.png",
+			"images/icon-search0.png",
+			"css/jcx.css",
+			"images/loading.png",
+			"js/mui.min.js",
+			"home.html",
+			"index.html",
+			"images/loading.gif",
+			"images/loading1.gif",
+			"images/loading2.gif"
+		],
+		"refer": [
+			"home.html",
+			"index.html"
+		]
+	},
+	"user_list1.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/mui.css",
+			"js/mui.min.js",
+			"images/icon-search.png",
+			"images/icon-search0.png",
+			"css/pullToRefresh.css",
+			"css/swiper.min.css",
+			"images/loading.png",
+			"images/icon-left.png",
+			"css/jcx.css",
+			"images/loading3.gif",
+			"images/loading4.gif",
+			"images/loading5.png"
+		],
+		"refer": []
+	},
+	"user_zf_wei_set.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"images/loading.png",
+			"js/vue.min.js",
+			"images/icon-search.png",
+			"js/jcx.js",
+			"js/iscroll.min.js",
+			"images/icon-search0.png",
+			"images/icon-left.png",
+			"js/pullToRefresh.js",
+			"css/jcx.css"
+		],
+		"refer": []
+	},
+	"user_ren_add.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"images/wutu.jpg",
+			"images/cicon-1.png",
+			"images/bicon-9.png",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"images/bicon-8.png",
+			"js/uploadimage/exif.js",
+			"images/bicon-2.png",
+			"images/bicon-1.png",
+			"images/bicon-4.png",
+			"js/mui.min.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.min.css",
+			"images/bicon-5.png",
+			"images/bicon-10.png",
+			"js/mui.picker.js",
+			"js/jquery-1.11.2.min.js",
+			"js/uploadimage/img_up2.js",
+			"images/bicon-11.png",
+			"images/bicon-12.png",
+			"css/mui.picker.css",
+			"css/mui.css",
+			"js/city.data-3.js",
+			"js/pullToRefresh.js",
+			"images/bicon-13.png",
+			"js/uploadimage/canvasResize.js",
+			"images/xj.png",
+			"css/pullToRefresh.css",
+			"images/bicon-6.png",
+			"images/bicon-7.png",
+			"js/uploadimage/binaryajax.js",
+			"css/swiper.min.css",
+			"images/bicon-14.png",
+			"images/bicon-3.png",
+			"js/iscroll.min.js",
+			"images/icon-left.png",
+			"css/jcx.css"
+		],
+		"refer": [
+			"user_list1.html",
+			"user_ry_set.html"
+		]
+	},
+	"user_zf_add_wei.html": {
+		"resources": [
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"images/close.png",
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"js/uploadimage/binaryajax.js",
+			"js/uploadimage/demoa.js",
+			"js/swiper.min.js",
+			"js/vue.min.js",
+			"js/jcx.js",
+			"images/up_img.png",
+			"images/icon-left.png",
+			"css/mui.picker.css",
+			"css/swiper.min.css",
+			"css/mui.poppicker.css",
+			"css/jcx.css"
+		],
+		"refer": []
+	},
+	"user_geren_set.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"js/mui.min.js",
+			"css/swiper.min.css",
+			"js/swiper.min.js",
+			"js/jcx.js",
+			"images/icon-left.png",
+			"css/jcx.css",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
+		]
+	}
+}

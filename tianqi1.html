@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	</head>
+	<body>
+		<p id="tianqi_btm0"></p>
+		<p id="tianqi_btm1"></p>
+		<div class="banner" style="height: 200px;">
+			
+		</div>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" charset="gb2312">
+//天气
+findWeather();
+function findWeather() {
+	var cityUrl = 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js';
+	$.getScript(cityUrl, function(script, textStatus, jqXHR) {
+		var citytq = remote_ip_info.city;
+		//天气第一版start
+		var url = "http://php.weather.sina.com.cn/xml.php?city=" + citytq + "&password=DJOYnieT8234jlsK&day=0";
+		$.ajax({
+			type: "get",
+			url: url,
+			async: true,
+			success: function(data) {
+				if(window.DOMParser) {
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(data, "text/xml");
+				} else {
+					xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+					xmlDoc.async = "false";
+					xmlDoc.loadXML(data);
+				}
+				
+				var status1=xmlDoc.getElementsByTagName("status1")[0].childNodes[0].nodeValue;//天气
+				var tgd1=xmlDoc.getElementsByTagName("tgd1")[0].childNodes[0].nodeValue;//温度
+				var direction1=xmlDoc.getElementsByTagName("direction1")[0].childNodes[0].nodeValue;//风向
+				var power1=xmlDoc.getElementsByTagName("power1")[0].childNodes[0].nodeValue;//风级
+				var tianqi='{"status1":"' + status1 + '","tgd1":"' + tgd1 + '","direction1":"' + direction1 + '","power1":"' + power1 + '","citytq":"' + citytq + '"}';
+				localStorage.setItem('tianqi',tianqi);
+			}
+		});
+		//天气第一版end
+		return false;
+		//天气第二版start
+		var url = "http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&city=" + citytq + "&day=0&dfc=1";
+		$.ajax({
+			url: url,
+			dataType: "script",
+			scriptCharset: "gbk",
+			success: function(data) {
+				console.log(data);
+				var _w = window.SWther.w[citytq][0];
+				console.log(JSON.stringify(_w));
+				var tq0 = citytq + "&nbsp;&nbsp;&nbsp;" + _w.s1 + "&nbsp;&nbsp;&nbsp;" + _w.t2 + "℃" + "&nbsp;&nbsp;&nbsp;" + _w.d1 + _w.p1 + "级";
+				$('.banner-t1').html(tq0);
+				document.getElementById("tianqi_btm0").innerText = _w.t2 + "℃";
+				document.getElementById("tianqi_btm1").innerText = citytq;
+				var url1 = web_url() + "/?type=search&t=tianqibeijing&sqlvalue=leixing{like}'{bfb}" + _w.s1 + "{bfb}'" + rizi();
+				getData(true, 'get', url1, '', function(mmm) {
+					if(mmm.status = 'true') {
+						$('.banner').css('background-image', 'url(' + img_chuli(JSON.parse(mmm.msg)[0].suoluetu) + ')');
+					}
+				});
+			}
+		});
+		//天气第二版end
+	});
+}</script>
+	</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>选择入户家庭</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl"></a>
+				<a class="head-box head-title fr">保存并上传</a>
+				<div class="header-h1">一、基本信息</div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="pad-ys1">
+					
+					<div class="renyuan-bar ys2">
+						<p class="c-333">房屋住址</p>
+						<textarea name="" class="riji-area box-sizing" placeholder="请输入房屋住址"></textarea>
+					</div>
+					<div class="renyuan-bar">
+						<p class="c-333">采集事由</p>
+						<div class="renyuan-rd">
+							<input type="radio" name="caijishiyou" id="caijishiyou1" value="居住"/><label for="caijishiyou1">居住</label>
+							<input type="radio" name="caijishiyou" id="caijishiyou2" value="商务/务工"/><label for="caijishiyou2">商务/务工</label>
+							<input type="radio" name="caijishiyou" id="caijishiyou3" value="访客"/><label for="caijishiyou3">访客</label>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="c-333">房屋性质</p>
+						<div class="renyuan-rd">
+							<input type="radio" name="fangwuxingzhi" id="fangwuxingzhi1" value="自购房"/><label for="fangwuxingzhi1">自购房</label>
+							<input type="radio" name="fangwuxingzhi" id="fangwuxingzhi2" value="自建房"/><label for="fangwuxingzhi2">自建房</label>
+							<input type="radio" name="fangwuxingzhi" id="fangwuxingzhi3" value="出租房"/><label for="fangwuxingzhi3">出租房</label>
+							<input type="radio" name="fangwuxingzhi" id="fangwuxingzhi4" value="公租房"/><label for="fangwuxingzhi4">公租房</label>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="c-333">居住性质</p>
+						<div class="renyuan-rd">
+							<input type="radio" name="juzhuxingzhi" id="juzhuxingzhi1" value="业主"/><label for="juzhuxingzhi1">业主</label>
+							<input type="radio" name="juzhuxingzhi" id="juzhuxingzhi2" value="雇主"/><label for="juzhuxingzhi2">雇主</label>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<p class="c-333">照片</p>
+						<div class="upimg-bar pad-t-10 clearfix">
+							<div class="upimg-li">
+								<div class="TU_A1 pad-b-100" style="background-image: url(images/up_img.png);"></div>
+							</div>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="姓名">
+					</div>
+					<div class="renyuan-bar">
+						<p class="c-333">性别</p>
+						<div class="renyuan-rd">
+							<input type="radio" name="xingbie" id="xingbie1" value="业主"/><label for="xingbie1">业主</label>
+							<input type="radio" name="xingbie" id="xingbie2" value="雇主"/><label for="xingbie2">雇主</label>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="出生日期">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="身份证住址">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="身份证号">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="手机号">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="户号">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="与户主关系">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">户籍信息</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">辖区</span>
+							<span>本地</span>
+							<span>外地</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="户籍详址">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">文化程度</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">初中以下</span>
+							<span>高中</span>
+							<span>中专、大专</span>
+							<span>本科</span>
+							<span>研究生</span>
+							<span>博士以上</span>
+						</div>
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">婚姻状况</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">已婚</span>
+							<span>未婚</span>
+							<span>离异</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="政治面貌">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">是否有工作</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">有</span>
+							<span>无</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="职业名称">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="务工详址">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">现有子女数量</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">没有</span>
+							<span>一个</span>
+							<span>两个</span>
+							<span>三个以上</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="流动人口婚育证明号">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">儿童是否预防接种</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">是</span>
+							<span>否</span>
+						</div>
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">是否为学龄儿童</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">是</span>
+							<span>否</span>
+						</div>
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">是否就学</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">是</span>
+							<span>否</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="学校名称">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="班级">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">是否有医保</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">是</span>
+							<span>否</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="医保所在地">
+					</div>
+					<div class="renyuan-bar ys6">
+						<p class="c-333">是否有社保</p>
+						<div class="renyuan-sp clearfix">
+							<span class="on">是</span>
+							<span>否</span>
+						</div>
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="社保所在地">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="社保类型">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="社保所在地">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="在乌社会关系人姓名">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="关系">
+					</div>
+					<div class="renyuan-bar">
+						<input type="text" class="renyuan-input" placeholder="关系人联系方式">
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		mui.init({
+			swipeBack: true
+		});
+    </script>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>新闻详细</title>
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+	</head>
+
+	<body>
+		<div class="mui-views" id="app">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<div class="header-h1">新闻详情</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r">
+
+					<div class="pad-tb-5 pad-lr-10" v-cloak>
+
+						<p class="newsd-tm mar-b-10">{{news.time}}  {{news.laiyuan}}</p>
+						<p class="newsd-h1 mar-b-10">{{news.biaoti}}</p>
+						<div class="newsd-txt" v-html="content"></div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();
+				getData(true, 'get', web_url() + '/?type=search&t=article&status=终审&id=' + localStorage.news_detail_id + rizi(), '', function(result) {
+					//data_chuli(JSON.parse(result.msg)[0]);
+					var content = HTMLDecode(JSON.parse(result.msg)[0].content);
+					content = img_htmlB(content);
+					app.content = content;
+					var da = JSON.parse(result.msg)[0];
+					da.time = da.dtime1.slice(0, 10);
+					app.news = da;
+					document.title = da.biaoti;
+					$('.header-h1').text(document.title);
+				});
+
+			});
+		</script>
+		<script type="text/javascript">
+			$('.pad-tb-5').click(function() {
+				location.href = 'news_vedio.html';
+			});
+		</script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: {},
+					content: '',
+				}
+			});
+
+			function neirong_img(div) {
+				var n = $(div).size();
+				for(var i = 0; i < n; i++) {
+					var ss = $(div).eq(i).attr('src');
+					if(ss != '') {
+						ss = web_url() + '/' + ss;
+						$(div).eq(i).attr('src', ss);
+					}
+				}
+			}
+		</script>
+	</body>
+
+</html>

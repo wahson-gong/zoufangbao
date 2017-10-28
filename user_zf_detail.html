@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>最近走访详情页（新增）</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+</head>
+<body>
+	<div class="mui-views">
+		<div class="header hdA">
+			<div class="header-A1 clearfix">
+				<a class="head-box head-back head-backA fl"></a>
+				<!--<a class="head-box head-title fr">保存并上传</a>-->
+				<div class="header-h1"></div>
+			</div>
+		</div>
+		<div class="mui-views" style="height: auto;top: 44px;">
+			<div class="mui-views-r">
+				
+				<div class="renyuan-kinds">
+					<div class="bd-btm pad-lr-15">
+						<div class="renyuan-bar ys8">
+							<p class="renyuan-p">家庭成员&nbsp;&nbsp;&nbsp;<span class="ys1">3名</span></p>
+						</div>
+					</div>
+					<div class="renyuan-kind" style="display: none;">
+						<div class="bd-btm pad-lr-15">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p">玛力亚木</p>
+							</div>
+						</div>
+						<div class="bd-btm pad-lr-15">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p">艾伯不拉</p>
+							</div>
+						</div>
+						<div class="bd-btm pad-lr-15">
+							<div class="renyuan-bar ys7">
+								<p class="renyuan-p">玉素甫</p>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<div class="renyuan-kinds">
+					<div class="bd-btm pad-lr-15">
+						<div class="renyuan-bar ys8">
+							<p class="renyuan-p">家庭概况</p>
+						</div>
+					</div>
+					<div class="renyuan-kind" style="display: none;">
+						<div class="bd-btm pad-lr-15">
+							<div class="renyuan-bar ys2">
+								<input type="text" readonly="readonly" class="renyuan-input" value="放心户">
+							</div>
+						</div>
+					</div>
+				</div>	
+					
+				<div class="renyuan-kinds">
+					<div class="bd-btm pad-lr-15">
+						<div class="renyuan-bar ys8">
+							<p class="renyuan-p">上次走访记录</p>
+						</div>
+					</div>
+					<div class="renyuan-kind" style="display: none;">
+						<div class="bd-btm pad-lr-15">
+							<div class="renyuan-bar ys7">
+								<textarea name="" class="riji-area box-sizing" placeholder="这里显示的是已完成的走访情况....."></textarea>
+							</div>
+						</div>
+					</div>
+				</div>	
+					
+					
+						
+					
+				<div class="pad-15">
+					
+					<div class="mar-b-10">
+						<p class="riji-h1">入户走访情况</p>
+						<textarea name="" class="riji-area box-sizing" placeholder="这里显示的是已完成的走访情况....."></textarea>
+					</div>
+					<div class="mar-b-10">
+						<p class="riji-h1">存在问题情况</p>
+						<textarea name="" class="riji-area box-sizing" placeholder="这里显示的是已完成的存在问题....."></textarea>
+					</div>
+					<div class="renyuan-bar">
+						<p class="c-333">图片（最多8张）</p>
+						<div class="upimg-bar pad-t-10 clearfix">
+							<div class="upimg-li">
+								<div class="upimg-li-close"></div>
+								<div class="TU_A1 pad-b-100" style="background-image: url(images/news.png);"></div>
+							</div>
+							<div class="upimg-li">
+								<div class="TU_A1 pad-b-100" style="background-image: url(images/up_img.png);"></div>
+							</div>
+						</div>
+					</div>
+					<div class="renyuan-bar ys2">
+						<p class="c-333">入户人员</p>
+						<input type="text" class="renyuan-input ys1 box-sizing" placeholder="入户人员">
+					</div>
+					
+					<br />
+					
+					<div class="btn-ys1">提交</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+   		document.addEventListener('plusready', function(){
+   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+   		});
+   		mui.init({
+			swipeBack: true
+		});
+    </script>
+	<script type="text/javascript">
+		$('.renyuan-kinds').click(function(){
+			$(this).find('.renyuan-kind').toggle();
+		});
+	</script>
+</body>
+</html>

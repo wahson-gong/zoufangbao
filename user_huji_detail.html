@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>户籍详情</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<!--<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>-->
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backB fl mui-action-back"></a>
+					<a class="head-box head-title fr">保存并上传</a>
+					<div class="header-h1">户籍详情</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r" id="app">
+					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>-->
+					<form id="huji_add">
+
+						<div class="bk-li">
+							<div class="bk-lt">
+								<img src="images/bicon-1.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="房屋所有人姓名" name="allxingming" id="allxingming" :value="huji.allxingming" />
+							</div>
+						</div>
+
+						<div class="bk-li">
+							<div class="bk-li-h1-red">户籍类型</div>
+							<div class="bk-dd clearfix" id="hujileixing">
+								<div class="bk-dt">一般户</div>
+								<div class="bk-dt">放心户</div>
+								<div class="bk-dt">贫困户</div>
+								<div class="bk-dt">重点户</div>
+								<div class="bk-dt">其他</div>
+								<input type="hidden" name="hujileixing" :value="huji.hujileixing" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-9.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="房产证号码" name="fangchanzhenghao" id="fangchanzhenghao" :value="huji.fangchanzhenghao" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-14.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="户主姓名" name="huzhuxingming" id="huzhuxingming" :value="huji.huzhuxingming" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-4.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="所在地区[省市县]" name="suozaidiqu" id="suozaidiqu" readonly="readonly" :value="huji.suozaidiqu" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-4.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="街道[乡村]" name="jiedao" id="jiedao" readonly="readonly" :value="huji.jiedao" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-4.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="门牌号" name="menpaihao" id="menpaihao" :value="huji.menpaihao" />
+							</div>
+						</div>
+
+						<div class="bk-li" style="display: none;">
+							<div class="bk-lt">
+								<img src="images/bicon-4.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="房屋坐标" name="fangwuzuobiao" id="fangwuzuobiao" readonly="readonly" :value="huji.fangwuzuobiao" />
+							</div>
+						</div>
+
+						<div class="bk-li">
+							<div class="bk-li-h1">房屋类型</div>
+							<div class="bk-dd clearfix" id="fangwuleixing">
+								<div class="bk-dt">平房</div>
+								<div class="bk-dt">楼房</div>
+								<div class="bk-dt">其他</div>
+								<input type="hidden" name="fangwuleixing" :value="huji.fangwuleixing" />
+							</div>
+						</div>
+
+						<div class="renyuan-bar" style="padding-left: 10px;padding-right: 10px;">
+							<div class="renyuan-p">
+								<!--<div class="fr upimg_btn" onclick="return imgupgrade(3)">上传</div>-->房屋图片（最多3张）</div>
+							<div class="upimg-bar upimg-barA pad-t-10 clearfix"></div>
+							<div class="upimg-bar upimg-barB pad-t-10 clearfix" style="display: none;">
+								<div class="upimg-li" onclick="return tx_ck()">
+									<div class="TU_A1 pad-b-100" style="background-image: url(images/up_img.png);"></div>
+								</div>
+							</div>
+							<input type="hidden" id="fangwutupian" name="fangwutupian" :value="huji.fangwutupian" />
+							<input type="hidden" id="fangwutupian_" name="fangwutupian_" :value="huji.fangwutupian" />
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-9.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="所有人身份证号" name="allshenfenzhenghao" id="allshenfenzhenghao" :value="huji.allshenfenzhenghao" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-14.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="包户干部姓名" name="baohuganbuxingming" id="baohuganbuxingming" :value="huji.baohuganbuxingming" />
+							</div>
+						</div>
+
+						<div class="bk-li">
+							<div class="bk-lt">
+								<img src="images/bicon-9.png" class="bk-lt-icon" />
+								<input type="text" class="bk-lt-pt" placeholder="土地使用证号" name="tudishiyongzhenghao" id="tudishiyongzhenghao" :value="huji.tudishiyongzhenghao" />
+							</div>
+						</div>
+
+						<div class="bk-li">
+							<div class="bk-li-h1">房屋用途</div>
+							<div class="bk-dd clearfix" id="fangwuyongtu">
+								<div class="bk-dt">居住</div>
+								<div class="bk-dt">经商</div>
+								<div class="bk-dt">商住两用</div>
+								<div class="bk-dt">出租</div>
+								<div class="bk-dt">其他</div>
+								<input type="hidden" name="fangwuyongtu" :value="huji.fangwuyongtu" />
+							</div>
+						</div>
+
+						<div class="bk-li">
+							<div class="bk-li-h1">产权性质</div>
+							<div class="bk-dd clearfix" id="chanquanxingzhi">
+								<div class="bk-dt">农权房</div>
+								<div class="bk-dt">商品房</div>
+								<div class="bk-dt">自建房</div>
+								<div class="bk-dt">其他</div>
+								<input type="hidden" name="chanquanxingzhi" :value="huji.chanquanxingzhi" />
+							</div>
+						</div>
+
+						<div class="bk-li">
+							<div class="bk-li-h1">建筑结构</div>
+							<div class="bk-dd clearfix" id="jianzhujiegou">
+								<div class="bk-dt">砖混</div>
+								<div class="bk-dt">砖木</div>
+								<div class="bk-dt">土木</div>
+								<div class="bk-dt">框架</div>
+								<div class="bk-dt">其他</div>
+								<input type="hidden" name="jianzhujiegou" :value="huji.jianzhujiegou" />
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-10.png" class="bk-lt-icon">
+								<input type="text" class="bk-lt-pt" placeholder="困难诉求" name="kunnansuqiu" id="kunnansuqiu" :value="huji.kunnansuqiu">
+							</div>
+						</div>
+
+						<div class="bk-li b1">
+							<div class="bk-lt">
+								<img src="images/bicon-10.png" class="bk-lt-icon">
+								<input type="text" class="bk-lt-pt" placeholder="备注" name="beizhu" id="beizhu" :value="huji.beizhu">
+							</div>
+						</div>
+
+						<input type="hidden" id="status" name="status" value="终审" />
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txA()">拍照上传</a>
+				</li>
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txB()">从相册选取</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="return tx_ck()"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="outimg" style="width: 100%;height: 100%;position: fixed;z-index: 9999;background: rgba(0,0,0,0.6);display: none;">
+			<div style="width: 100%;height: 100%;position: relative;">
+				<!-- Swiper -->
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+
+					</div>
+					<!-- Add Pagination -->
+					<div class="swiper-pagination" style="bottom: 0px;font-size: 17px;line-height: 44px;color: #fff;"></div>
+					<!--Add close-->
+					<img class="close-img" src="images/close.png" />
+				</div>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/demoa.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=8lInfF3G6oCcRWLlraUGghLW"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var webview_detail = null;
+			document.addEventListener('plusready', function() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					$('#fangwuzuobiao').val('0.000,0.000');
+				} else {
+					var geolocation = new BMap.Geolocation();
+					geolocation.getCurrentPosition(function(result) {
+						var dw = result.point.lng + ',' + result.point.lat;
+						$('#fangwuzuobiao').val(dw);
+					});
+				}
+			});
+			mui.init({
+				swipeBack: true,
+				gestureConfig: {
+					longtap: true,
+				}
+			});
+			mui.plusReady(function() {
+				//				plus.nativeUI.closeWaiting();
+				//				mui.currentWebview.show();
+				if(localStorage.add_sanji == undefined) {
+					data_two('17');
+				}
+				getData(true, 'get', web_url() + '/?type=search&t=huji&huhao=' + localStorage.user_huji_detail_huhao + rizi(), '', function(result) {
+					app.huji = JSON.parse(result.msg)[0];
+					app.$nextTick(function() {
+						if(localStorage.yonghuming == app.huji.yonghuming) {
+							$('.head-title').show();
+						}
+						zutu(app.huji.fangwutupian);
+						try {
+							//						$("input[name=hujileixing][value=" + app.huji.hujileixing + "]").attr("checked", true);
+							//						$("input[name=fangwuleixing][value=" + app.huji.fangwuleixing + "]").attr("checked", true);
+							//						$("input[name=fangwuyongtu][value=" + app.huji.fangwuyongtu + "]").attr("checked", true);
+							//						$("input[name=chanquanxingzhi][value=" + app.huji.chanquanxingzhi + "]").attr("checked", true);
+							//						$("input[name=jianzhujiegou][value=" + app.huji.jianzhujiegou + "]").attr("checked", true);
+							$('.bk-dd').each(function() {
+								var a = $(this).find('input').val();
+								if(a != '') {
+									for(var j = 0; j < $(this).find('.bk-dt').size(); j++) {
+										var b = $(this).find('.bk-dt').eq(j).text();
+										if(a == b) {
+											$(this).find('.bk-dt').eq(j).addClass('don');
+										}
+									}
+								}
+							})
+						} catch(e) {
+							//TODO handle the exception
+						}
+
+						app.isActive = true;
+					})
+				});
+
+				webview_detail = plus.webview.getWebviewById('user_huji_list.html');
+
+				var cityData3 = JSON.parse(localStorage.add_sanji);
+			var cityPicker3 = new mui.PopPicker({
+				layer: 4
+			});
+			cityPicker3.setData(cityData3);
+			var showCityPickerButton = document.getElementById('suozaidiqu');
+			var cityResult3 = document.getElementById('suozaidiqu');
+			var cityResult5 = document.getElementById('jiedao');
+			var cityResult7 = document.getElementById('huji');
+			showCityPickerButton.addEventListener('tap', function(event) {
+				cityPicker3.show(function(items) {
+					cityResult3.value = _getParam(items[0], 'text') + "-" + _getParam(items[1], 'text');
+					cityResult5.value = _getParam(items[1], 'text') + "-" + _getParam(items[2], 'text');
+					//cityResult7.value = _getParam(items[2], 'value');
+				});
+			}, false);
+
+			});
+		</script>
+		<script type="text/javascript">
+			function tx_ck() {
+				mui('#picture').popover('toggle');
+			}
+
+			function txA() {
+				cameraimages(3);
+				tx_ck();
+			}
+
+			function txB() {
+				galleryImgs(3);
+				tx_ck();
+			}
+			var app = new Vue({
+				el: '#app',
+				data: {
+					huji: {},
+					renyuan: {},
+					huji: {},
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+				}
+			});
+
+			function zutu(str) {
+				console.log(str)
+				if(str != '' && str != null) {
+					var imglist = str.replace(/{title}/g, "");
+					var imglist = imglist.split('{next}');
+					$('#fangwutupian_').data('num', imglist.length);
+					if(imglist.length < 3) {
+						$('.upimg-barB').show();
+					} else {
+						$('.upimg-barB').hide();
+					}
+					for(i = 0; i < imglist.length; i++) {
+						$('.upimg-barA').append('<div class=\"upimg-li\"><div class=\"upimg-li-close\" onclick=\"return close_imgA(this)\"></div><div onclick=\"return out_img(this)\" class=\"TU_A1 pad-b-100\" style=\"background-image: url(' + web_url() + '/' + imglist[i] + ');\"></div></div>');
+						console.log(web_url() + '/' + imglist[i]);
+					}
+				} else {
+					$('.upimg-barB').show();
+				}
+			}
+
+			function close_imgA(obj) {
+				var str = document.getElementById("fangwutupian_").value;
+				var imglist = str.replace(/{title}/g, "");
+				var imglist = imglist.split('{next}');
+				var index = $(obj).parent('.upimg-li').index();
+				imglist.splice(index, 1);
+				if(imglist.length < 3) {
+					$('.upimg-barB').show();
+				} else {
+					$('.upimg-barB').hide();
+				}
+				var newimg = dd(imglist);
+				document.getElementById("fangwutupian_").value = newimg;
+				document.getElementById("fangwutupian").value = newimg;
+				$(obj).parent('.upimg-li').remove();
+			}
+
+			function dd(imglist) {
+				var end_str = '';
+				for(var i = 0; i < imglist.length; i++) {
+					if(end_str == '') {
+						end_str = imglist[i] + '{title}';
+					} else {
+						end_str = end_str + '{next}' + imglist[i] + '{title}'
+					}
+				}
+				return end_str;
+			}
+
+			function data_two(id) {
+				getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + id, '', function(result) {
+					var newdata = two_chuli(JSON.parse(result.msg));
+					setParam('add_sanji', newdata);
+				});
+			}
+			var _getParam = function(obj, param) {
+				return obj[param] || '';
+			};
+			
+
+			function two_chuli(data) {
+				var n = data.length;
+				var newdata = "";
+				for(var i = 0; i < n; i++) {
+					getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + data[i].id, '', function(result) {
+						var newdata = two_chuli(JSON.parse(result.msg));
+						setParam('newdata_' + data[i].id, newdata);
+					});
+					if(eval('localStorage.newdata_' + data[i].id) == '[]') {
+						var ls_data = '{"value":"' + data[i].id + '","text":"' + data[i].u1 + '"}';
+					} else {
+						var ls_data = '{"value":"' + data[i].id + '","text":"' + data[i].u1 + '","children":' + eval('localStorage.newdata_' + data[i].id) + '}';
+					}
+					if(newdata == '') {
+						newdata = ls_data;
+					} else {
+						newdata = newdata + ',' + ls_data;
+					}
+				}
+				newdata = "[" + newdata + ']';
+				return newdata;
+			}
+
+			$('.head-title').click(function() {
+
+				var allxingming = document.getElementById("allxingming").value;
+				if(allxingming == '') {
+					alert('请输入房屋所有人姓名');
+					return false;
+				}
+
+				var hujileixing = '';
+				if($('#hujileixing .bk-dt').hasClass('don')) {
+					hujileixing = $('#hujileixing .bk-dt.don').text();
+				}
+				if(hujileixing == '') {
+					alert('请选择户籍类型');
+					return false;
+				}
+
+				var allshenfenzhenghao = document.getElementById("allshenfenzhenghao").value;
+				var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+				if(!reg.test(allshenfenzhenghao) && allshenfenzhenghao != '') {
+					alert("身份证输入不合法");
+					return false;
+				}
+
+				plus.nativeUI.showWaiting("提交中...");
+				try {
+					//上传头像
+					imgupgrade(3)
+				} catch(e) {
+					//TODO handle the exception
+				}
+				var url1 = web_url() + '/?type=edit&t=huji&huhao=' + localStorage.user_huji_detail_huhao + "&yonghuming=" + localStorage.yonghuming;
+				var data1 = $('#huji_add').serialize() + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + '&suoshuzu=' + JSON.parse(localStorage.ubase).msg[0].suoshuzu + rizi();
+				getData(true, 'post', url1, data1, function(msg) {
+					//plus.webview.getWebviewById('user_huji_list.html').reload();
+					plus.nativeUI.closeWaiting();
+					mui.toast('提交成功！');
+					mui.fire(webview_detail, 'user_huji_add', localStorage.yonghuming);
+					mui.back();
+				});
+
+			});
+			$('.bk-dd .bk-dt').click(function() {
+				$(this).addClass('don').siblings('.bk-dt').removeClass('don');
+				$(this).siblings('input').val($(this).text());
+			});
+			
+			//长按取消单选
+				var classObj = document.getElementsByClassName('bk-dt');
+				for(i = 0; i < classObj.length; i++) {
+					classObj[i].addEventListener('longtap', function() {
+						console.log('你触发了longtap事件');
+						$(this).removeClass('don');
+						$(this).siblings('input').val("");
+					});
+				}
+		</script>
+	</body>
+
+</html>

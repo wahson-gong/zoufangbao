@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>走访历史</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<a onclick="return linkA(this)" data-href="user_zf_add_sca.html" class="head-box head-title fr">新增</a>
+					<div class="header-h1">走访历史</div>
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r" id="app">
+					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>-->
+					<div class="wrapper" id="wrapper">
+						<ul v-cloak>
+							<li class="yistA" v-for="li in news" @click="zf_jilu_nk(li.id,li.huhao)">
+								<div class="yistA_tu bg_tu">
+									<div class="wh-100 bg_tu" :style="'background-image:url('+img_href+li.zutu+');'"></div>
+								</div>
+								<div class="yistA_tt">
+									<p class="h1 mar-b-12">{{li.huji.allxingming}}家</p>
+									<p class="h2 mar-b-13">走访时间：{{li.dtime}}</p>
+									<p class="h3">{{li.zoufangqingkuang}}</p>
+								</div>
+								<div class="yistA_tp">
+									<span class="blue">{{li.zu.u1}}</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+//				plus.nativeUI.closeWaiting();
+//				mui.currentWebview.show();
+beautyshuju(num, page, 'no');
+			pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+			if(pagenum != '0') {
+				page++;
+			}
+
+			refresher.init({
+				id: "wrapper",
+				pullDownAction: Refresh,
+				pullUpAction: Load,
+				scrollAction: Ascroll,
+				scrollEndAction: AscrollEnd,
+			});
+			
+			document.addEventListener('user_zf_add', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+			document.addEventListener('user_zf_add_sc', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+			document.addEventListener('user_zf_add_sca', function(event) {
+				var id = event.detail;
+				Refresh();
+			});
+			
+			
+			});
+		</script>
+		<script type="text/javascript">
+			var page = 1;
+			var num = 10;
+			var pagenum = num;
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: [],
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+					img_href: web_url() + '/',
+				},
+				methods: {
+					zf_jilu_nk: function(id, huhao) {
+						zf_jilu_nk(id, huhao);
+					}
+				},
+			});
+
+			function beautyshuju(num, page, yno) {
+				if(localStorage.net == 'false') {
+					if(localStorage.on_user_zf_history != undefined) {
+						app.news = JSON.parse(localStorage.on_user_zf_history);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.news.length);
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+					}
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+								app.isActive = true;
+							}, 300);
+						} else {
+							setTimeout(function() {
+								app.isActive = true;
+							}, 300);
+						}
+					});
+				} else {
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					pagenum = parseInt(pagenum);
+					if(pagenum >= num || page == 1) {
+						getData(true, 'get', web_url() + '/?type=zoufangjilu&t=zoufangjilu&number=' + num + '&page=' + page + '&sqlvalue=suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",FIND_IN_SET(" + JSON.parse(localStorage.ubase).msg[0].id + " dh bianhao)/yonghuming='" + localStorage.yonghuming + "'" + rizi(), '', function(result) {
+							var data = data_chuli(JSON.parse(result.msg));
+							if(result.msg == '') {
+								if(page == 1) {
+									app.news = [];
+								}
+								pagenum = 0;
+							} else {
+								if(page == 1) {
+									app.news = data;
+								} else {
+									extend(app.news, data);
+								}
+								pagenum = data.length;
+							}
+							document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+							setParam('on_user_zf_history', JSON.stringify(app.news));
+							app.$nextTick(function() {
+								if(yno != 'no') {
+									setTimeout(function() {
+										wrapper.refresh();
+										app.isActive = true;
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
+									}, 300);
+								}
+								$('.vue_img').each(function() {
+									var str = $(this).data('img');
+									if(str != '' && str != null) {
+										var imglist = str.replace(/{title}/g, "");
+										var imglist = imglist.split('{next}');
+										$(this).css('background-image', 'url(' + web_url() + '/' + imglist[0] + ')');
+									}
+								});
+
+							});
+						});
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+						wrapper.refresh();
+					}
+				}
+
+			}
+			
+
+			setTimeout(function() {
+				var timea_num = 0;
+				var timea = setInterval(function() {
+					timea_num++;
+					if(timea_num > 140) {
+						clearInterval(timea);
+					} else {
+						wrapper.refresh();
+					}
+				}, 50);
+			}, 100);
+			
+
+			function Refresh() {
+				net_yno();
+				page = 1;
+				beautyshuju(num, page, 'yes');
+				pagenum = num;
+				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+				if(pagenum != 0) {
+					page++;
+				}
+			}
+
+			function Load() {
+				beautyshuju(num, page, 'yes');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+			}
+
+			function Ascroll() {
+
+			}
+
+			function AscrollEnd() {
+
+			}
+
+			function data_chuli(data) {
+				var n = data.length;
+				for(var i = 0; i < n; i++) {
+					data[i].newtime = timeD(data[i].dtime);
+					var str = data[i].zutu;
+					if(str != '' && str != null) {
+						var imglist = str.replace(/{title}/g, "");
+						var imglist = imglist.split('{next}');
+						data[i].zutu = imglist[0];
+					}
+				}
+				return data;
+			}
+			//走访计划链接
+			function zf_jilu_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_zf_add_sc_id', id);
+					localStorage.setItem('user_zf_add_sc_huhao', huhao);
+					openWindows('user_zf_add_sc.html');
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>户籍选择</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<a class="head-box head-menu fr"></a>
+					<div class="head-ss">
+						<div class="search pst-r">
+							<div class="search-cv search-cvA"><img src="images/icon-search.png" class="search-cv-img">搜索</div>
+							<div class="search-cv search-cvB" style="width: 25%;" onclick="return onKeydown()"><img src="images/icon-search0.png" class="search-cv-img" />搜索</div>
+							<input type="text" class="search-input box-sizing pad-lr-10" style="padding-right: 70px;" placeholder="请输入关键词" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="paixu" style="z-index: 999999;top: 44px;">
+				<p data-type="huzhuxingming">名称排序</p>
+				<p data-type="hujileixing">类型排序</p>
+				<p data-type="menpaihao">门牌号排序</p>
+			</div>
+
+			<div class="mui-views" id="app" style="height: auto;top: 44px;">
+				<div class="mui-views-r box-sizing" style="padding-bottom: 35px;">
+					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>-->
+					<div class="mui-views-r">
+
+						<div class="wrapper" id="wrapper">
+							<ul>
+								<li v-for="li in list">
+									<div class="renyuan-bar pad-lr-15">
+										<label class="renyuan-p" :data-id="li.id" :data-huhao="li.huhao"> <div class="rdo-cov" :data-type = "li.hujileixing" :data-value="li.huhao"></div> <span class="ys5">{{li.allxingming}}家</span>&nbsp;&nbsp;<span class="ys4">{{li.menpaihao}}-{{li.hujileixing}}</span></label>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="zf-set-btm pst-f p-lb box-sizing" style="background: #fff;z-index: 99999;">
+						<div class="zf-set-btm-btn ys1">确定</div>
+						<p class="zf-set-btm-p">请选择户籍</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var webview_detail = null;
+			var webview_detaila = null;
+			var webview_detailA = null;
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true,
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: false, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: false, //默认为false，不监听
+					release: false //默认为false，不监听
+				}
+			});
+			mui.plusReady(function() {
+//				plus.nativeUI.closeWaiting();
+//				mui.currentWebview.show();
+				
+				beautyshuju(num, page, 'no', '');
+			pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+			if(pagenum != '0') {
+				page++;
+			}
+			
+			
+				webview_detail = plus.webview.getWebviewById('user_renyuan_add.html');
+				webview_detaila = plus.webview.getWebviewById('user_cun_ren_detail.html');
+				webview_detailA = plus.webview.getWebviewById('user_zf_add_sca.html');
+			});
+		</script>
+		<script type="text/javascript">
+			$('.head-menu').click(function() {
+				$('.paixu').toggleClass('on');
+			});
+		</script>
+		<script type="text/javascript">
+			var type = "convert(allxingming using gbk)";
+
+			if(localStorage.huji_zf_paixu_set == undefined) {
+				setParam('huji_zf_paixu_set', 'dtime');
+			}
+			var page = 1;
+			var num = 20;
+			var pagenum = num;
+			var orderby = 'asc';
+			var app = new Vue({
+				el: '#app',
+				data: {
+					list: [],
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
+				}
+			});
+
+			
+
+			setTimeout(function() {
+				refresher.init({
+					id: "wrapper",
+					pullDownAction: Refresh,
+					pullUpAction: Load,
+					scrollAction: Ascroll,
+					scrollEndAction: AscrollEnd,
+				});
+			}, 200);
+
+			function Refresh() {
+				app.isActive = false;
+				net_yno();
+				page = 1;
+				beautyshuju(num, page, 'yes', '');
+				pagenum = num;
+				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+				if(pagenum != 0) {
+					page++;
+				}
+			}
+
+			function Load() {
+				beautyshuju(num, page, 'yes', '');
+				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+				if(pagenum != '0') {
+					page++;
+				}
+			}
+
+			function Ascroll() {
+
+			}
+
+			function AscrollEnd() {
+
+			}
+
+			function beautyshuju(num, page, yno, u1) {
+				if(localStorage.net == 'false') {
+					if(localStorage.on_user_ry_set != undefined) {
+						app.list = JSON.parse(localStorage.on_user_ry_set);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+					}
+					app.$nextTick(function() {
+						if(yno != 'no') {
+							setTimeout(function() {
+								wrapper.refresh();
+								app.isActive = true;
+							}, 300);
+						} else {
+							setTimeout(function() {
+								app.isActive = true;
+							}, 300);
+						}
+					});
+				} else {
+					if(localStorage.on_user_ry_set != undefined && page == 1 && localStorage.huji_zf_paixu_set == 'dtime') {
+						app.list = JSON.parse(localStorage.on_user_ry_set);
+						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
+						app.$nextTick(function() {
+							if(yno != 'no') {
+								setTimeout(function() {
+									wrapper.refresh();
+									app.isActive = true;
+								}, 300);
+							} else {
+								setTimeout(function() {
+									app.isActive = true;
+								}, 300);
+							}
+						});
+					}
+
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					pagenum = parseInt(pagenum);
+					if(pagenum >= num || page == 1) {
+						var url_a = web_url() + '/?type=search&t=huji&status=终审&number=' + num + '&page=' + page + u1 + rizi() + '&ordertype=' + type + '&orderby=' + orderby + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun;
+						getData(false, 'get', url_a, '', function(result) {
+							var data = JSON.parse(result.msg);
+							if(result.msg == '') {
+								if(page == 1) {
+									app.list = [];
+								}
+								pagenum = 0;
+							} else {
+								if(page == 1) {
+									app.list = data;
+								} else {
+									extend(app.list, data);
+								}
+								pagenum = data.length;
+							}
+							document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
+							setParam('on_user_ry_set', JSON.stringify(app.list));
+							app.$nextTick(function() {
+								if(yno != 'no') {
+									setTimeout(function() {
+										wrapper.refresh();
+										app.isActive = true;
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
+									}, 300);
+								}
+							});
+						});
+					} else {
+						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
+						wrapper.refresh();
+					}
+				}
+
+			}
+
+			$('.paixu p').click(function() {
+				$(this).addClass('on').siblings('p').removeClass('on');
+				$('.paixu').removeClass('on');
+				type = $(this).data('type');
+				if(type == 'huzhuxingming') {
+					orderby = 'asc';
+					setParam('huji_zf_paixu_set', 'convert(allxingming using gbk)');
+				} else {
+					orderby = 'asc';
+					setParam('huji_zf_paixu_set', type);
+				}
+				Refresh();
+			});
+			var up_data = "";
+
+			function xhuanzhe(obj) {
+				$('.rdo-cov').removeClass('act');
+				$(obj).find('.rdo-cov').addClass('act');
+				if($(obj).find('.rdo-cov').hasClass('act')) {
+					var id = $(obj).data('id');
+					var huhao = $(obj).data('huhao');
+					var txt = $(obj).find('.ys5').text();
+					$('.zf-set-btm-p').text(txt);
+					up_data = '{"id":"' + id + '","huhao":"' + huhao + '","jia":"' + txt + '"}';
+				}
+			}
+			//时间
+			//	var dtime=time_qian('');
+			//	var timetxt=timeE(dtime);
+			//	$('#timetxt').html(timetxt);
+			//确定
+			$('.zf-set-btm-btn').click(function() {
+				//JSON.parse(up_data)
+				if(up_data == '') {
+					alert('请选择户籍');
+					return false;
+				}
+				mui.fire(webview_detail, 'user_ry_set', JSON.parse(up_data));
+				mui.fire(webview_detaila, 'user_ry_set', JSON.parse(up_data));
+				mui.fire(webview_detailA, 'user_ry_set', JSON.parse(up_data));
+				mui.back();
+			});
+
+			function onKeydown() {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					var bt = $('.search-input').val();
+					bt = bt.replace(/\s+/g, '');
+					if(bt == '') {
+						u1 = '';
+						//alert('请输入搜索关键字');
+						//return false;
+					} else {
+						u1 = "&sqlvalue=allxingming{like}%27{bfb}" + bt + "{bfb}%27";
+					}
+					page = 1;
+					beautyshuju(num, page, 'yes', u1);
+					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
+					if(pagenum != '0') {
+						page++;
+					}
+					$('.search-input').val('');
+					$('.search').removeClass('on');
+				}
+			}
+			mui('.wrapper').on('tap', '.renyuan-p', function() {
+				xhuanzhe(this);
+			});
+			mui('.wrapper').on('longtap', '.renyuan-p', function() {
+				xhuanzhe(this);
+			});
+		</script>
+	</body>
+
+</html>
