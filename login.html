@@ -101,10 +101,10 @@
 						setParam('login_token', result.msg[0].token);
 						setParam('yonghuming', yhm);
 						setParam('mima', mima);
-						getData(false, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshucun, '', function(result) {
+						getData(true, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshucun, '', function(result) {
 							setParam('login_suoshucun_txt', JSON.parse(result.msg)[0].u1);
 						});
-						getData(false, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshuzu, '', function(result) {
+						getData(true, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshuzu, '', function(result) {
 							setParam('login_suoshuzu_txt', JSON.parse(result.msg)[0].u1);
 						});
 
@@ -114,11 +114,11 @@
 						//mui.fire(webview_home, 'login', yhm);
 
 						//document.getElementById("yonghuming").value = '';
-						//document.getElementById("mima").value = '';
+						document.getElementById("mima").value = '';
 						setParam('login_action', 'yes');
 						//plus.webview.show('index.html');
 						plus.nativeUI.showWaiting("登录成功，正在初始化...");
-						openWindows('index.html');
+						openWindows('index.html?yonghuming='+yhm);
 						plus.nativeUI.closeWaiting();
 					} else {
 						mui.toast(result.msg);

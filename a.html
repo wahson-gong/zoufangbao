@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//昨天
+			function str_tm(num,type){
+				var day1 = new Date();
+				day1.setDate(day1.getDate() - num);
+				var str=day1.toLocaleDateString(); 
+				var arr=str.split('/');
+				var tm=arr[0]+'-'+arr[1]+'-'+arr[2];
+				if(type==0){
+					tm=tm + " 00:00:00";
+				}else if(type==1){
+					tm=tm + " 23:59:59";
+				}
+				return tm;
+			}
+			console.log(str_tm(1,0));//昨天
+			console.log(str_tm(0,2));//今日
+			console.log(str_tm(-1,0));//明天
+			console.log(str_tm(-2,0));//后天
+			//
+		</script>
+	</body>
+</html>

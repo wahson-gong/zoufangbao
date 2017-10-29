@@ -24,12 +24,12 @@
 
 					<div class="wrapper" id="wrapper">
 						<ul v-cloak class="yistA_ul">
-							<li class="yistA" v-for="li in news" @click="zf_wei_nk(li.huji.id,li.huji.huhao)">
+							<li class="yistA" v-for="li in news" @click="zf_wei_nk(li.huji.id,li.huji.huhao,li.huji.allxingming)">
 								<div class="yistA_tu bg_tu">
 									<div class="wh-100 bg_tu" :style="'background-image:url('+img_href+li.huji.fangwutupian+');'"></div>
 								</div>
 								<div class="yistA_tt">
-									<p class="h1 mar-b-15">{{li.huji.huzhuxingming}}家走访</p>
+									<p class="h1 mar-b-15">{{li.huji.allxingming}}家走访</p>
 									<p class="h2">{{li.huji.newtime}}</p>
 								</div>
 								<div class="yistA_tp">
@@ -59,7 +59,8 @@
 			mui.plusReady(function() {
 //				plus.nativeUI.closeWaiting();
 //				mui.currentWebview.show();
-beautyshuju(num, page, 'no');
+			
+			beautyshuju(num, page, 'no');
 			pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 			if(pagenum != '0') {
 				page++;
@@ -233,16 +234,16 @@ beautyshuju(num, page, 'no');
 				return data;
 			}
 			//走访计划链接
-			function zf_wei_nk(id, huhao) {
-				net_yno();
-				if(localStorage.net == 'false') {
-					mui.toast('请检查网络');
-					return false;
-				} else {
-					localStorage.setItem('user_zf_add_wei_id', id);
-					localStorage.setItem('user_zf_add_wei_huhao', huhao);
-					openWindows('user_zf_add_wei.html');
-				}
+			function zf_wei_nk(id, huhao,allxingming) {
+				localStorage.setItem('user_zf_add_wei_id', id);
+				localStorage.setItem('user_zf_add_wei_huhao', huhao);
+				localStorage.setItem('user_zf_add_wei_allxingming', allxingming);
+				openWindows('user_zf_add_wei.html');
+//				net_yno();
+//				if(localStorage.net == 'false') {
+//					mui.toast('请检查网络');
+//					return false;
+//				} else {}
 			}
 		</script>
 	</body>

@@ -267,6 +267,11 @@
 				var _getParam = function(obj, param) {
 					return obj[param] || '';
 				};
+				if(localStorage.add_sanji == undefined) {
+					data_two('17');
+				}
+
+				console.log(localStorage.add_sanji);
 				var cityData3 = JSON.parse(localStorage.add_sanji);
 				var cityPicker3 = new mui.PopPicker({
 					layer: 4
@@ -302,9 +307,7 @@
 				}
 			});
 
-			if(localStorage.add_sanji == undefined) {
-				data_two('17');
-			}
+			data_two('17');
 
 			function tx_ck() {
 				mui('#picture').popover('toggle');
@@ -319,11 +322,13 @@
 				galleryImgs(3);
 				tx_ck();
 			}
+
 			function data_two(id) {
 				getData(false, 'get', web_url() + '/?type=liandong&id=' + id, '', function(result) {
 					setParam('add_sanji', result.msg);
 				});
 			}
+
 			function form_ck() {
 
 				var allxingming = document.getElementById("allxingming").value;

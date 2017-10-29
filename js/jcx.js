@@ -458,15 +458,39 @@ function week_time() {
 	var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth));
 	var eyue = formatDate(monthEndDate);
 
-	var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek);
 	var stime_a = formatDate(weekStartDate);
 
-	var weekEndDate = new Date(nowYear, nowMonth, nowDay + (2 - nowDayOfWeek));
 	var etime_a = formatDate(weekEndDate);
 
 	return stime + '*' + etime + '*' + syue + '*' + eyue + '*' + stime_a + '*' + etime_a;
 
 }
+
+function str_tm(num,type){
+	var day1 = new Date();
+	day1.setDate(day1.getDate() - num);
+	var str=day1.toLocaleDateString(); 
+	var arr=str.split('/');
+	var tm=arr[0]+'-'+arr[1]+'-'+arr[2];
+	if(type==0){
+		tm=tm + " 00:00:00";
+	}else if(type==1){
+		tm=tm + " 23:59:59";
+	}else if(type=3){
+		var hour = day1.getHours();
+		hour < 10 ? hour = '0' + hour : hour;
+		var minutes = day1.getMinutes();
+		minutes < 10 ? minutes = '0' + minutes : minutes;
+		var second = day1.getSeconds();
+		second < 10 ? second = '0' + second : second;
+		tm=tm + " "+hour+":"+minutes+":"+second;
+	}
+	return tm;
+}
+//console.log(str_tm(1,0));//昨天
+//console.log(str_tm(0,2));//今日
+//console.log(str_tm(-1,0));//明天
+//console.log(str_tm(-2,0));//后天
 
 function getMonthDays(myMonth) {
 	var now = new Date(); //当前日期 

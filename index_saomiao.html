@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>身份证扫描</title>
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<div class="head-ss">
+						<div class="search pst-r">
+							<div class="header-h1">扫描身份证</div>
+						</div>
+					</div>
+					<!--<div class="header-h1">村内人员</div>-->
+				</div>
+			</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r" >
+					 
+					<div >
+						 <div class="bk-tx-bar">
+							<div class="bk-tx-cov bg_tu" onclick="return tx_ck()">
+								<img class="bk-tx-icon" src="images/xj.png" />
+								<div class="bk-tx-pic bg_tu bk-tx-pic-touxiang"></div>
+							</div>
+						</div>
+						 
+					</div>
+					
+					<div >
+						 
+						<input type="text" name="xingming" id="xingming"  />
+						<p><input type="text" name="shenfenzhengdizhi" id="shenfenzhengdizhi"  />
+						<p><input type="text" name="shenfenzhenghao" id="shenfenzhenghao"  />
+						<p><input type="text" name="xingbie" id="xingbie"  />
+						<p><input type="text" name="minzu" id="minzu"  />
+						<p><input type="text" name="chushengriqi" id="chushengriqi" />
+					</div>
+					
+					
+					<div >
+					<div class="btn-ys1" onclick="return search_sfz()">在线识别</div>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txA()">拍照上传</a>
+				</li>
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txB()">从相册选取</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="return tx_ck()"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+		<input type="hidden" name="touxiang" id="touxiang" />
+		
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/img_up2.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			document.addEventListener('plusready', function() {
+				net_yno();
+			});
+			mui.init({
+				swipeBack: true
+			});
+			mui.plusReady(function() {
+				 
+			});
+			
+			 
+			
+			function tx_ck() {
+				mui('#picture').popover('toggle');
+			}
+			
+			function txA() {
+				cameraimages(1);
+				tx_ck();
+			}
+
+			function txB() {
+				galleryImgs(1);
+				tx_ck();
+			}
+			
+			
+			function search_sfz() {
+				//上传头像
+				imgupgrade();
+				//var img_url="public/uploads/20171028/2017102817362259f44f96719c4.png";
+				var img_url=$("#touxiang").val();
+				//识别
+				getData(true, 'get', web_url() + '/?type=shenfenzhengshibie&img_url='+web_url()+"/"+img_url, '', function(result) {
+					
+					console.log( web_url() + '/?type=shenfenzhengshibie&img_url='+web_url()+"/"+img_url);
+					console.log(JSON.stringify(result.msg));
+					
+					$("#shenfenzhengdizhi").val(result.msg.shenfenzhengdizhi);
+					$("#chushengriqi").val(result.msg.chushengriqi);
+					$("#xingming").val(result.msg.xingming);
+					$("#shenfenzhenghao").val(result.msg.shenfenzhenghao);
+					$("#xingbie").val(result.msg.xingbie);
+					$("#minzu").val(result.msg.minzu);
+					
+				});
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

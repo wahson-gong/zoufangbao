@@ -73,6 +73,20 @@
 					var id = event.detail;
 					Refresh();
 				});
+				document.addEventListener('user_zf_add_no', function(event) {
+					var id = event.detail;
+					var data=app.news;
+					if(data.length>0){
+						for(var i=0;i<data.length;i++){
+							if(data[i].id==id){
+								data.splice(i,1);
+								app.news=data;
+								localStorage.on_user_zf_jihua_list=JSON.stringify(data);
+							}
+						}
+					}
+					Refresh();
+				});
 				document.addEventListener('user_riji_add', function(event) {
 					var id = event.detail;
 					Refresh();
@@ -93,7 +107,7 @@
 		</script>
 		<script type="text/javascript">
 			var page = 1;
-			var num = 10;
+			var num = 20;
 			var pagenum = num;
 			var app = new Vue({
 				el: '#app',
@@ -115,6 +129,7 @@
 				if(localStorage.net == 'false') {
 					if(localStorage.on_user_zf_jihua_list != undefined) {
 						app.news = JSON.parse(localStorage.on_user_zf_jihua_list);
+						
 						document.getElementById("wrapper").setAttribute('data-pagenum', app.news.length);
 					} else {
 						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
@@ -135,7 +150,7 @@
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
 					if(pagenum >= num || page == 1) {
-						getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_huji.fangwutupian,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=" + num + "&page=" + page + "&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+						getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_huji.fangwutupian,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=" + num + "&page=" + page + "&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27"+str_tm(1,0)+"%27{and}%27"+str_tm(-2,0)+"%27,sl_zoufangjihua.suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
 							var data = data_chuli(JSON.parse(result.msg));
 							if(result.msg == '') {
 								if(page == 1) {
@@ -172,7 +187,6 @@
 						wrapper.refresh();
 					}
 				}
-
 			}
 
 			setTimeout(function() {

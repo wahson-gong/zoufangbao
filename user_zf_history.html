@@ -96,7 +96,7 @@ beautyshuju(num, page, 'no');
 		</script>
 		<script type="text/javascript">
 			var page = 1;
-			var num = 10;
+			var num = 20;
 			var pagenum = num;
 			var app = new Vue({
 				el: '#app',
@@ -241,15 +241,9 @@ beautyshuju(num, page, 'no');
 			}
 			//走访计划链接
 			function zf_jilu_nk(id, huhao) {
-				net_yno();
-				if(localStorage.net == 'false') {
-					mui.toast('请检查网络');
-					return false;
-				} else {
-					localStorage.setItem('user_zf_add_sc_id', id);
-					localStorage.setItem('user_zf_add_sc_huhao', huhao);
-					openWindows('user_zf_add_sc.html');
-				}
+				localStorage.setItem('user_zf_add_sc_id', id);
+				localStorage.setItem('user_zf_add_sc_huhao', huhao);
+				openWindows('user_zf_add_sc.html');
 			}
 		</script>
 	</body>

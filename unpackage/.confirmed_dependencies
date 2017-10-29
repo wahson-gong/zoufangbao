@@ -376,7 +376,8 @@
 			"js/mui.picker.js",
 			"css/mui.picker.css",
 			"user_list.html",
-			"images/8_16.png"
+			"images/8_16.png",
+			"index_saomiao.html"
 		],
 		"refer": [
 			"user_zf_zuijin.html",
@@ -406,7 +407,9 @@
 			"user_list1.html",
 			"user_zf_add_sca.html",
 			"user_zf_add_wei.html",
-			"tianqi.html"
+			"tianqi.html",
+			"user_zf_set.html",
+			"index_saomiao.html"
 		],
 		"priority": 0
 	},
@@ -685,7 +688,9 @@
 			"js/jcx.js",
 			"css/jcx.css",
 			"images/icon-right.png",
-			"images/icon-left.png"
+			"images/icon-left.png",
+			"js/vue.min.js",
+			"images/nopic.jpg"
 		],
 		"refer": [
 			"user_riji_list.html",
@@ -1086,6 +1091,32 @@
 			"js/mui.poppicker.js",
 			"css/mui.poppicker.css",
 			"css/mui.picker.css"
+		]
+	},
+	"index_saomiao.html": {
+		"resources": [
+			"index.html",
+			"js/jquery-1.11.2.min.js",
+			"css/pullToRefresh.css",
+			"js/mui.min.js",
+			"images/wutu.jpg",
+			"css/swiper.min.css",
+			"js/vue.min.js",
+			"images/icon-search.png",
+			"js/jcx.js",
+			"js/iscroll.min.js",
+			"images/icon-search0.png",
+			"images/icon-left.png",
+			"js/pullToRefresh.js",
+			"css/jcx.css",
+			"js/uploadimage/canvasResize.js",
+			"js/uploadimage/exif.js",
+			"images/xj.png",
+			"js/uploadimage/img_up2.js",
+			"js/uploadimage/binaryajax.js"
+		],
+		"refer": [
+			"index.html"
 		]
 	}
 }

@@ -11,6 +11,11 @@
 		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
 		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
 	</head>
+	<style>
+		/*.mui-poppicker-btn-cancel{
+				display: none;
+			}*/
+	</style>
 
 	<body>
 		<div class="gengxin-bar" id="gengxin-bar">
@@ -30,7 +35,7 @@
 				<div class="header hdA">
 					<div class="header-A1 clearfix">
 						<a class="head-box head-menu fl" v-on:click="menu_top"></a>
-						<a class="head-box head-sm fr" href="tianyi://open.app"></a>
+						<a class="head-box head-sm fr"  onclick="openWindows('index_saomiao.html')"   ></a>
 						<div class="header-h1">走访宝</div>
 					</div>
 				</div>
@@ -65,13 +70,13 @@
 									<div class="bg-ys1"></div>
 
 									<div class="m-h1 pad-lr-15 clearfix">
-										<a onclick="return linkA(this)" data-href="user_zf_jihua_list.html" class="m-h1-more fr">更多</a>
+										<a onclick="return jihua_linkA(this)" data-href="user_zf_jihua_list.html" class="m-h1-more fr">更多</a>
 										<p class="m-h1-t"><img src="images/nav-4.png" />&nbsp;&nbsp;走访计划<span v-cloak>({{zf_num}}户)</span></p>
 									</div>
 
 									<div class="pad-tb-5" v-cloak>
 
-										<div class="list-d1 list-d2 clearfix pad-lr-15 zf_jihua" v-for="li in zf_jihua" @click="zf_jihua_nk(li.jh_id,li.huhao)">
+										<div class="list-d1 list-d2 clearfix pad-lr-15 zf_jihua" v-for="li in zf_jihua" @click="zf_jihua_nk(li.jh_id,li.huhao,li.allxingming)">
 											<p class="list-d1-r t_r fr">{{li.zoufangzhuangtai}}</p>
 											<p class="list-d1-t t_l fl">{{li.u1}}-{{li.allxingming}}家</p>
 											<p class="list-d1-t t_c fl">{{li.newtime}}</p>
@@ -123,7 +128,7 @@
 									</div>
 
 									<div class="pad-tb-5" v-cloak>
-										<div class="list-d1 list-d2 clearfix pad-lr-15" v-for="li in wei_zf" @click="zf_wei_nk(li.huji.id,li.huji.huhao)">
+										<div class="list-d1 list-d2 clearfix pad-lr-15" v-for="li in wei_zf" @click="zf_wei_nk(li.huji.id,li.huji.huhao,li.huji.allxingming)">
 											<p class="list-d1-t t_l fl">{{li.cun.u1}}-{{li.huji.allxingming}}家</p>
 											<p class="list-d1-t t_c fl">{{li.huji.hujileixing}}</p>
 											<p class="list-d1-t t_r fl">{{li.huji.newtime}}</p>
@@ -231,6 +236,10 @@
 		<script type="text/javascript">
 			var num = 20;
 			var page = 1;
+			if(localStorage.bian == undefined) {
+				localStorage.bian = 'add';
+				localStorage.hao = '0';
+			}
 			mui.init({
 				gestureConfig: {
 					swipe: true,
@@ -244,6 +253,7 @@
 					user_suoshuzu: '',
 					user_touxiang: '',
 					zf_jihua: [],
+					zf_jihua_mt_num: 0,
 					zf_num: 0,
 					news: {},
 					zuijin_zf: [],
@@ -264,14 +274,14 @@
 					menu_down: function() {
 						$('.box-show,.menu-bar').removeClass('on');
 					},
-					zf_jihua_nk: function(id, huhao) {
-						zf_jihua_nk(id, huhao);
+					zf_jihua_nk: function(id, huhao, xm) {
+						zf_jihua_nk(id, huhao, xm);
 					},
 					zf_jilu_nk: function(id, huhao) {
 						zf_jilu_nk(id, huhao);
 					},
-					zf_wei_nk: function(id, huhao) {
-						zf_wei_nk(id, huhao);
+					zf_wei_nk: function(id, huhao, xm) {
+						zf_wei_nk(id, huhao, xm);
 					},
 				}
 			});
@@ -319,10 +329,34 @@
 					var id = event.detail;
 					Refresh();
 				});
+				document.addEventListener('user_zf_add_no', function(event) {
+					var id = event.detail;
+					var data = app.zf_jihua;
+					if(data.length > 0) {
+						for(var i = 0; i < data.length; i++) {
+							if(data[i].jh_id == id) {
+								data.splice(i, 1);
+								app.zf_jihua = data;
+								app.zf_num = data.length;
+								localStorage.hm_zf_jihua = JSON.stringify(data);
+							}
+						}
+					}
+					Refresh();
+				});
+				//走访记录【详情修改】
+				document.addEventListener('user_zf_add_sc', function(event) {
+					var id = event.detail;
+					Refresh();
+				});
 				//走访记录【直接新增走访记录】
 				document.addEventListener('user_zf_add_sca', function(event) {
 					var id = event.detail;
 					Refresh();
+				});
+				document.addEventListener('user_zf_add_sca_no', function(event) {
+					var id = event.detail;
+					app.add_num = id;
 				});
 				//走访计划设置
 				document.addEventListener('user_zf_set', function(event) {
@@ -355,11 +389,8 @@
 				if(localStorage.dataA_dizhiA == undefined && localStorage.net) {
 					data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 				}
-				var _getParam = function(obj, param) {
-					return obj[param] || '';
-				};
- 
 				
+
 				//网络检查
 				net_yno();
 				//检查更新
@@ -373,10 +404,13 @@
 
 			});
 
-//加载所属组
-data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
+var _getParam = function(obj, param) {
+					return obj[param] || '';
+				};
+			//加载所属组
+			data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 
-           //缓存数据上传
+			//缓存数据上传
 			function data_up() {
 				net_yno();
 				if(localStorage.net == 'false') {
@@ -390,6 +424,7 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 						return false;
 					} else {
 						//plus.nativeUI.showWaiting("上传数据中...");
+						mui.toast('上传数据中...');
 						if(data_edit.count != '0') {
 							data_sc(data_edit.list, 'edit');
 						}
@@ -402,13 +437,15 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 						setParam('data_add', '{"count":0,"list":[]}');
 						mui.toast('数据已上传');
 						//plus.nativeUI.closeWaiting();
+
 					}
 				}
 			}
 
 			function data_sc(data, type) {
 				for(var i = 0; i < data.length; i++) {
-					var nn = data.length - i;
+					var nn = data.length - i - 1;
+					mui.toast(nn);
 					if(type == 'add') {
 						app.add_num = nn;
 						console.log(nn);
@@ -474,41 +511,33 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 					openWindows('news_detail.html');
 				}
 			}
-			//走访计划链接
-			function zf_jihua_nk(id, huhao) {
-				net_yno();
-				if(localStorage.net == 'false') {
-					mui.toast('请检查网络');
-					return false;
+			//走访计划更多
+			function jihua_linkA() {
+				if(this.zf_jihua_mt_num == 0) {
+					openWindows('user_zf_set.html');
 				} else {
-					localStorage.setItem('user_zf_add_id', id);
-					localStorage.setItem('user_zf_add_huhao', huhao);
-					openWindows('user_zf_add.html');
+					openWindows('user_zf_jihua_list.html');
 				}
+			}
+			//走访计划链接
+			function zf_jihua_nk(id, huhao, xm) {
+				localStorage.setItem('user_zf_add_id', id);
+				localStorage.setItem('user_zf_add_huhao', huhao);
+				localStorage.setItem('user_zf_add_xm', xm);
+				openWindows('user_zf_add.html');
 			}
 			//走访记录链接
 			function zf_jilu_nk(id, huhao) {
-				net_yno();
-				if(localStorage.net == 'false') {
-					mui.toast('请检查网络');
-					return false;
-				} else {
-					localStorage.setItem('user_zf_add_sc_id', id);
-					localStorage.setItem('user_zf_add_sc_huhao', huhao);
-					openWindows('user_zf_add_sc.html');
-				}
+				localStorage.setItem('user_zf_add_sc_id', id);
+				localStorage.setItem('user_zf_add_sc_huhao', huhao);
+				openWindows('user_zf_add_sc.html');
 			}
 			//长期未走访链接
-			function zf_wei_nk(id, huhao) {
-				net_yno();
-				if(localStorage.net == 'false') {
-					mui.toast('请检查网络');
-					return false;
-				} else {
-					localStorage.setItem('user_zf_add_wei_id', id);
-					localStorage.setItem('user_zf_add_wei_huhao', huhao);
-					openWindows('user_zf_add_wei.html');
-				}
+			function zf_wei_nk(id, huhao, xm) {
+				localStorage.setItem('user_zf_add_wei_id', id);
+				localStorage.setItem('user_zf_add_wei_huhao', huhao);
+				localStorage.setItem('user_zf_add_wei_allxingming', xm);
+				openWindows('user_zf_add_wei.html');
 			}
 			//时间
 			function cq_time(data) {
@@ -595,8 +624,6 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 					setParam('dataA_dizhiA', newdata);
 				});
 			}
-			
-			 
 
 			function two_chuli(data) {
 				var n = data.length;
@@ -604,9 +631,9 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 				for(var i = 0; i < n; i++) {
 					getData(true, 'get', web_url() + '/?type=search&t=canshu&classid=' + data[i].id, '', function(result) {
 						var newdata = two_chuli(JSON.parse(result.msg));
-						try{
+						try {
 							setParam('newdata_' + data[i].id, newdata);
-						}catch(e){
+						} catch(e) {
 							//TODO handle the exception
 						}
 					});
@@ -687,6 +714,7 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 				}
 
 				if(localStorage.net == 'false') {
+					app.zf_jihua_mt_num = localStorage.zf_jihua_mt_num;
 					app.zf_num = localStorage.hm_zf_num;
 					app.zf_jihua = JSON.parse(localStorage.hm_zf_jihua);
 					app.zuijin_zf = JSON.parse(localStorage.hm_zuijin_zf);
@@ -696,18 +724,26 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 					app.yue_num = localStorage.hm_yue_num;
 
 				} else {
-					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=count(sl_zoufangjihua.id)%20as%20count_id&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=count(sl_zoufangjihua.id)%20as%20count_id&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27" + str_tm(1, 0) + "%27{and}%27" + str_tm(-2, 0) + "%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
 						app.zf_num = JSON.parse(result.msg)[0].count_id;
 						setParam('hm_zf_num', app.zf_num);
 					});
 					//走访计划 "sl_zoufangjihua.dtime{between}'"+time_qian('')+"'{and}'"+wx_time();
-					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27" + str_tm(1, 0) + "%27{and}%27" + str_tm(-2, 0) + "%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
 						app.zf_jihua = [];
 						var jdata = JSON.parse(result.msg);
 						var datat = [];
 						extendA(datat, jdata, 3);
 						app.zf_jihua = tmF_chuli(datat);
 						setParam('hm_zf_jihua', JSON.stringify(app.zf_jihua));
+					});
+					//
+
+					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27" + str_tm(-1, 0) + "%27{and}%27" + str_tm(-2, 1) + "%27,sl_zoufangjihua.suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+						var n = JSON.parse(result.msg).length;
+						console.log(n);
+						this.zf_jihua_mt_num = n;
+						setParam('zf_jihua_mt_num', n);
 					});
 					var wk = week_time().split('*');
 					//最近走访
@@ -789,15 +825,20 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 			document.getElementById('yhm_login').addEventListener('tap', function() {
 				mui.confirm('退出登录？', '操作提示', ['确定', '取消'], function(v) {
 					if(v.index == 0) {
-						delParam('login_status');
-						delParam('login_token');
-						delParam('ubase');
-						delParam('login_suoshucun_txt');
-						delParam('login_suoshuzu_txt');
+						//						delParam('login_status');
+						//						delParam('login_token');
+						//						delParam('ubase');
+						//						delParam('login_suoshucun_txt');
+						//						delParam('login_suoshuzu_txt');
 						//delParam('yonghuming');
+						var yonghuming = getParam("yonghuming");
+						var tianqi = getParam("tianqi");
+						localStorage.clear();
+						setParam("yonghuming", yonghuming);
+						setParam("tianqi", tianqi);
 						mui.toast('退出成功！');
 						app.menu_top();
-						plus.webview.show('login.html');
+						//plus.webview.show('login.html');
 						openWindows('login.html');
 					}
 				});
@@ -818,34 +859,36 @@ data_two(JSON.parse(localStorage.ubase).msg[0].suoshucun);
 						setParam("login_suoshuzu_txt", app.user_suoshuzu);
 						setParam("login_suoshucun_txt", app.user_suoshucun);
 						console.log(result.msg[0].touxiang);
-						if(app.user_touxiang.indexOf('http') < 0) {
-							app.user_touxiang = web_url() + "/" + app.user_touxiang;
+						if(app.user_touxiang != "" && app.user_touxiang != null) {
+							if(app.user_touxiang.indexOf('http') < 0) {
+								app.user_touxiang = web_url() + "/" + app.user_touxiang;
+							}
 						}
+
 						$('#user_tx').css('background-image', 'url(' + app.user_touxiang + ')');
 						console.log(app.user_touxiang);
-						
-						var cityData3 = JSON.parse(localStorage.dataA_dizhiA.replace(/undefined/g,"[]"));
-				var cityPicker3 = new mui.PopPicker();
-				cityPicker3.setData(cityData3);
-				var showCityPickerButton = document.getElementById('suozaidiqu');
-				showCityPickerButton.addEventListener('tap', function(event) {
-					cityPicker3.show(function(items) {
-						if(_getParam(items[0], 'value') == '') {
-							mui.toast('请选项组');
-							return false;
-						} else {
-							var data = JSON.parse(localStorage.ubase);
-							app.user_suoshuzu = _getParam(items[0], 'text');
-							setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
-							data.msg[0].suoshuzu = _getParam(items[0], 'value');
-							setParam('ubase', JSON.stringify(data));
-							var data1 = '&suoshuzu=' + _getParam(items[0], 'value');
-							user_edit(data1);
-							app.edit_num = JSON.parse(localStorage.data_edit).count;
-						}
-					});
-				}, false);
 
+						var cityData3 = JSON.parse(localStorage.dataA_dizhiA.replace(/undefined/g, "[]"));
+						var cityPicker3 = new mui.PopPicker();
+						cityPicker3.setData(cityData3);
+						var showCityPickerButton = document.getElementById('suozaidiqu');
+						showCityPickerButton.addEventListener('tap', function(event) {
+							cityPicker3.show(function(items) {
+								if(_getParam(items[0], 'value') == '') {
+									mui.toast('请选项组');
+									return false;
+								} else {
+									var data = JSON.parse(localStorage.ubase);
+									app.user_suoshuzu = _getParam(items[0], 'text');
+									setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+									data.msg[0].suoshuzu = _getParam(items[0], 'value');
+									setParam('ubase', JSON.stringify(data));
+									var data1 = '&suoshuzu=' + _getParam(items[0], 'value');
+									user_edit(data1);
+									app.edit_num = JSON.parse(localStorage.data_edit).count;
+								}
+							});
+						}, false);
 
 					}
 				});

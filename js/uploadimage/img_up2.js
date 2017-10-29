@@ -151,6 +151,7 @@ function loadSingleImage(img_val) {
 		},
 		dataType: "json",
 		success: function(data) {
+			console.log("上传成功"+data['msg'])
 			$('#touxiang').val(data['msg']);
 		},
 		eror: function() {

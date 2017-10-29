@@ -69,7 +69,6 @@
 				if(pagenum != '0') {
 					page++;
 				}
-
 				refresher.init({
 					id: "wrapper",
 					pullDownAction: Refresh,
@@ -77,7 +76,17 @@
 					scrollAction: Ascroll,
 					scrollEndAction: AscrollEnd,
 				});
-
+				setTimeout(function() {
+					var timea_num = 0;
+					var timea = setInterval(function() {
+						timea_num++;
+						if(timea_num > 140) {
+							clearInterval(timea);
+						} else {
+							wrapper.refresh();
+						}
+					}, 50);
+				}, 100);
 			});
 		</script>
 		<script type="text/javascript">
@@ -163,17 +172,7 @@
 
 			}
 
-			setTimeout(function() {
-				var timea_num = 0;
-				var timea = setInterval(function() {
-					timea_num++;
-					if(timea_num > 140) {
-						clearInterval(timea);
-					} else {
-						wrapper.refresh();
-					}
-				}, 50);
-			}, 100);
+			
 			document.addEventListener('user_zf_add', function(event) {
 				var id = event.detail;
 				Refresh();
@@ -229,15 +228,9 @@
 			}
 			//走访计划链接
 			function zf_jilu_nk(id, huhao) {
-				net_yno();
-				if(localStorage.net == 'false') {
-					mui.toast('请检查网络');
-					return false;
-				} else {
-					localStorage.setItem('user_zf_add_sc_id', id);
-					localStorage.setItem('user_zf_add_sc_huhao', huhao);
-					openWindows('user_zf_add_sc.html');
-				}
+				localStorage.setItem('user_zf_add_sc_id', id);
+				localStorage.setItem('user_zf_add_sc_huhao', huhao);
+				openWindows('user_zf_add_sc.html');
 			}
 		</script>
 	</body>

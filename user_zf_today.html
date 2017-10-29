@@ -174,15 +174,9 @@ function data_chuli(data){
 }
 //走访计划链接
 function zf_jilu_nk(id,huhao){
-	net_yno();
-	if(localStorage.net=='false'){
-		mui.toast('请检查网络');
-		return false;
-	}else{
-		localStorage.setItem('user_zf_add_sc_id',id);
-		localStorage.setItem('user_zf_add_sc_huhao',huhao);
-		openWindows('user_zf_add_sc.html');
-	}
+	localStorage.setItem('user_zf_add_sc_id', id);
+	localStorage.setItem('user_zf_add_sc_huhao', huhao);
+	openWindows('user_zf_add_sc.html');
 }		
 	</script>
 </body>

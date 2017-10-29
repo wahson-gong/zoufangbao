@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>选择入户家庭</title>
+    <title>走访记录新增</title>
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
     <link rel="stylesheet" type="text/css" href="css/mui.picker.css"/>
@@ -157,11 +157,11 @@
 	<script type="text/javascript">
 document.addEventListener('user_ry_set', function(event) {
     var id = event.detail.id;
-    //document.getElementById("suozaihuji").value=event.detail.jia+'【户号：'+event.detail.huhao+'】';
     document.getElementById("suozaihuji").value=event.detail.jia;
-   
-   document.getElementById("huhao").value=event.detail.huhao;
-    huji(event.detail.huhao);
+   	document.getElementById("huhao").value=event.detail.huhao;
+   	$('.header-h1').text(event.detail.allxingming	+'家走访记录');
+	document.getElementById("huzhuxingming").value=event.detail.allxingming;
+
 });	
 function tx_ck(){
 	mui('#picture').popover('toggle');
@@ -173,12 +173,6 @@ function txA(){
 function txB(){
 	galleryImgs(8);
 	tx_ck();
-}
-function huji(huhao){
-	getData(true,'get',web_url()+'/?type=search&t=huji&huhao='+huhao+rizi(),'',function(result){
-		$('.header-h1').text(JSON.parse(result.msg)[0].allxingming	+'家走访记录');
-		document.getElementById("huzhuxingming").value=JSON.parse(result.msg)[0].allxingming;
-	});
 }
 		
 var app = new Vue({
@@ -340,11 +334,18 @@ document.addEventListener('plusready', function(){
 				add_list.push(add_listA);
 				data_add.list=add_list;
 				setParam('data_add',JSON.stringify(data_add));
+				mui.fire(webview_detailJ,'user_zf_add_sca_no',add_count+1);
+				mui.fire(webview_detailA,'user_zf_add_sca_no',add_count+1);
+				mui.fire(webview_detailB,'user_zf_add_sca_no',add_count+1);
+				mui.fire(webview_detailC,'user_zf_add_sca_no',add_count+1);
+				mui.fire(webview_detailD,'user_zf_add_sca_no',add_count+1);
+				mui.fire(webview_detailE,'user_zf_add_sca_no',add_count+1);
+				mui.fire(webview_detailF,'user_zf_add_sca_no',add_count+1);
 				plus.nativeUI.closeWaiting();
+				mui.toast('提交成功！');
 				mui.back();
 			}else{
 				getData(true,'post',url1,data1,function(result){
-					mui.toast('提交成功！');
 					mui.fire(webview_detailJ,'user_zf_add_sca',localStorage.yonghuming);
 					mui.fire(webview_detailA,'user_zf_add_sca',localStorage.yonghuming);
 					mui.fire(webview_detailB,'user_zf_add_sca',localStorage.yonghuming);
@@ -353,6 +354,7 @@ document.addEventListener('plusready', function(){
 					mui.fire(webview_detailE,'user_zf_add_sca',localStorage.yonghuming);
 					mui.fire(webview_detailF,'user_zf_add_sca',localStorage.yonghuming);
 					plus.nativeUI.closeWaiting();
+					mui.toast('提交成功！');
 					mui.back();
 				});
 			}

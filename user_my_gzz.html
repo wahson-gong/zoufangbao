@@ -7,6 +7,12 @@
 		<title>我的工作组</title>
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<style>
+			.mui-table-view-cell.mui-media .mui-media-object.mui-pull-left {
+				height: 40px;
+				width: 40px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -32,7 +38,7 @@
 								<p class="renyuan-p">我的走访</p>
 							</div>
 						</a>
-						<a onclick="setParam('index_search','');return linkA(this)" data-href="user_cun_ren.html" class="bd-btm pad-lr-15 dbk">
+						<a onclick="return linkA(this)" data-href="user_cun_ren.html" class="bd-btm pad-lr-15 dbk">
 							<div class="renyuan-bar ys7">
 								<p class="renyuan-p"><span class="fr ys1 ys3" id="renyuan"></span>村内人员</p>
 							</div>
@@ -42,17 +48,37 @@
 								<p class="renyuan-p"><span class="fr ys1 ys3" id="huji"></span>村内户籍</p>
 							</div>
 						</a>
-
 					</div>
+					<div id="app">
+						<ul style="list-style: none;padding-left: 0;margin: 0;">
+							<li style="height: 60px;border: 3px solid #dddddd;border-width: 0 0 1px 0;padding: 10px 0 10px 10px;" v-for="lt in contact_lists">
+								<img style="width: 60px;height: 60px;border-radius: 30px;float: left;margin-right: 20px;" :src="lt.touxiang">
+								<div style="padding: 4px;color: #333;">姓名：{{lt.xingming}} </div>
+								<div style="padding: 4px;color: #333;">电话：
+									<a href="tel:{{lt.yonghuming}}" style="padding: 4px;color: #333;">{{lt.yonghuming}}</a>
+								</div>
+							</li>
 
+						</ul>
+					</div>
 				</div>
 			</div>
+			<div id="test"></div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			var app = new Vue({
+				el: '#app',
+				data: {
+					contact_lists: [],
+					img_href: web_url() + '/',
+				}
+			});
+
 			mui.init({
 				swipeBack: true
 			});
@@ -65,7 +91,23 @@
 				getData(true, 'get', web_url() + "/?type=search&t=huji&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
 					document.getElementById("huji").innerText = JSON.parse(result.msg)[0].count_id;
 				});
-
+				getData(true, 'get', web_url() + "?type=search&t=user&suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu, '', function(result) {
+					//document.getElementById("test2").innerText = JSON.parse(result.msg)[0].xingming; 
+					app.contact_lists = JSON.parse(result.msg);
+					for(var i = 0; i < app.contact_lists.length; i++) {
+						
+						if(app.contact_lists[i].touxiang != null && app.contact_lists[i].touxiang != "") {
+							if(app.contact_lists[i].touxiang.indexOf('http') < 0) {
+								app.contact_lists[i].touxiang = web_url() + "/" + app.contact_lists[i].touxiang;
+							}
+						}else
+						{
+							app.contact_lists[i].touxiang="./images/nopic.jpg"
+						}
+							//console.log(app.contact_lists[i].touxiang);
+					}
+					//console.log(app.contact_lists)
+				});
 			});
 		</script>
 		<script type="text/javascript">

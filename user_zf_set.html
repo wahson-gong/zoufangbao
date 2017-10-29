@@ -51,7 +51,7 @@
 					<div class="mui-views-r">
 						<div class="wrapper" id="wrapper">
 							<ul>
-								<li v-for="li in list" :key="">
+								<li v-for="li in list " >
 									<div class="renyuan-bar pad-lr-15">
 										<div class="renyuan-p">
 											<div class="rdo-div act" v-if="li.bl=='no'" :data-type="li.hujileixing" :data-jh_yhm="li.jh_yhm" :data-jh_id="li.jh_id" :data-value="li.huhao"></div>
@@ -231,8 +231,8 @@
 					pagenum = parseInt(pagenum);
 					if(pagenum >= num || page == 1) {
 						//var url_a=web_url()+'/?type=search&t=huji&liemingcheng=id,hujileixing,huhao,allxingming,menpaihao&status=终审&number='+num+'&page='+page+'&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun+u1+rizi()+'&ordertype=convert(allxingming using gbk)&orderby='+orderby;
-						var url_a = web_url() + '/?type=hujil_div1&t=huji&liemingcheng=sl_huji.hujileixing,sl_huji.huhao,sl_huji.allxingming,sl_huji.menpaihao&status=终审&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + u1 + '&ordertype=' + type + '&orderby=' + orderby + '&yonghuming=' + localStorage.yonghuming + rizi();
-
+						var url_a = web_url() + '/?type=hujil_div1&t=huji&liemingcheng=hujileixing,huhao,allxingming,menpaihao&status=终审&number=' + num + '&page=' + page  + u1 + '&ordertype=' + type + '&orderby=' + orderby +  rizi();
+console.log(url_a);
 						getData(true, 'get', url_a, '', function(result) {
 							var dlist = JSON.parse(result.msg);
 							if(result.msg == '') {
@@ -302,6 +302,7 @@
 					setParam('huji_zf_paixu_set', type);
 					app.ordertype = type;
 				}
+				//$('.zf-set-btm-p').text("请选择走访人家");
 				Refresh();
 			});
 
@@ -429,7 +430,7 @@
 						getData(false, 'get', url_b, '', function(result) {
 							if(result.msg == "[]") {
 								var url1 = web_url() + '/?type=add&t=zoufangjihua';
-								var data1 = 'huhao=' + updata[i] + '&dtime=' + dtime + '&zoufangzhuangtai=未走访' + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + '&suoshuzu=' + JSON.parse(localStorage.ubase).msg[0].suoshuzu + "&yonghuming=" + localStorage.yonghuming + rizi() + "&dtime=" + timeA();
+								var data1 = 'huhao=' + updata[i] + '&dtime=' + dtime + '&zoufangzhuangtai=未走访' + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + '&suoshuzu=' + JSON.parse(localStorage.ubase).msg[0].suoshuzu + "&yonghuming=" + localStorage.yonghuming + rizi() + "&dtime=" + str_tm(-1,3);
 								var data_url = url1 + '&' + data1;
 								if(localStorage.net == 'false') {
 									if(localStorage.data_add == undefined) {

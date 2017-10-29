@@ -10,7 +10,7 @@
     "icons": {
         "72": "icon.png"
     },
-    "launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "launch_path": "home.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
     "developer": {
         "name": "",/*开发者名称*/
         "email": "",/*开发者邮箱地址*/
@@ -656,7 +656,8 @@
 					"js/mui.picker.js",
 					"css/mui.picker.css",
 					"user_list.html",
-					"images/8_16.png"
+					"images/8_16.png",
+					"index_saomiao.html"
 				],
 				"refer": [
 					"user_zf_zuijin.html",
@@ -677,7 +678,8 @@
 					"user_list1.html",
 					"user_zf_add_sca.html",
 					"user_zf_add_wei.html",
-					"tianqi.html"
+					"tianqi.html",
+					"user_zf_set.html"
 				],
 				"priority": 0
 			},
@@ -951,7 +953,9 @@
 					"js/jcx.js",
 					"css/jcx.css",
 					"images/icon-right.png",
-					"images/icon-left.png"
+					"images/icon-left.png",
+					"js/vue.min.js",
+					"images/nopic.jpg"
 				],
 				"refer": [
 					"user_huji_list.html",
@@ -1361,6 +1365,31 @@
 					"js/mui.poppicker.js",
 					"css/mui.poppicker.css",
 					"css/mui.picker.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"index_saomiao.html": {
+				"resources": [
+					"index.html",
+					"js/jquery-1.11.2.min.js",
+					"css/pullToRefresh.css",
+					"js/mui.min.js",
+					"images/wutu.jpg",
+					"css/swiper.min.css",
+					"js/vue.min.js",
+					"images/icon-search.png",
+					"js/jcx.js",
+					"js/iscroll.min.js",
+					"images/icon-search0.png",
+					"images/icon-left.png",
+					"js/pullToRefresh.js",
+					"css/jcx.css",
+					"js/uploadimage/canvasResize.js",
+					"js/uploadimage/exif.js",
+					"images/xj.png",
+					"js/uploadimage/img_up2.js",
+					"js/uploadimage/binaryajax.js"
 				],
 				"refer": [],
 				"priority": 0

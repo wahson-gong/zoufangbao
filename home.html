@@ -28,12 +28,19 @@
 <script type="text/javascript">
 mui.init();
 mui.plusReady(function() {
-	if(localStorage.data_edit==undefined){
-		setParam('data_edit','{"count":0,"list":[]}');
+	//登录验证
+	if(localStorage.ubase==undefined){
+		openWindows('login.html');
+	}else{
+		openWindows('index.html');
 	}
-	if(localStorage.data_add==undefined){
-		setParam('data_add','{"count":0,"list":[]}');
-	}
+//	
+//	if(localStorage.data_edit==undefined){
+//		setParam('data_edit','{"count":0,"list":[]}');
+//	}
+//	if(localStorage.data_add==undefined){
+//		setParam('data_add','{"count":0,"list":[]}');
+//	}
 	
 //	//网络检查
 //	net_yno();
@@ -45,12 +52,7 @@ mui.plusReady(function() {
 //	        sessionStorage.setItem('upgrade','1');
 //	    });
 //	}
-	//登录验证
-	if(localStorage.ubase==undefined){
-		openWindows('login.html');
-	}else{
-		openWindows('index.html');
-	}
+	
 });
 		
 </script>
