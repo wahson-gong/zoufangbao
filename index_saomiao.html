@@ -79,7 +79,7 @@
 		<script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/uploadimage/img_up2.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/img_up2_saomiao.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -100,7 +100,7 @@
 			}
 			
 			function txA() {
-				cameraimages(1);
+				cameraimages();
 				tx_ck();
 			}
 
@@ -112,9 +112,10 @@
 			
 			function search_sfz() {
 				//上传头像
-				imgupgrade();
+				//imgupgrade();
 				//var img_url="public/uploads/20171028/2017102817362259f44f96719c4.png";
 				var img_url=$("#touxiang").val();
+				$("#touxiang").val("");
 				//识别
 				getData(true, 'get', web_url() + '/?type=shenfenzhengshibie&img_url='+web_url()+"/"+img_url, '', function(result) {
 					

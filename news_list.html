@@ -97,7 +97,11 @@
 			});
 
 			function beautyshuju(num, page, yno) {
-
+if(localStorage.news_list != undefined) {
+					    app.isActive = true;
+						app.news = JSON.parse(localStorage.news_list);
+					} 
+					
 				if(localStorage.net == 'false') {
 					if(localStorage.news_list != undefined) {
 						app.news = JSON.parse(localStorage.news_list);

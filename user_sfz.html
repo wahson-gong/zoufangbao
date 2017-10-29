@@ -1,41 +1,215 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>设置</title>
-    <link rel="stylesheet" type="text/css" href="css/swiper.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/jcx.css"/>
-</head>
-<body>
-	<div class="mui-views">
-		<div class="header hdA">
-			<div class="header-A1 clearfix">
-				<a class="head-box head-back head-backA fl mui-action-back"></a>
-				<div class="header-h1">读取身份证</div>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设置</title>
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+	</head>
+
+	<body>
+		<div class="mui-views">
+			<div class="header hdA">
+				<div class="header-A1 clearfix">
+					<a class="head-box head-back head-backA fl mui-action-back"></a>
+					<div class="header-h1">读取身份证</div>
+				</div>
 			</div>
-		</div>
-		<div class="mui-views" style="height: auto;top: 44px;">
-			<div class="mui-views-r">
-				<div class="sfz-cover">
-					<div class="sfz-pic mar-b-10" style="background-image: url(images/sfz1.jpg);"></div>
-					<div class="sfz-pic mar-b-10" style="background-image: url(images/sfz2.jpg);"></div>
-					<br /><br />
-					<div class="sfz-btn on mar-b-10" data-text = "继续读取">开始读取</div>
-					<div class="clearfix">
-						<div class="sfz-btn on w-50 fl ys1 box-sizing">新增人员</div>
-						<div class="sfz-btn w-50 fl ys2 box-sizing">搜索人员</div>
+			<div class="mui-views" style="height: auto;top: 44px;">
+				<div class="mui-views-r">
+					<div class="sfz-cover">
+						<div class="sfz-pic mar-b-10 pst-r tct bg-c1" id="tu" onclick="return tx_ck()">
+							<div class="pst-a wh-100 p-lt br-10">
+								<div class="table " id="sfz_bg">
+									<div  class="table-cell ft-14 c-333">点击上传图片/拍照</div>
+								</div>
+							</div>
+						</div>
+						<div class="sfz-pic mar-b-10 pst-r">
+							<div class="pst-a wh-100 p-lt br-10 bg-c1">
+								<div style="height: 6px;" class="pst-r w-100">
+									<div class="pst-a tct fs-14 c-fff" onclick="return search_sfz()" style="top: 150px;right: 10px;padding: 5px;background: #4996E6;border-radius: 6px;font-size: 14px;z-index: 2;">读取信息</div>
+								</div>
+								<div class="" style="position: relative;">
+									<div class="clearfix">
+										<div class="ft-a">姓名</div>
+										<!--<div class="ft-b" id="xingming"></div>-->
+										<input type="text" class="ft-b b1" id="xingming" />
+									</div>
+									<div class="clearfix">
+										<div class="ft-a">性别</div>
+										<!--<div class="ft-b" id="xingbie"></div>-->
+										<input type="text" class="ft-b b1" id="xingbie" />
+										<div class="ft-a">民族</div>
+										<!--<div class="ft-b" id="minzu"></div>-->
+										<input type="text" class="ft-b b1" id="minzu" />
+									</div>
+									<div class="clearfix">
+										<div class="ft-a">出生日期</div>
+										<!--<div class="ft-b" id="chushengriqi"></div>-->
+										<input type="text" class="ft-b b2" id="chushengriqi" />
+									</div>
+									<div class="clearfix mar-b-10">
+										<div class="ft-a">住址</div>
+										<!--<div class="ft-b" id="shenfenzhengdizhi"></div>-->
+										<input type="text" class="ft-b b3" id="shenfenzhengdizhi" />
+									</div>
+									<div class="clearfix">
+										<div class="ft-a">公民身份证号</div>
+										<!--<div class="ft-b" id="shenfenzhenghao"></div>-->
+										<input type="text" class="ft-b b3"  id="shenfenzhenghao" />
+									</div>
+									<div class="clearfix">
+										<div class="ft-a">签发机关</div>
+										<!--<div class="ft-b"></div>-->
+										<input type="text" class="ft-b b3" id="chushengriqi" />
+									</div>
+									<div class="clearfix">
+										<div class="ft-a">有效期限</div>
+										<!--<div class="ft-b"></div>-->
+										<input type="text" class="ft-b b2" id="chushengriqi" />
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<br /><br />
+
+						<div class="clearfix">
+							<div class="btn-ys1 fl" id="cx" onclick="return cx_ry()" style="width: 48%;">查询人员</div>
+							<div class="btn-ys1 fr" id="xz" onclick="return xz_ry()" style="width: 48%;">新增人员</div>
+						</div>
+						<br />
+						<div class="btn-ys1" id="sb">NFC识别</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-		mui.init({
-			swipeBack: true
-		});
-	</script>
-</body>
+
+		<div id="picture" class="mui-popover mui-popover-action mui-popover-bottom">
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txA()">拍照上传</a>
+				</li>
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="txB()">从相册选取</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view li_nn">
+				<li class="mui-table-view-cell li_nn">
+					<a onclick="return tx_ck()"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+		<input type="hidden" name="touxiang" id="touxiang" />
+
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/binaryajax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/exif.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/canvasResize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/uploadimage/img_up2_saomiao.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: true
+			});
+			//清楚上次的缓存
+			delParam("sfz");delParam("cx_data");
+
+			function tx_ck() {
+				mui('#picture').popover('toggle');
+			}
+
+			function txA() {
+				cameraimages(999);
+				tx_ck();
+
+			}
+
+			function txB() {
+				galleryImgs(999);
+				tx_ck();
+
+			}
+
+			function search_sfz() {
+				//上传头像
+				imgupgrade();
+				
+				var img_url = $("#touxiang").val();
+				if(img_url==""||img_url==null)
+				{
+					mui.toast("请选择或上传图片");
+					return false;
+				}
+				
+				//识别
+				plus.nativeUI.showWaiting("身份证识别中...");
+				getData(true, 'get', web_url() + '/?type=shenfenzhengshibie&img_url=' + web_url() + "/" + img_url, '', function(result) {
+                    plus.nativeUI.closeWaiting();
+					console.log(web_url() + '/?type=shenfenzhengshibie&img_url=' + web_url() + "/" + img_url);
+					console.log(JSON.stringify(result.msg));
+					 
+					setParam('sfz', JSON.stringify(result.msg));
+					$("#shenfenzhengdizhi").val(result.msg.shenfenzhengdizhi);
+					$("#chushengriqi").val(result.msg.chushengriqi);
+					$("#xingming").val(result.msg.xingming);
+					$("#shenfenzhenghao").val(result.msg.shenfenzhenghao);
+					$("#xingbie").val(result.msg.xingbie);
+					$("#minzu").val(result.msg.minzu);
+
+				});
+			}
+			//查询人员
+			function cx_ry() {
+				var img_url = $("#touxiang").val();
+				if(img_url==""||img_url==null)
+				{
+					mui.toast("请选择或上传图片");
+					return false;
+				}
+				
+//				if($("#shenfenzhenghao").val()==""||$("#shenfenzhenghao").val()==null)
+//				{
+//					mui.toast("身份证号不能为空");
+//					return false;
+//				}
+				
+				
+				var xm = $("#xingming").val();
+				var sfzh = $("#shenfenzhenghao").val();
+				var cx_data = {
+					"xingming": xm,
+					"shenfenzhenghao": sfzh
+				};
+				localStorage.cx_data = JSON.stringify(cx_data);
+				openWindows('user_cun_ren_sfz.html');
+			}
+			//新增人员
+			function xz_ry() {
+              var img_url = $("#touxiang").val();
+				if(img_url==""||img_url==null)
+				{
+					mui.toast("请选择或上传图片");
+					return false;
+				}
+				var sfz_str=getParam("sfz");
+				if(sfz_str==""||sfz_str==null)
+				{
+					mui.toast("没有身份证信息");
+					return false;
+				}
+                openWindows('user_renyuan_add_sfz.html');
+			}
+		</script>
+	</body>
+
 </html>

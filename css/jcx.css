@@ -12,6 +12,48 @@ a{
 [v-cloak] {
   display: none;
 }
+.tct{
+	text-align: center;
+}
+.br-10{
+	border-radius: 10px;
+}
+.bg-c1{
+	background: #f7f7f8;
+}
+.ft-14{
+	font-size: 14px;
+}
+.ft-a,.ft-b{
+	float: left;
+	font-size: 14px;
+	line-height: 26px;
+	margin: 0px 15px;
+}
+.ft-a{
+	color: #38cce2;
+}
+.ft-b{
+	color: #333;
+	border: none;
+	display: block;
+	background: transparent;
+}
+.ft-b.b1{
+	width: 60px;
+}
+.ft-b.b2{
+	width: 120px;
+}
+.ft-b.b3{
+	width: 160px;
+}
+.ft-b.b3_ghy{
+	width: 95%;
+}
+.c-fff{
+	color: #fff;
+}
 .li_nn{
 	list-style: none;
 }
@@ -112,6 +154,9 @@ a{
 	display: table;
 	width: 100%;
 	height: 100%;
+}
+.table .img_ghy{
+	background-size:300px 200px
 }
 .table.ys1{
 	height: auto;
@@ -1539,6 +1584,15 @@ input.renyuan-input.ys1:-ms-input-placeholder {
 	font-size: 12px;
 	line-height: 16px;
 	padding: 0px 4px;
+	min-width: 36px;
+	text-align: center;
+}
+
+.span_ghy{
+	color: #eb6100;
+	border-radius: 6px;
+	font-size: 12px;
+	line-height: 16px;
 	min-width: 36px;
 	text-align: center;
 }

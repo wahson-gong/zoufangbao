@@ -432,7 +432,8 @@
 					"js/mui.min.js",
 					"js/iscroll.min.js",
 					"images/wutu.jpg",
-					"images/nopic.jpg"
+					"images/nopic.jpg",
+					"images/loading.png"
 				],
 				"refer": [
 					"user_zf_add.html",
@@ -679,7 +680,8 @@
 					"user_zf_add_sca.html",
 					"user_zf_add_wei.html",
 					"tianqi.html",
-					"user_zf_set.html"
+					"user_zf_set.html",
+					"user_sfz.html"
 				],
 				"priority": 0
 			},
@@ -1157,7 +1159,8 @@
 					"css/swiper.min.css",
 					"images/icon-left.png",
 					"css/jcx.css",
-					"images/wutu.jpg"
+					"images/wutu.jpg",
+					"images/loading.png"
 				],
 				"refer": [
 					"user_list.html",
@@ -1392,6 +1395,95 @@
 					"js/uploadimage/binaryajax.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"user_sfz.html": {
+				"resources": [
+					"js/uploadimage/canvasResize.js",
+					"js/uploadimage/exif.js",
+					"js/jquery-1.11.2.min.js",
+					"js/uploadimage/img_up2.js",
+					"js/mui.min.js",
+					"js/uploadimage/binaryajax.js",
+					"css/swiper.min.css",
+					"js/vue.min.js",
+					"js/jcx.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"images/icon-left.png",
+					"css/jcx.css",
+					"js/uploadimage/img_up2_saomiao.js"
+				],
+				"refer": [
+					"user_cun_ren.html",
+					"user_renyuan_add_sfz.html",
+					"user_cun_ren_sfz.html"
+				],
+				"priority": 0
+			},
+			"user_renyuan_add_sfz.html": {
+				"resources": [
+					"js/mui.picker.min.js",
+					"images/wutu.jpg",
+					"images/cicon-1.png",
+					"images/bicon-9.png",
+					"js/vue.min.js",
+					"js/jcx.js",
+					"images/bicon-8.png",
+					"js/uploadimage/exif.js",
+					"images/bicon-2.png",
+					"images/bicon-1.png",
+					"images/bicon-4.png",
+					"js/mui.min.js",
+					"js/mui.poppicker.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.min.css",
+					"images/bicon-5.png",
+					"images/bicon-10.png",
+					"js/mui.picker.js",
+					"js/jquery-1.11.2.min.js",
+					"js/uploadimage/img_up2.js",
+					"images/bicon-11.png",
+					"images/bicon-12.png",
+					"css/mui.picker.css",
+					"css/mui.css",
+					"js/city.data-3.js",
+					"js/pullToRefresh.js",
+					"images/bicon-13.png",
+					"js/uploadimage/canvasResize.js",
+					"images/xj.png",
+					"css/pullToRefresh.css",
+					"images/bicon-6.png",
+					"images/bicon-7.png",
+					"js/uploadimage/binaryajax.js",
+					"css/swiper.min.css",
+					"images/bicon-14.png",
+					"images/bicon-3.png",
+					"js/iscroll.min.js",
+					"css/jcx.css",
+					"images/icon-left.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"user_cun_ren_sfz.html": {
+				"resources": [
+					"js/jquery-1.11.2.min.js",
+					"css/pullToRefresh.css",
+					"js/mui.min.js",
+					"css/swiper.min.css",
+					"js/vue.min.js",
+					"js/jcx.js",
+					"js/iscroll.min.js",
+					"js/pullToRefresh.js",
+					"css/jcx.css",
+					"images/loading.png",
+					"images/icon-left.png",
+					"images/wutu.jpg"
+				],
+				"refer": [
+					"user_cun_ren_detail.html"
+				],
 				"priority": 0
 			}
 		},

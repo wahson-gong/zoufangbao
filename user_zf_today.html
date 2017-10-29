@@ -19,7 +19,11 @@
 		</div>
 		<div class="mui-views" style="height: auto;top: 44px;">
 			<div class="mui-views-r" id="app">
-				
+				<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+					<div class="table">
+						<div class="table-cell"><span class="mui-spinnerA"></span></div>
+					</div>
+				</div>
 <div class="wrapper" id="wrapper">
 	<ul v-cloak>
 		<li class="yistA" v-for="li in news" @click="zf_jilu_nk(li.id,li.huhao)">
@@ -65,6 +69,9 @@ var app = new Vue({
   	el: '#app',
   	data: {
     	news: {},
+    	isActive: false,
+		activeClass: 'active',
+		errorClass: 'status pst1',
     	img_href:web_url()+'/',
   	},
   	methods:{
@@ -93,11 +100,16 @@ function beautyshuju(num,page,yno){
 				pagenum=data.length;
 			}
 			document.getElementById("wrapper").setAttribute('data-pagenum',pagenum);
-			app.$nextTick(function(){
-				if(yno!='no'){
-					setTimeout(function(){
+			app.$nextTick(function() {
+				if(yno != 'no') {
+					setTimeout(function() {
 						wrapper.refresh();
-					},300);
+						app.isActive = true;
+					}, 300);
+				} else {
+					setTimeout(function() {
+						app.isActive = true;
+					}, 300);
 				}
 			});
 		});

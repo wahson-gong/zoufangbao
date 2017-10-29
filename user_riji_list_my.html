@@ -21,11 +21,11 @@
 			</div>
 			<div class="mui-views" style="height: auto;top: 44px;">
 				<div class="pst-r w-100 h-100" id="app">
-					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+					<div v-bind:class="[isActive ? activeClass : '', errorClass]">
 						<div class="table">
 							<div class="table-cell"><span class="mui-spinnerA"></span></div>
 						</div>
-					</div>-->
+					</div>
 					<div id="wrapper" class="wrapper">
 						<ul>
 							<li v-for="li in news" :data-id="li.id" @click="news_nk(li.id)">
@@ -74,7 +74,7 @@
 					news: {},
 					isActive: false,
 					activeClass: 'active',
-					errorClass: 'status',
+					errorClass: 'status pst1',
 				},
 				methods: {
 					news_nk: function(id) {

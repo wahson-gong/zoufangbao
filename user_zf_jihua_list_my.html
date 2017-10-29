@@ -21,7 +21,11 @@
 			</div>
 			<div class="mui-views" style="height: auto;top: 44px;">
 				<div class="mui-views-r" id="app">
-
+					<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>
 					<div class="wrapper" id="wrapper">
 						<ul v-cloak class="yistA_ul">
 							<li class="yistA" v-for="li in news" @click="zf_jihua_nk(li.jh_id,li.huhao)">
@@ -110,6 +114,9 @@ beautyshuju(num, page, 'no');
 				el: '#app',
 				data: {
 					news: {},
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status',
 					img_href: web_url() + '/',
 				},
 				methods: {
@@ -159,6 +166,11 @@ beautyshuju(num, page, 'no');
 								if(yno != 'no') {
 									setTimeout(function() {
 										wrapper.refresh();
+										app.isActive = true;
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
 									}, 300);
 								}
 								$('.vue_img').each(function() {

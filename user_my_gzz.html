@@ -52,11 +52,22 @@
 					<div id="app">
 						<ul style="list-style: none;padding-left: 0;margin: 0;">
 							<li style="height: 60px;border: 3px solid #dddddd;border-width: 0 0 1px 0;padding: 10px 0 10px 10px;" v-for="lt in contact_lists">
+								<!--<div class="yistA_tp">
+									<span class="blue" style="float: right;">{{lt.suoshuzu}}</span>
+								</div>-->
 								<img style="width: 60px;height: 60px;border-radius: 30px;float: left;margin-right: 20px;" :src="lt.touxiang">
-								<div style="padding: 4px;color: #333;">姓名：{{lt.xingming}} </div>
-								<div style="padding: 4px;color: #333;">电话：
+								<div style="font-size: 12px;padding: 4px;color: #333;">姓名：{{lt.xingming}} 
+								<div class="span_ghy" style="float: right;padding-right: 24px;">{{lt.u1}}</div>
+								 
+								</div>
+								
+								
+								
+								<div style="font-size: 12px;padding: 4px;color: #333;">电话：
 									<a href="tel:{{lt.yonghuming}}" style="padding: 4px;color: #333;">{{lt.yonghuming}}</a>
 								</div>
+								
+								
 							</li>
 
 						</ul>
@@ -85,13 +96,8 @@
 			mui.plusReady(function() {
 				//				plus.nativeUI.closeWaiting();
 				//				mui.currentWebview.show();
-				getData(true, 'get', web_url() + "/?type=search&t=renyuan&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
-					document.getElementById("renyuan").innerText = JSON.parse(result.msg)[0].count_id;
-				});
-				getData(true, 'get', web_url() + "/?type=search&t=huji&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
-					document.getElementById("huji").innerText = JSON.parse(result.msg)[0].count_id;
-				});
-				getData(true, 'get', web_url() + "?type=search&t=user&suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu, '', function(result) {
+				console.log(web_url() + "?type=search&t=user,canshu&liemingcheng=xingming,touxiang,yonghuming,u1&&sqlvalue=sl_canshu.id|"+JSON.parse(localStorage.ubase).msg[0].suoshuzu+",sl_user.suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun);
+				getData(true, 'get', web_url() + "?type=search&t=user,canshu&liemingcheng=xingming,touxiang,yonghuming,u1&&sqlvalue=sl_canshu.id|sl_user.suoshuzu,sl_user.suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun+"&ordertype=sl_canshu.id", '', function(result) {
 					//document.getElementById("test2").innerText = JSON.parse(result.msg)[0].xingming; 
 					app.contact_lists = JSON.parse(result.msg);
 					for(var i = 0; i < app.contact_lists.length; i++) {
@@ -107,6 +113,13 @@
 							//console.log(app.contact_lists[i].touxiang);
 					}
 					//console.log(app.contact_lists)
+				});
+			
+			getData(true, 'get', web_url() + "/?type=search&t=renyuan&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
+					document.getElementById("renyuan").innerText = JSON.parse(result.msg)[0].count_id;
+				});
+				getData(true, 'get', web_url() + "/?type=search&t=huji&liemingcheng=count(id)%20as%20count_id&sqlvalue=suoshucun|" + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
+					document.getElementById("huji").innerText = JSON.parse(result.msg)[0].count_id;
 				});
 			});
 		</script>

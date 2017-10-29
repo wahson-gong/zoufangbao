@@ -21,7 +21,11 @@
 			</div>
 			<div class="mui-views" style="height: auto;top: 44px;">
 				<div class="mui-views-r" id="app" style="overflow: hidden;">
-
+					<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+						<div class="table">
+							<div class="table-cell"><span class="mui-spinnerA"></span></div>
+						</div>
+					</div>
 					<div class="wrapper" id="wrapper">
 						<ul v-cloak class="yistA_ul">
 							<li class="yistA" v-for="li in news" @click="zf_wei_nk(li.huji.id,li.huji.huhao,li.huji.allxingming)">
@@ -85,6 +89,9 @@
 				el: '#app',
 				data: {
 					news: [],
+					isActive: false,
+					activeClass: 'active',
+					errorClass: 'status pst1',
 					img_href: web_url() + '/',
 				},
 				methods: {
@@ -95,6 +102,12 @@
 			});
 
 			function beautyshuju(num, page, yno) {
+				if(localStorage.user_zf_wei_cun != undefined) {
+					    app.isActive = true;
+						app.news = JSON.parse(localStorage.user_zf_wei_cun);
+					} 
+					
+					
 				if(localStorage.net == 'false') {
 					if(localStorage.user_zf_wei_cun != undefined) {
 						app.news = JSON.parse(localStorage.user_zf_wei_cun);
@@ -145,6 +158,11 @@
 								if(yno != 'no') {
 									setTimeout(function() {
 										wrapper.refresh();
+										app.isActive = true;
+									}, 300);
+								} else {
+									setTimeout(function() {
+										app.isActive = true;
 									}, 300);
 								}
 							});

@@ -5,8 +5,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>今日走访计划</title>
-		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
 	</head>
 
@@ -27,6 +27,7 @@
 							<div class="table-cell"><span class="mui-spinnerA"></span></div>
 						</div>
 					</div>-->
+
 					<div class="wrapper" id="wrapper">
 						<ul v-cloak class="yistA_ul">
 							<li class="yistA" v-for="li in news" @click="zf_jihua_nk(li.jh_id,li.huhao)">
@@ -126,6 +127,11 @@
 			});
 			//"sl_zoufangjihua.dtime{between}'"+time_qian('')+"'{and}'"+wx_time()
 			function beautyshuju(num, page, yno) {
+				if(localStorage.on_user_zf_jihua_list != undefined) {
+					    app.isActive = true;
+						app.news = JSON.parse(localStorage.on_user_zf_jihua_list);
+					} 
+					
 				if(localStorage.net == 'false') {
 					if(localStorage.on_user_zf_jihua_list != undefined) {
 						app.news = JSON.parse(localStorage.on_user_zf_jihua_list);
@@ -149,8 +155,10 @@
 				} else {
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
-					if(pagenum >= num || page == 1) {
-						getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_huji.fangwutupian,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=" + num + "&page=" + page + "&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27"+str_tm(1,0)+"%27{and}%27"+str_tm(-2,0)+"%27,sl_zoufangjihua.suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+					
+						
+					if(pagenum >= num || page == 1) { 
+						getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_huji.fangwutupian,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=" + num + "&page=" + page + "&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27"+GetDateStr(-1)+" 00:00:00"+"%27{and}%27"+GetDateStr(1)+" 23:59:59"+"%27,sl_zoufangjihua.suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
 							var data = data_chuli(JSON.parse(result.msg));
 							if(result.msg == '') {
 								if(page == 1) {
@@ -159,6 +167,7 @@
 								pagenum = 0;
 							} else {
 								if(page == 1) {
+									console.log(JSON.stringify(data));
 									app.news = data;
 								} else {
 									extend(app.news, data);
@@ -171,6 +180,7 @@
 								if(yno != 'no') {
 									setTimeout(function() {
 										wrapper.refresh();
+										app.isActive = true;
 									}, 300);
 								} else {
 									setTimeout(function() {
@@ -231,6 +241,7 @@
 			function data_chuli(data) {
 				var n = data.length;
 				for(var i = 0; i < n; i++) {
+					console.log(data[i].ntime);
 					data[i].newtime = timeF(data[i].ntime);
 					var str = data[i].fangwutupian;
 					if(str != '' && str != null) {

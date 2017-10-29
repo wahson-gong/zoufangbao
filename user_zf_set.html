@@ -5,13 +5,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>走访设置</title>
-		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
-		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+
 	</head>
 
 	<body>
-		<div class="mui-views">
+		<div class="mui-views" id="app">
 			<div class="header">
 				<div class="header-A1 clearfix">
 					<a class="head-box head-back head-backA fl mui-action-back"></a>
@@ -20,7 +18,7 @@
 						<div class="search pst-r on">
 							<div class="search-cv search-cvA"><img src="images/icon-search.png" class="search-cv-img">搜索</div>
 							<div class="search-cv search-cvB" style="width: 25%;" onclick="return onKeydown()"><img src="images/icon-search0.png" class="search-cv-img" />搜索</div>
-							<input type="text" class="search-input box-sizing pad-lr-10" style="padding-right: 70px;" placeholder="请输入关键词" />
+							<input type="text" class="search-input box-sizing pad-lr-10" v-model="searchData" style="padding-right: 70px;" placeholder="请输入关键词" />
 						</div>
 					</div>
 					<div class="header-h1">添加走访计划</div>
@@ -29,17 +27,17 @@
 			<div class="paixu" style="z-index: 999999;">
 				<p data-type="allxingming">名称排序</p>
 				<p data-type="hujileixing">类型排序</p>
-				<p data-type="menpaihao">门牌号排序</p>
+				<p data-type="huhao">门牌号排序</p>
 			</div>
-			<div class="mui-views" id="app" style="height: auto;top: 44px;">
+			<div class="mui-views" style="height: auto;top: 44px;">
 
 				<div class="mui-views-r box-sizing" style="padding-bottom: 35px;padding-top: 40px;">
 
-					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+					<div v-bind:class="[isActive ? activeClass : '', errorClass]">
 						<div class="table">
 							<div class="table-cell"><span class="mui-spinnerA"></span></div>
 						</div>
-					</div>-->
+					</div>
 
 					<div style="z-index: 99999;position: absolute;top: 0px;left: 0px;width: 100%;background: #f7f7f8;">
 						<div class="zf-set-head pad-lr-15 pad-tb-5 bd-btm pst-r">
@@ -51,7 +49,8 @@
 					<div class="mui-views-r">
 						<div class="wrapper" id="wrapper">
 							<ul>
-								<li v-for="li in list " >
+								<!-- v-for="li in list | filterBy searchData in 'id' 'xingming' | orderBy 'xingming' '-1'"-->
+								<li v-for="li in list">
 									<div class="renyuan-bar pad-lr-15">
 										<div class="renyuan-p">
 											<div class="rdo-div act" v-if="li.bl=='no'" :data-type="li.hujileixing" :data-jh_yhm="li.jh_yhm" :data-jh_id="li.jh_id" :data-value="li.huhao"></div>
@@ -72,6 +71,9 @@
 				</div>
 			</div>
 		</div>
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<!--<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
@@ -80,19 +82,6 @@
 		<script src="js/pullToRefresh.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			document.addEventListener('plusready', function() {
-				var type = "convert(allxingming using gbk)";
-				if(localStorage.huji_zf_paixu_set == undefined) {
-					setParam('huji_zf_paixu_set', type);
-				}
-				net_yno();
-			});
-			var num = 20;
-			var page = 1;
-			var pagenum = num;
-			var webview_detail = null;
-			var webview_detailA = null;
-			var orderby = 'asc';
 			mui.init({
 				swipeBack: true,
 				gestureConfig: {
@@ -108,19 +97,6 @@
 			mui.plusReady(function() {
 				//				plus.nativeUI.closeWaiting();
 				//				mui.currentWebview.show();
-				if(localStorage.huji_zf_paixu_set == undefined) {
-					setParam('huji_zf_paixu_set', 'dtime');
-					app.ordertype = 'dtime';
-				} else {
-					var n = $('.paixu p').size();
-					for(var i = 0; i < n; i++) {
-						type = $('.paixu p').eq(i).data('type');
-						if(type == localStorage.huji_zf_paixu_set) {
-							$('.paixu p').eq(i).addClass('on');
-							app.ordertype = type;
-						}
-					}
-				}
 
 				beautyshuju(num, page, 'no', '');
 				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
@@ -131,17 +107,17 @@
 				webview_detail = plus.webview.getWebviewById('user_zf_jihua_list.html');
 				webview_detailA = plus.webview.getWebviewById(home_id());
 			});
+
 			var app = new Vue({
 				el: '#app',
 				data: {
-					ordertype: '',
+					searchData: '',
 					list: [],
 					isActive: false,
 					activeClass: 'active',
 					errorClass: 'status pst1',
 				},
 			});
-
 			refresher.init({
 				id: "wrapper",
 				pullDownAction: Refresh,
@@ -149,7 +125,30 @@
 				scrollAction: Ascroll,
 				scrollEndAction: AscrollEnd,
 			});
-
+			var num = 99999;
+			var page = 1;
+			var pagenum = num;
+			var webview_detail = null;
+			var webview_detailA = null;
+			var orderby = 'asc';
+			var type = 'convert(allxingming using gbk)';
+			type = "convert(allxingming using gbk)";
+			document.addEventListener('plusready', function() {
+				if(localStorage.huji_zf_paixu_set == undefined) {
+					setParam('huji_zf_paixu_set', type);
+				} else {
+					var n = $('.paixu p').size();
+					for(var i = 0; i < n; i++) {
+						type = $('.paixu p').eq(i).data('type');
+						type = "convert(" + type + " using gbk)";
+						if(type == localStorage.huji_zf_paixu_set) {
+							$('.paixu p').eq(i).addClass('on');
+							app.ordertype = type;
+						}
+					}
+				}
+				net_yno();
+			});
 			setTimeout(function() {
 				var timea_num = 0;
 				var timea = setInterval(function() {
@@ -190,10 +189,25 @@
 			}
 
 			function beautyshuju(num, page, yno, u1) {
+				if(localStorage.on_user_zf_set != undefined) {
+					    app.isActive = true;
+						app.list = JSON.parse(localStorage.on_user_zf_set);
+					} 
+					
 				if(localStorage.net == 'false') {
 					if(localStorage.on_user_zf_set != undefined) {
-						app.list = JSON.parse(localStorage.on_user_zf_set);
-						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
+						//						app.list = JSON.parse(localStorage.on_user_zf_set);
+						//						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
+						var oldData = JSON.parse(localStorage.on_user_zf_set);
+						var ttype = $('.paixu p.on').data('type');
+						var ndata = [];
+						if(ttype != '' && ttype != undefined) {
+							ndata = getPyData(oldData, ttype, 'yes');
+						} else {
+							ndata = oldData;
+						}
+						app.list = ndata;
+						document.getElementById("wrapper").setAttribute('data-pagenum', oldData.length);
 					} else {
 						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
 					}
@@ -210,6 +224,7 @@
 						}
 					});
 				} else {
+
 					if(localStorage.on_user_zf_set != undefined && page == 1 && localStorage.huji_zf_paixu_set == 'dtime') {
 						app.list = JSON.parse(localStorage.on_user_zf_set);
 						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
@@ -229,10 +244,10 @@
 
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
+
 					if(pagenum >= num || page == 1) {
-						//var url_a=web_url()+'/?type=search&t=huji&liemingcheng=id,hujileixing,huhao,allxingming,menpaihao&status=终审&number='+num+'&page='+page+'&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun+u1+rizi()+'&ordertype=convert(allxingming using gbk)&orderby='+orderby;
-						var url_a = web_url() + '/?type=hujil_div1&t=huji&liemingcheng=hujileixing,huhao,allxingming,menpaihao&status=终审&number=' + num + '&page=' + page  + u1 + '&ordertype=' + type + '&orderby=' + orderby +  rizi();
-console.log(url_a);
+
+						var url_a = web_url() + '/?type=hujil_div1&t=huji&liemingcheng=hujileixing,huhao,allxingming,menpaihao&status=终审&number=' + num + '&page=' + page + u1 + '&ordertype=' + type + '&orderby=' + orderby + rizi();
 						getData(true, 'get', url_a, '', function(result) {
 							var dlist = JSON.parse(result.msg);
 							if(result.msg == '') {
@@ -269,7 +284,6 @@ console.log(url_a);
 						wrapper.refresh();
 					}
 				}
-
 			}
 
 			function data_list(data1) {
@@ -293,16 +307,8 @@ console.log(url_a);
 				$(this).addClass('on').siblings('p').removeClass('on');
 				$('.paixu').removeClass('on');
 				type = $(this).data('type');
-				if(type == 'allxingming') {
-					orderby = 'asc';
-					setParam('huji_zf_paixu_set', 'convert(allxingming using gbk)');
-					app.ordertype = 'convert(allxingming using gbk)';
-				} else {
-					orderby = 'asc';
-					setParam('huji_zf_paixu_set', type);
-					app.ordertype = type;
-				}
-				//$('.zf-set-btm-p').text("请选择走访人家");
+				type = "convert(" + type + " using gbk)";
+				setParam('huji_zf_paixu_set', type);
 				Refresh();
 			});
 
@@ -390,71 +396,45 @@ console.log(url_a);
 			$('.zf-set-btm-btn').click(function() {
 				net_yno();
 				plus.nativeUI.showWaiting('计划添加中...');
-				//del
-				//				var dn = $('.rdo-div').size();
-				//				for(var j = 0; j < dn; j++) {
-				//					if(!$('.rdo-div').eq(j).hasClass('act')) {
-				//						var huhao = $('.rdo-div').eq(j).data('value');
-				//						var jh_yhm = $('.rdo-div').eq(j).data('jh_yhm');
-				//						var jh_id = $('.rdo-div').eq(j).data('jh_id');
-				//						var url1 = web_url() + "/?type=del&t=zoufangjihua&yonghuming=" + jh_yhm + "&id=" + jh_id + rizi();
-				//						if(localStorage.net == 'false') {
-				//							if(localStorage.data_edit == undefined) {
-				//								setParam('data_edit', '{"count":0,"list":[]}');
-				//							}
-				//							var data_edit = JSON.parse(localStorage.data_edit);
-				//							var edit_list = data_edit.list;
-				//							var edit_count = parseInt(data_edit.count);
-				//							data_edit.count = edit_count + 1;
-				//							var edit_listA = {
-				//								"url": url1
-				//							};
-				//							edit_list.push(edit_listA);
-				//							data_edit.list = edit_list;
-				//							setParam('data_edit', JSON.stringify(data_edit));
-				//						} else {
-				//							getData(false, 'post', url1, '', function(msg) {
-				//								//console.log('计划删除成功，户号：' + huhao + '，ID：' + jh_id + '，用户名：' + jh_yhm);
-				//							});
-				//						}
-				//					}
-				//				}
-				//del end
+
 				//add
 				xuantxt = xuantxt + ",1";
 				var updata = xuantxt.split(',');
 				var n = updata.length;
 				for(var i = 0; i < n; i++) {
 					if(updata[i] != '1') {
-						var url_b = web_url() + "/?type=search&t=zoufangjihua&ordertype=dtime&orderby=desc&sqlvalue=zoufangzhuangtai='未走访',suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",huhao=" + updata[i] + rizi();
-						getData(false, 'get', url_b, '', function(result) {
-							if(result.msg == "[]") {
-								var url1 = web_url() + '/?type=add&t=zoufangjihua';
-								var data1 = 'huhao=' + updata[i] + '&dtime=' + dtime + '&zoufangzhuangtai=未走访' + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + '&suoshuzu=' + JSON.parse(localStorage.ubase).msg[0].suoshuzu + "&yonghuming=" + localStorage.yonghuming + rizi() + "&dtime=" + str_tm(-1,3);
-								var data_url = url1 + '&' + data1;
-								if(localStorage.net == 'false') {
-									if(localStorage.data_add == undefined) {
-										setParam('data_add', '{"count":0,"list":[]}');
-									}
-									var data_add = JSON.parse(localStorage.data_add);
-									var add_list = data_add.list;
-									var add_count = parseInt(data_add.count);
-									data_add.count = add_count + 1;
-									var add_listA = {
-										"url": data_url,
-										"zfjh": "add",
-										"jh_huhao": updata[i]
-									};
-									add_list.push(add_listA);
-									data_add.list = add_list;
-									setParam('data_add', JSON.stringify(data_add));
-								} else {
+
+						var url1 = web_url() + '/?type=add&t=zoufangjihua';
+						var data1 = 'huhao=' + updata[i] + '&dtime=' + dtime + '&zoufangzhuangtai=未走访' + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + '&suoshuzu=' + JSON.parse(localStorage.ubase).msg[0].suoshuzu + "&yonghuming=" + localStorage.yonghuming + rizi();
+						var data_url = url1 + '&' + data1;
+						if(localStorage.net == 'false') {
+							if(localStorage.data_add == undefined) {
+								setParam('data_add', '{"count":0,"list":[]}');
+							}
+							var data_add = JSON.parse(localStorage.data_add);
+							var add_list = data_add.list;
+							var add_count = parseInt(data_add.count);
+							data_add.count = add_count + 1;
+							var add_listA = {
+								"url": data_url,
+								"zfjh": "add",
+								"jh_huhao": updata[i],
+								"suoshucun": JSON.parse(localStorage.ubase).msg[0].suoshucun,
+							};
+							add_list.push(add_listA);
+							data_add.list = add_list;
+							setParam('data_add', JSON.stringify(data_add));
+						} else {
+							var url_b = web_url() + "/?type=search&t=zoufangjihua&ordertype=dtime&orderby=desc&sqlvalue=zoufangzhuangtai='未走访',dtime{between}%27" + GetDateStr(-1) + " 00:00:00" + "%27{and}%27" + GetDateStr(1) + " 23:59:59" + "%27,suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",huhao=" + updata[i] + rizi();
+							getData(false, 'get', url_b, '', function(result) {
+								if(result.msg == "[]") {
 									getData(true, 'post', url1, data1, function(msg) {
 										//console.log('计划添加成功，户号：' + updata[i]);
 									});
 								}
-							}
-						});
+							});
+						}
+
 					}
 
 				}

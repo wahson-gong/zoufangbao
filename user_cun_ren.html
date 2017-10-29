@@ -28,11 +28,11 @@
 			</div>
 			<div class="mui-views" style="height: auto;top: 44px;">
 				<div class="mui-views-r" id="app">
-					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+					<div v-bind:class="[isActive ? activeClass : '', errorClass]">
 						<div class="table">
 							<div class="table-cell"><span class="mui-spinnerA"></span></div>
 						</div>
-					</div>-->
+					</div>
 					<div class="wrapper" id="wrapper">
 						<ul v-cloak class="yistA_ul">
 							<li class="yistA" v-for="li in news" @click="news_nk(li.id,li.hukoubianhao)">
@@ -112,13 +112,18 @@
 			var num = 10;
 			var pagenum = num;
 			var u1 = '';
+			if(localStorage.cx_data!=undefined){
+				var cx_data=JSON.parse(localStorage.cx_data);
+				u1='&sqlvalue=xingming{like}%27{bfb}'+cx_data.xingming+'{bfb}%27/shenfenzhenghao{like}%27{bfb}'+cx_data.shenfenzhenghao+'{bfb}%27';
+				delParam('cx_data');console.log(u1)
+			}
 			var app = new Vue({
 				el: '#app',
 				data: {
 					news: [],
 					isActive: false,
 					activeClass: 'active',
-					errorClass: 'status',
+					errorClass: 'status pst1',
 					img_href: web_url() + '/',
 				},
 				methods: {
@@ -129,6 +134,11 @@
 			});
 
 			function beautyshuju(num, page, yno, u1) {
+				if(localStorage.on_user_cun_ren != undefined) {
+					    app.isActive = true;
+						app.news = JSON.parse(localStorage.on_user_cun_ren);
+					} 
+					
 				if(localStorage.net == 'false') {
 					if(localStorage.on_user_cun_ren != undefined) {
 						app.news = JSON.parse(localStorage.on_user_cun_ren);
@@ -153,6 +163,7 @@
 					pagenum = parseInt(pagenum);
 					if(pagenum >= num || page == 1) {
 //web_url() + '/?type=search&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&sqlvalue=suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + u1 + '' + rizi()
+						console.log(web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi())
 						getData(true, 'get', web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi(), '', function(result) {
 							//console.log(web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi());
 							var data = data_chuli(JSON.parse(result.msg));
