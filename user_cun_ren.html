@@ -163,8 +163,14 @@
 					pagenum = parseInt(pagenum);
 					if(pagenum >= num || page == 1) {
 //web_url() + '/?type=search&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&sqlvalue=suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + u1 + '' + rizi()
-						console.log(web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi())
-						getData(true, 'get', web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi(), '', function(result) {
+						var search_key="";
+						try{
+							search_key=getParam("index_search");
+						}catch(e){
+							//TODO handle the exception
+						}
+						console.log(web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+search_key  + u1 + '' + rizi())
+						getData(true, 'get', web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+search_key  + u1 + '' + rizi(), '', function(result) {
 							//console.log(web_url() + '/?type=renyuanchaxun&t=renyuan&ordertype=convert(xingming%20using%20gbk)&orderby=asc&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + "&search_str="+getParam("index_search")  + u1 + '' + rizi());
 							var data = data_chuli(JSON.parse(result.msg));
 							if(result.msg == '') {

@@ -735,7 +735,16 @@
 				],
 				"refer": [
 					"index.html",
-					"user_list1.html"
+					"user_list1.html",
+					"user_huji_list.html",
+					"user_cun_ren.html",
+					"user_zf_zuijin.html",
+					"user_zf_history.html",
+					"user_zf_set.html",
+					"user_riji_list.html",
+					"user_zf_jihua_list.html",
+					"user_zf_wei.html",
+					"tianqi1.html"
 				],
 				"priority": 0
 			},
@@ -998,7 +1007,15 @@
 					"img/720X1280.png"
 				],
 				"refer": [
-					"user_list1.html"
+					"user_list1.html",
+					"user_huji_list.html",
+					"user_cun_ren.html",
+					"user_zf_zuijin.html",
+					"user_zf_history.html",
+					"user_zf_set.html",
+					"user_riji_list.html",
+					"user_zf_jihua_list.html",
+					"user_zf_wei.html"
 				],
 				"priority": 0
 			},

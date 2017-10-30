@@ -96,20 +96,20 @@
 				plus.nativeUI.showWaiting("登录中...");
 				getData(false, 'get', web_url() + "/?type=login&t=user&yonghuming=" + yhm + "&mima=" + mima, '', function(result) {
 					if(result.status == 'true') {
+						plus.nativeUI.showWaiting("登录成功，初始化页面...");
 						setParam('ubase', JSON.stringify(result));
 						setParam('login_status', 'true');
 						setParam('login_token', result.msg[0].token);
 						setParam('yonghuming', yhm);
 						setParam('mima', mima);
+						//perload();
 						getData(true, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshucun, '', function(result) {
 							setParam('login_suoshucun_txt', JSON.parse(result.msg)[0].u1);
 						});
 						getData(true, 'get', web_url() + '/?type=search&t=canshu&id=' + result.msg[0].suoshuzu, '', function(result) {
 							setParam('login_suoshuzu_txt', JSON.parse(result.msg)[0].u1);
 						});
-
-						plus.nativeUI.closeWaiting();
-
+						
 						//var webview_home = plus.webview.getWebviewById('index.html');
 						//mui.fire(webview_home, 'login', yhm);
 
@@ -117,7 +117,7 @@
 						document.getElementById("mima").value = '';
 						setParam('login_action', 'yes');
 						//plus.webview.show('index.html');
-						plus.nativeUI.showWaiting("登录成功，正在初始化...");
+						
 						openWindows('index.html?yonghuming='+yhm);
 						plus.nativeUI.closeWaiting();
 					} else {
@@ -125,6 +125,60 @@
 						plus.nativeUI.closeWaiting();
 					}
 				});
+			}
+			
+			function perload()
+			{
+				  
+				var subWebview_ry = mui.preload({
+					url: 'user_cun_ren.html',
+					id: 'user_cun_ren.html',
+				});
+				
+				var subWebview_tq = mui.preload({
+					url: 'tianqi1.html',
+					id: 'tianqi1.html',
+				});
+				
+				var subWebview_hj = mui.preload({
+					url: 'user_huji_list.html',
+					id: 'user_huji_list.html',
+				});
+				
+				
+				
+				var subWebview_ri = mui.preload({
+					url: 'user_riji_list.html',
+					id: 'user_riji_list.html',
+				});
+				
+				var subWebview_jl = mui.preload({
+					url: 'user_zf_history.html',
+					id: 'user_zf_history.html',
+				});
+				
+				var subWebview_jh = mui.preload({
+					url: 'user_zf_jihua_list.html',
+					id: 'user_zf_jihua_list.html',
+				});
+				
+				var subWebview_jh_add = mui.preload({
+					url: 'user_zf_set.html',
+					id: 'user_zf_set.html',
+				});
+				
+				//
+				var subWebview_jh_add = mui.preload({
+					url: 'user_zf_zuijin.html',
+					id: 'user_zf_zuijin.html',
+				});
+				
+				var subWebview_zf_wei = mui.preload({
+					url: 'user_zf_wei.html',
+					id: 'user_zf_wei.html',
+				});
+				
+				
 			}
 			//{"status":"true","msg":[{"id":"1","dtime":"2017-08-21 00:00:00","yonghuming":"123456","mima":"e10adc3949ba59abbe56e057f20f883e","xingming":null,"suoshucun":null,"suoshuzu":null,"shouzimu":null,"token":"apZjaZaZ"}]}
 		</script>

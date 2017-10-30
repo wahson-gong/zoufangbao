@@ -84,7 +84,7 @@
 							<div class="btn-ys1 fr" id="xz" onclick="return xz_ry()" style="width: 48%;">新增人员</div>
 						</div>
 						<br />
-						<div class="btn-ys1" id="sb">NFC识别</div>
+						<div class="btn-ys1" id="sb" onclick="launchApp()">NFC识别</div>
 
 					</div>
 				</div>
@@ -118,11 +118,63 @@
 
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			
+			//intent 实例
+		var Intent = null;
+		//main activity
+		var main = null;
+		
+		//清楚上次的缓存
+			delParam("sfz");delParam("cx_data");
+		
 			mui.init({
 				swipeBack: true
 			});
-			//清楚上次的缓存
-			delParam("sfz");delParam("cx_data");
+			
+			mui.plusReady(function() {
+			Intent = plus.android.importClass("android.content.Intent");
+			// 获取主Activity
+			main = plus.android.runtimeMainActivity();
+
+			//接收广播
+			var receiver = plus.android.implements('io.dcloud.android.content.BroadcastReceiver', {
+				onReceive: function(context, intent) { //实现onReceiver回调函数
+					plus.android.importClass(intent);
+//					mui.toast("监听广播传递的action"+intent.getAction());
+//					mui.toast("广播传递的参数"+intent.getStringExtra("RESULT"));
+
+					//获取广播中的参数
+					//mui.toast(intent.getStringExtra("RESULT"));
+					var result = JSON.parse(intent.getStringExtra("RESULT"));
+					if(result.msg.xingbie!=""||result.msg.xingbie!=null)
+					{
+						result.msg.minzu=result.msg.minzu+"族";
+					}
+					if(result.msg.chushengriqi!=""||result.msg.chushengriqi!=null)
+					{
+						result.msg.chushengriqi=result.msg.chushengriqi.replace("年","-").replace("月","-").replace("日","-");
+					}
+					
+					
+		            setParam('sfz', JSON.stringify(result.msg));
+					$("#shenfenzhengdizhi").val(result.msg.shenfenzhengdizhi);
+					$("#chushengriqi").val(result.msg.chushengriqi);
+					$("#xingming").val(result.msg.xingming);
+					$("#shenfenzhenghao").val(result.msg.shenfenzhenghao);
+					$("#xingbie").val(result.msg.xingbie);
+					$("#minzu").val(result.msg.minzu);
+					//销毁广播，视具体情况选择是否销毁广播
+					//main.unregisterReceiver(receiver);
+				}
+			});
+			var IntentFilter = plus.android.importClass('android.content.IntentFilter');
+			var filter = new IntentFilter();
+			filter.addAction("SCANNING_IDCARD_RESULT"); //  监听广播传递的action
+			main.registerReceiver(receiver, filter); //注册监听				
+
+			 
+		});
+			
 
 			function tx_ck() {
 				mui('#picture').popover('toggle');
@@ -209,6 +261,18 @@
 				}
                 openWindows('user_renyuan_add_sfz.html');
 			}
+			
+			
+			 // 安卓版调用第三方程序
+            function launchApp() {
+                if(plus.os.name == "Android") {
+                    plus.runtime.launchApplication({
+                        pname: "cn.com.senter.mobilereader",
+                    });
+
+                }
+            }
+			 
 		</script>
 	</body>
 

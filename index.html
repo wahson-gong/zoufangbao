@@ -234,6 +234,7 @@
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/uploadimage/img_tx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+				
 			var num = 20;
 			var page = 1;
 			if(localStorage.bian == undefined) {
@@ -285,6 +286,20 @@
 					},
 				}
 			});
+			
+			//载入缓存
+			try{
+				app.wei_zf = JSON.parse(localStorage.hm_wei_zf);
+			app.news = JSON.parse(localStorage.news_list);
+			app.zf_jihua = JSON.parse(localStorage.hm_zf_jihua);
+			app.zuijin_zf = JSON.parse(localStorage.hm_zuijin_zf);
+			app.wei_zf = JSON.parse(localStorage.hm_wei_zf); 
+			}catch(e){
+				//TODO handle the exception
+			}
+			
+					
+				
 			mui.plusReady(function() {
 				//plus.nativeUI.closeWaiting();mui.currentWebview.show();
 				//登录验证
@@ -301,10 +316,9 @@
 				}
 
 				doubleBack(); /*连续两次按返回键，则退出应用*/
-				var subWebview = mui.preload({
-					url: 'tianqi1.html',
-					id: 'tianqi1.html',
-				});
+				
+
+				
 				home_view();
 				//右划
 				document.getElementById('menu-bar').addEventListener('swiperight', function() {
@@ -400,8 +414,13 @@
 						sessionStorage.setItem('upgrade', '1');
 					});
 				}
-
-				//预先加载可能出现  user_zf_set.html
+				
+               var subWebview = mui.preload({
+					url: 'tianqi1.html',
+					id: 'tianqi1.html',
+				});
+				//预先加载可能出现 
+				//perload();
 
 			});
 
@@ -450,7 +469,7 @@
 
 					if(data[i].zfjh == undefined) {
 						console.log(data[i].url)
-						getData(false, 'post', data[i].url, '', function(msg) {
+						getData(true, 'post', data[i].url, '', function(msg) {
 							console.log(data[i].url)
 							if(type == 'add') {
 								app.add_num = nn;
@@ -531,8 +550,7 @@
 			}
 			//走访计划更多 
 			function jihua_linkA() {
-				//alert(app.zf_jihua_mt_num);
-				if(app.zf_jihua_mt_num == 0) {
+				if(app.zf_num == 0) {
 					openWindows('user_zf_set.html');
 				} else {
 					openWindows('user_zf_jihua_list.html');
@@ -721,8 +739,6 @@
 				app.user_suoshuzu = localStorage.login_suoshuzu_txt;
 				app.edit_num = JSON.parse(localStorage.data_edit).count;
 				app.add_num = JSON.parse(localStorage.data_add).count;
-				//天气
-				findWeather();
 				//新闻
 				num = 20;
 				page = 1;
@@ -731,19 +747,9 @@
 				if(pagenum != '20') {
 					page++;
 				}
-
-					app.zf_jihua_mt_num = localStorage.zf_jihua_mt_num;
-					app.zf_num = localStorage.hm_zf_num;
-					app.today_num = localStorage.hm_today_num;
-					app.week_num = localStorage.hm_week_num;
-					app.yue_num = localStorage.hm_yue_num;
-					try{
-						app.zf_jihua = JSON.parse(localStorage.hm_zf_jihua);
-					app.zuijin_zf = JSON.parse(localStorage.hm_zuijin_zf);
-					app.wei_zf = JSON.parse(localStorage.hm_wei_zf);
-					}catch(e){
-						//TODO handle the exception
-					}
+				
+				
+               
 					
 				if(localStorage.net == 'false') {
 					app.zf_jihua_mt_num = localStorage.zf_jihua_mt_num;
@@ -762,12 +768,13 @@
 					});
 					//走访计划 "sl_zoufangjihua.dtime{between}'"+time_qian('')+"'{and}'"+wx_time();
 					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27"+GetDateStr(-1)+" 00:00:00"+ "%27{and}%27" +GetDateStr(1)+" 23:59:59"+ "%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
+						//console.log(web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27"+GetDateStr(-1)+" 00:00:00"+ "%27{and}%27" +GetDateStr(1)+" 23:59:59"+ "%27,sl_zoufangjihua.suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun");
 						app.zf_jihua = [];
 						var jdata = JSON.parse(result.msg);
 						var datat = [];
 						extendA(datat, jdata, 3);
 						app.zf_jihua = tmF_chuli(datat);
-						app.zf_jihua_mt_num=app.zf_jihua.length;
+						//app.zf_jihua_mt_num=app.zf_jihua.length;
 						setParam('hm_zf_jihua', JSON.stringify(app.zf_jihua));
 					});
 					//
@@ -775,7 +782,7 @@
 					getData(true, 'get', web_url() + "/?type=search&t=zoufangjihua,huji,canshu&liemingcheng=sl_zoufangjihua.id%20as%20jh_id,sl_zoufangjihua.dtime%20as%20ntime,sl_zoufangjihua.huhao,sl_zoufangjihua.yonghuming,sl_zoufangjihua.zoufangzhuangtai,sl_huji.allxingming,sl_canshu.u1&ordertype=sl_zoufangjihua.dtime&orderby=asc&number=3&page=1&sqlvalue=sl_zoufangjihua.zoufangzhuangtai=%27未走访%27,sl_zoufangjihua.dtime{between}%27" + str_tm(-1, 0) + "%27{and}%27" + str_tm(-2, 1) + "%27,sl_zoufangjihua.suoshuzu=" + JSON.parse(localStorage.ubase).msg[0].suoshuzu + ",sl_huji.huhao=sl_zoufangjihua.huhao,sl_canshu.id=sl_huji.suoshucun", '', function(result) {
 						var n = JSON.parse(result.msg).length;
 						console.log(n);
-						this.zf_jihua_mt_num = n;
+						app.zf_jihua_mt_num = n;
 						setParam('zf_jihua_mt_num', n);
 					});
 					var wk = week_time().split('*');
@@ -807,7 +814,8 @@
 					});
 
 					load_userInfo();
-
+					//天气
+					findWeather();
 				}
 				setTimeout(function() {
 					app.isActive = true;
@@ -817,6 +825,7 @@
 
 			//获取新闻列表
 			function news(num, page, yno) {
+				 
 				if(localStorage.net == 'false') {
 					app.news = JSON.parse(localStorage.news_list);
 					app.$nextTick(function() {
@@ -926,6 +935,9 @@
 					}
 				});
 			}
+		
+		 
+		
 		</script>
 	</body>
 

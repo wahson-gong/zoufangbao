@@ -28,10 +28,14 @@
 <script type="text/javascript">
 mui.init();
 mui.plusReady(function() {
+	
+				
 	//登录验证
 	if(localStorage.ubase==undefined){
 		openWindows('login.html');
 	}else{
+		 //perload();
+				
 		openWindows('index.html');
 	}
 //	
@@ -54,6 +58,61 @@ mui.plusReady(function() {
 //	}
 	
 });
+
+
+	function perload()
+			{
+				var subWebview_ry = mui.preload({
+					url: 'user_cun_ren.html',
+					id: 'user_cun_ren.html',
+				});
+				
+				var subWebview_tq = mui.preload({
+					url: 'tianqi1.html',
+					id: 'tianqi1.html',
+				});
+				
+				var subWebview_hj = mui.preload({
+					url: 'user_huji_list.html',
+					id: 'user_huji_list.html',
+				});
+				
+				
+				
+				var subWebview_ri = mui.preload({
+					url: 'user_riji_list.html',
+					id: 'user_riji_list.html',
+				});
+				
+				var subWebview_jl = mui.preload({
+					url: 'user_zf_history.html',
+					id: 'user_zf_history.html',
+				});
+				
+				var subWebview_jh = mui.preload({
+					url: 'user_zf_jihua_list.html',
+					id: 'user_zf_jihua_list.html',
+				});
+				
+				var subWebview_jh_add = mui.preload({
+					url: 'user_zf_set.html',
+					id: 'user_zf_set.html',
+				});
+				
+				//
+				var subWebview_jh_add = mui.preload({
+					url: 'user_zf_zuijin.html',
+					id: 'user_zf_zuijin.html',
+				});
+				
+				var subWebview_zf_wei = mui.preload({
+					url: 'user_zf_wei.html',
+					id: 'user_zf_wei.html',
+				});
+				
+				
+			}
+			
 		
 </script>
 	</body>
