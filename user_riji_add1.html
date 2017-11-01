@@ -240,6 +240,10 @@
 			function riji_edit() {
 				imgupgrade();
 				var minqingjilu = document.getElementById("minqingjilu").value;
+				if(minqingjilu==''){
+					mui.toast('请输入民情记录');
+					return false;
+				}
 				var zutu = document.getElementById("fangwutupian").value;
 				var url_a = web_url() + '/?type=edit&t=minqingriji&status=终审&id=' + localStorage.user_riji_add1_id + rizi();
 				var data_a = 'minqingjilu=' + minqingjilu + '&zutu=' + zutu;

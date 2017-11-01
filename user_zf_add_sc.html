@@ -34,7 +34,7 @@
 									</div>
 								</div>
 								<div class="ck-ap">
-									<div class="ck-ap-p" v-for="li in huji_renyuan">&nbsp;&nbsp;&nbsp;{{li.xingming}}</div>
+									<div class="ck-ap-p" v-for="li in huji_renyuan"  @click="news_nk(li.id,li.hukoubianhao)">&nbsp;&nbsp;&nbsp;{{li.xingming}}</div>
 								</div>
 							</div>
 							<div class="ck-bar mar-b-10">
@@ -196,7 +196,12 @@
 					huji_renyuan: [],
 					huji_ry: 0,
 					sc_zf: {},
-				}
+				},
+				methods: {
+					news_nk: function(id, huhao) {
+						news_nk(id, huhao);
+					}
+				},
 			});
 			if(localStorage.jilu_dt == undefined) {
 				localStorage.jilu_dt = '[]';
@@ -239,12 +244,12 @@
 
 				} else {
 					console.log('有网');
-					//有网
+					//有网 
 					data_hc.id = localStorage.user_zf_add_sc_id;
 					data_hc.huhao = localStorage.user_zf_add_sc_huhao;
 					getData(true, 'get', web_url() + '/?type=search&t=zoufangjilu&id=' + localStorage.user_zf_add_sc_id, '', function(result) {
 						//走访记录info
-						app.info = JSON.parse(result.msg)[0];
+						app.info = JSON.parse(result.msg)[0];console.log(result.msg)
 						data_hc.info = app.info;
 						//修改判断
 						if(localStorage.yonghuming == app.info.yonghuming) {
@@ -405,7 +410,7 @@
 			}
 
 			function ruhu_man(data) {
-				var ruhurenyuan_txt = '';
+			     ruhurenyuan_txt = '';
 				var bianhao_txt = '';
 
 				for(var i = 0; i < data.length; i++) {
@@ -505,22 +510,19 @@
 				var zoufangqingkuang = document.getElementById("zoufangqingkuang").value;
 				zoufangqingkuang = zoufangqingkuang.replace(/\s+/g, '');
 				if(zoufangqingkuang == '') {
-					alert('请填写入户走访情况！');
-					plus.nativeUI.closeWaiting();
+					mui.toast('请填写入户走访情况！');
 					return false;
 				}
 				var cunzaidewenti = document.getElementById("cunzaidewenti").value;
 				cunzaidewenti = cunzaidewenti.replace(/\s+/g, '');
 				if(cunzaidewenti == '') {
-					alert('请填写入存在问题情况！');
-					plus.nativeUI.closeWaiting();
+					mui.toast('请填写入存在问题情况！');
 					return false;
 				}
 				var ruhurenyuan = document.getElementById("ruhurenyuan").value;
 				ruhurenyuan = ruhurenyuan.replace(/\s+/g, '');
 				if(ruhurenyuan == '') {
-					alert('请选择入户人员！');
-					plus.nativeUI.closeWaiting();
+					mui.toast('请选择入户人员！');
 					return false;
 				}
 				try {
@@ -624,11 +626,23 @@
 
 			}
 			$('.actionA').click(function() {
-				$(this).find('.ck-ap').toggle();
+				//$(this).find('.ck-ap').toggle();
 			});
 			$('.actionB').click(function() {
 				$(this).find('.ck-bpA').toggle();
 			});
+			
+			function news_nk(id, huhao) {
+				net_yno();
+				if(localStorage.net == 'false') {
+					mui.toast('请检查网络');
+					return false;
+				} else {
+					localStorage.setItem('user_cun_ren_detail_id', id);
+					localStorage.setItem('user_cun_ren_detail_huhao', huhao);
+					openWindows('user_cun_ren_detail.html');
+				}
+			}
 		</script>
 	</body>
 

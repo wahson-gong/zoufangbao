@@ -33,7 +33,7 @@
 							<br />
 							<input type="button" id="login" onclick="return login()" class="login-submit mar-b-10" value="登录" />
 							<p class="t_c">
-								<a href="" class="login-link">忘记密码</a>
+								<a  class="login-link">忘记密码</a>
 							</p>
 
 						</div>
@@ -68,7 +68,7 @@
 				//document.getElementById("mima").value=localStorage.mima;
 			});
 			$('.t_c').click(function() {
-				mui.alert('请联系驻村管理员！');
+				mui.mui.toast('请联系驻村管理员！');
 				return false;
 			});
 			document.addEventListener('login_action', function(event) {
@@ -86,16 +86,19 @@
 				var mima = document.getElementById("mima").value;
 				mima = mima.replace(/\s+/g, '');
 				if(yhm == '') {
-					alert('请输入用户名！');
+					mui.toast('请输入用户名！');
 					return false;
 				}
 				if(mima == '') {
-					alert('请输入密码！');
+					mui.toast('请输入密码！');
 					return false;
 				}
+				//隐藏键盘
+				hiden_jp();
 				plus.nativeUI.showWaiting("登录中...");
 				getData(false, 'get', web_url() + "/?type=login&t=user&yonghuming=" + yhm + "&mima=" + mima, '', function(result) {
 					if(result.status == 'true') {
+						
 						plus.nativeUI.showWaiting("登录成功，初始化页面...");
 						setParam('ubase', JSON.stringify(result));
 						setParam('login_status', 'true');
@@ -127,58 +130,18 @@
 				});
 			}
 			
-			function perload()
-			{
-				  
-				var subWebview_ry = mui.preload({
-					url: 'user_cun_ren.html',
-					id: 'user_cun_ren.html',
-				});
+			 
+			
+			//隐藏键盘
+			function hiden_jp(){
 				
-				var subWebview_tq = mui.preload({
-					url: 'tianqi1.html',
-					id: 'tianqi1.html',
-				});
-				
-				var subWebview_hj = mui.preload({
-					url: 'user_huji_list.html',
-					id: 'user_huji_list.html',
-				});
-				
-				
-				
-				var subWebview_ri = mui.preload({
-					url: 'user_riji_list.html',
-					id: 'user_riji_list.html',
-				});
-				
-				var subWebview_jl = mui.preload({
-					url: 'user_zf_history.html',
-					id: 'user_zf_history.html',
-				});
-				
-				var subWebview_jh = mui.preload({
-					url: 'user_zf_jihua_list.html',
-					id: 'user_zf_jihua_list.html',
-				});
-				
-				var subWebview_jh_add = mui.preload({
-					url: 'user_zf_set.html',
-					id: 'user_zf_set.html',
-				});
-				
-				//
-				var subWebview_jh_add = mui.preload({
-					url: 'user_zf_zuijin.html',
-					id: 'user_zf_zuijin.html',
-				});
-				
-				var subWebview_zf_wei = mui.preload({
-					url: 'user_zf_wei.html',
-					id: 'user_zf_wei.html',
-				});
-				
-				
+				var Context = plus.android.importClass("android.content.Context");
+                        var InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+                        var main = plus.android.runtimeMainActivity();
+                        var imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if(imm.isActive()){
+                                imm.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT); 
+                            }
 			}
 			//{"status":"true","msg":[{"id":"1","dtime":"2017-08-21 00:00:00","yonghuming":"123456","mima":"e10adc3949ba59abbe56e057f20f883e","xingming":null,"suoshucun":null,"suoshuzu":null,"shouzimu":null,"token":"apZjaZaZ"}]}
 		</script>

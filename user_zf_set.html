@@ -45,16 +45,14 @@
 							<div class="zf-set-mn"></div>
 						</div>
 					</div>
-
 					<div class="mui-views-r">
 						<div class="wrapper" id="wrapper">
 							<ul>
-								<!-- v-for="li in list | filterBy searchData in 'id' 'xingming' | orderBy 'xingming' '-1'"-->
-								<li v-for="li in list">
+								<li v-for="(li,index) in list" :data-index="index" :id="'xz'+li.huhao"  @click="xhuanzheB(li.huhao,li.hujileixing)">
 									<div class="renyuan-bar pad-lr-15">
 										<div class="renyuan-p">
-											<div class="rdo-div act" v-if="li.bl=='no'" :data-type="li.hujileixing" :data-jh_yhm="li.jh_yhm" :data-jh_id="li.jh_id" :data-value="li.huhao"></div>
-											<div class="rdo-div" v-else :data-type="li.hujileixing" :data-value="li.huhao"></div>
+											<div class="rdo-div act" v-if="li.bl=='no'"></div>
+											<div class="rdo-div" v-else=""></div>
 											<span class="ys5">{{li.allxingming}}家</span>&nbsp;&nbsp;<span class="ys4">{{li.menpaihao}}-{{li.hujileixing}}</span>
 										</div>
 									</div>
@@ -117,6 +115,11 @@
 					activeClass: 'active',
 					errorClass: 'status pst1',
 				},
+				methods: {
+					xhuanzheB: function(huhao, hx) {
+						xhuanzheB('#xz'+huhao,huhao,hx);
+					}
+				},
 			});
 			refresher.init({
 				id: "wrapper",
@@ -132,7 +135,6 @@
 			var webview_detailA = null;
 			var orderby = 'asc';
 			var type = 'convert(allxingming using gbk)';
-			type = "convert(allxingming using gbk)";
 			document.addEventListener('plusready', function() {
 				if(localStorage.huji_zf_paixu_set == undefined) {
 					setParam('huji_zf_paixu_set', type);
@@ -162,6 +164,15 @@
 			}, 100);
 
 			function Refresh() {
+				shuizu = 0;
+				shuizu0 = 0;
+				shuizu1 = 0;
+				shuizu2 = 0;
+				shuizu3 = 0;
+				shuizu4 = 0;
+				xuantxt = '';
+				tipstxt = '';
+				$('.zf-set-btm-p').text('请选择走访人家');
 				net_yno();
 				page = 1;
 				beautyshuju(num, page, 'yes', '');
@@ -187,7 +198,17 @@
 			function AscrollEnd() {
 
 			}
-
+			function data_dd(dlist){
+				var ttype = $('.paixu p.on').data('type');
+				var ndata = [];
+				if(ttype != '' && ttype != undefined) {
+					ndata = getPyData(dlist, ttype, 'yes');
+				} else {
+					ndata = dlist;
+				}
+				return ndata;
+			}
+			
 			function beautyshuju(num, page, yno, u1) {
 				if(localStorage.on_user_zf_set != undefined) {
 					    app.isActive = true;
@@ -196,17 +217,8 @@
 					
 				if(localStorage.net == 'false') {
 					if(localStorage.on_user_zf_set != undefined) {
-						//						app.list = JSON.parse(localStorage.on_user_zf_set);
-						//						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
 						var oldData = JSON.parse(localStorage.on_user_zf_set);
-						var ttype = $('.paixu p.on').data('type');
-						var ndata = [];
-						if(ttype != '' && ttype != undefined) {
-							ndata = getPyData(oldData, ttype, 'yes');
-						} else {
-							ndata = oldData;
-						}
-						app.list = ndata;
+						app.list=data_dd(oldData);
 						document.getElementById("wrapper").setAttribute('data-pagenum', oldData.length);
 					} else {
 						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
@@ -224,30 +236,11 @@
 						}
 					});
 				} else {
-
-					if(localStorage.on_user_zf_set != undefined && page == 1 && localStorage.huji_zf_paixu_set == 'dtime') {
-						app.list = JSON.parse(localStorage.on_user_zf_set);
-						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
-						app.$nextTick(function() {
-							if(yno != 'no') {
-								setTimeout(function() {
-									wrapper.refresh();
-									app.isActive = true;
-								}, 300);
-							} else {
-								setTimeout(function() {
-									app.isActive = true;
-								}, 300);
-							}
-						});
-					}
-
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
-
 					if(pagenum >= num || page == 1) {
-
-						var url_a = web_url() + '/?type=hujil_div1&t=huji&liemingcheng=hujileixing,huhao,allxingming,menpaihao&status=终审&number=' + num + '&page=' + page + u1 + '&ordertype=' + type + '&orderby=' + orderby + rizi();
+						var url_a = web_url() + '/?type=hujil_div1&t=huji&liemingcheng=hujileixing,huhao,allxingming,menpaihao,yonghuming&status=终审&number=' + num + '&page=' + page + u1 + '&ordertype=dtime&orderby=desc' + rizi();
+						
 						getData(true, 'get', url_a, '', function(result) {
 							var dlist = JSON.parse(result.msg);
 							if(result.msg == '') {
@@ -256,7 +249,9 @@
 								}
 								pagenum = 0;
 							} else {
-								//dlist=data_list(dlist);
+								dlist=data_listB(dlist);
+								app.list = dlist;
+								
 								if(page == 1) {
 									app.list = dlist;
 								} else {
@@ -285,7 +280,13 @@
 					}
 				}
 			}
-
+			function data_listB(data1){
+				for(var i = 0; i < data1.length; i++) {
+					data1[i].bl = 'yes';
+				}
+				return data1;
+			}
+			
 			function data_list(data1) {
 				for(var i = 0; i < data1.length; i++) {
 					var url_b = web_url() + "/?type=search&t=zoufangjihua&ordertype=dtime&orderby=desc&liemingcheng=id,yonghuming&sqlvalue=zoufangzhuangtai{like}%27{bfb}未走访{bfb}%27,suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",huhao=" + data1[i].huhao + rizi();
@@ -309,7 +310,7 @@
 				type = $(this).data('type');
 				type = "convert(" + type + " using gbk)";
 				setParam('huji_zf_paixu_set', type);
-				Refresh();
+				app.list=data_dd(app.list);
 			});
 
 			var shuizu = 0;
@@ -321,11 +322,16 @@
 			var xuantxt = '';
 			var tipstxt = '';
 
-			function xhuanzheB(obj) {
-				$(obj).toggleClass('act');
-				if($(obj).hasClass('act')) {
+			function xhuanzheB(obj,huhao,leixing) {
+				var index=parseInt($(obj).data('index'));
+				if(app.list[index].bl=='yes'){
+					app.list[index].bl='no';
+				}else{
+					app.list[index].bl='yes';
+				}
+				if(app.list[index].bl=='no') {
 					shuizu++;
-					var leixing = $(obj).data('type');
+					//var leixing = $(obj).data('type');
 					if(leixing == '一般户') {
 						shuizu0++;
 					} else if(leixing == '放心户') {
@@ -338,7 +344,7 @@
 						shuizu4++;
 					}
 
-					var huhao = $(obj).data('value');
+					//var huhao = $(obj).data('value');
 					if(xuantxt == '') {
 						xuantxt = huhao;
 					} else {
@@ -346,7 +352,7 @@
 					}
 				} else {
 					shuizu--;
-					var leixing = $(obj).data('type');
+					//var leixing = $(obj).data('type');
 					if(leixing == '一般户') {
 						shuizu0--;
 					} else if(leixing == '放心户') {
@@ -358,7 +364,7 @@
 					} else if(leixing == '其他') {
 						shuizu4--;
 					}
-					var huhao = $(obj).data('value');
+					//var huhao = $(obj).data('value');
 
 					var shuzu = xuantxt.split(',');
 					var n = shuzu.length;
@@ -394,9 +400,12 @@
 			var timetxt = timeE(dtime);
 			$('#timetxt').html(timetxt);
 			$('.zf-set-btm-btn').click(function() {
+				if(xuantxt==''){
+					mui.toast('请选择户籍');
+					return false;
+				}
 				net_yno();
 				plus.nativeUI.showWaiting('计划添加中...');
-
 				//add
 				xuantxt = xuantxt + ",1";
 				var updata = xuantxt.split(',');
@@ -425,7 +434,7 @@
 							data_add.list = add_list;
 							setParam('data_add', JSON.stringify(data_add));
 						} else {
-							var url_b = web_url() + "/?type=search&t=zoufangjihua&ordertype=dtime&orderby=desc&sqlvalue=zoufangzhuangtai='未走访',dtime{between}%27" + GetDateStr(-1) + " 00:00:00" + "%27{and}%27" + GetDateStr(1) + " 23:59:59" + "%27,suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",huhao=" + updata[i] + rizi();
+							var url_b = web_url() + "/?type=search&t=zoufangjihua&ordertype=dtime&orderby=desc&sqlvalue=zoufangzhuangtai='未走访',dtime{between}%27" + GetDateStr(-1) + " 00:00:00" + "%27{and}%27" + GetDateStr(1) + " 23:59:59" + "%27,suoshucun=" + JSON.parse(localStorage.ubase).msg[0].suoshucun + ",huhao=" + updata[i]+",yonghuming='"+getParam("yonghuming")+"'" + rizi();
 							getData(false, 'get', url_b, '', function(result) {
 								if(result.msg == "[]") {
 									getData(true, 'post', url1, data1, function(msg) {
@@ -477,12 +486,12 @@
 			$('.head-search').click(function() {
 				$('.head-ss,.header-h1').toggle();
 			});
-			mui('.wrapper').on('tap', '.rdo-div', function() {
-				xhuanzheB(this);
-			});
-			mui('.wrapper').on('longtap', '.rdo-div', function() {
-				xhuanzheB(this);
-			});
+//			mui('.wrapper').on('tap', '.rdo-div', function() {
+//				xhuanzheB(this);
+//			});
+//			mui('.wrapper').on('longtap', '.rdo-div', function() {
+//				xhuanzheB(this);
+//			});
 		</script>
 	</body>
 

@@ -21,7 +21,7 @@
 
 					<div class="pad-tb-5 pad-lr-10" v-cloak>
 
-						<p class="newsd-tm mar-b-10">{{news.time}}  {{news.laiyuan}}</p>
+						<p class="newsd-tm mar-b-10">{{news.time}} {{news.laiyuan}}</p>
 						<p class="newsd-h1 mar-b-10">{{news.biaoti}}</p>
 						<div class="newsd-txt" v-html="content"></div>
 
@@ -45,6 +45,11 @@
 				swipeBack: true
 			});
 			mui.plusReady(function() {
+				//只是安卓生效
+				var self = plus.webview.currentWebview();
+				self.setStyle({
+					videoFullscreen: 'landscape' //横屏
+				});
 				//				plus.nativeUI.closeWaiting();
 				//				mui.currentWebview.show();
 				getData(true, 'get', web_url() + '/?type=search&t=article&status=终审&id=' + localStorage.news_detail_id + rizi(), '', function(result) {
@@ -72,6 +77,44 @@
 				data: {
 					news: {},
 					content: '',
+				},
+				updated: function() {
+					console.log('dom结构变化！');
+					var iframe = document.querySelector('iframe');
+					iframe.onload = function() {
+						var iframeW = iframe.contentWindow;
+						iframeW.addEventListener('click', function(e) {
+							var target = e.target;
+							for(; target && target !== document; target = target.parentNode) {
+								if(target.tagName == 'BUTTON' && target.title == '切换全屏') {
+									if(window.innerHeight > window.innerWidth) {
+										//进入全屏 此时应该改变 按钮的样式，原站应该有对应的css，我没找到，你自己找找，找不到的话，就自己做吧；
+										var video = iframeW.document.querySelector('#mod_player');
+										if(video.requestFullscreen) {
+											video.requestFullscreen();
+										} else if(video.mozRequestFullScreen) {
+											video.mozRequestFullScreen();
+										} else if(video.msRequestFullscreen) {
+											video.msRequestFullscreen();
+										} else if(video.webkitRequestFullscreen) {
+											video.webkitRequestFullScreen();
+										}
+									} else {
+										//退出全屏
+										if(document.exitFullscreen) {
+											document.exitFullscreen();
+										} else if(document.msExitFullscreen) {
+											document.msExitFullscreen();
+										} else if(document.mozCancelFullScreen) {
+											document.mozCancelFullScreen();
+										} else if(document.webkitCancelFullScreen) {
+											document.webkitCancelFullScreen();
+										}
+									}
+								}
+							}
+						}, true);
+					};
 				}
 			});
 

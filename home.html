@@ -1,119 +1,71 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/jcx.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
 	</head>
+
 	<body>
-		
+
 		<div class="pst-f wh-100 bg_tu" style="background-image: url(img/720X1280.png);">
-			
+
 		</div>
-				
-<div class="gengxin-bar" id="gengxin-bar">
-	<div class="table">
-		<div class="table-cell">
-			<p>检测更新成功升级中。。。</p>
+
+		<div class="gengxin-bar" id="gengxin-bar">
+			<div class="table">
+				<div class="table-cell">
+					<p>检测更新成功升级中。。。</p>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
 
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
 
-<script src="js/mui.min.js"></script>
-<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-mui.init();
-mui.plusReady(function() {
-	
-				
-	//登录验证
-	if(localStorage.ubase==undefined){
-		openWindows('login.html');
-	}else{
-		 //perload();
-				
-		openWindows('index.html');
-	}
-//	
-//	if(localStorage.data_edit==undefined){
-//		setParam('data_edit','{"count":0,"list":[]}');
-//	}
-//	if(localStorage.data_add==undefined){
-//		setParam('data_add','{"count":0,"list":[]}');
-//	}
-	
-//	//网络检查
-//	net_yno();
-//	//检查更新
-//	//console.log(localStorage.net+"   "+sessionStorage.getItem('upgrade'))
-//	if(sessionStorage.getItem('upgrade') !='1'&&localStorage.net=='true'){
-//	    plus.runtime.getProperty(plus.runtime.appid,function(inf){ 
-//	        checkUpdate(inf.version);
-//	        sessionStorage.setItem('upgrade','1');
-//	    });
-//	}
-	
-});
+				//登录验证
+				if(localStorage.ubase == undefined) {
+					openWindows('login.html');
+				} else {
+					openWindows('index.html');
+				}
+				//	
+				//	if(localStorage.data_edit==undefined){
+				//		setParam('data_edit','{"count":0,"list":[]}');
+				//	}
+				//	if(localStorage.data_add==undefined){
+				//		setParam('data_add','{"count":0,"list":[]}');
+				//	}
 
+				//	//网络检查
+				//	net_yno();
+				//	//检查更新
+				//	//console.log(localStorage.net+"   "+sessionStorage.getItem('upgrade'))
+				//	if(sessionStorage.getItem('upgrade') !='1'&&localStorage.net=='true'){
+				//	    plus.runtime.getProperty(plus.runtime.appid,function(inf){ 
+				//	        checkUpdate(inf.version);
+				//	        sessionStorage.setItem('upgrade','1');
+				//	    });
+				//	}
 
-	function perload()
-			{
-				var subWebview_ry = mui.preload({
-					url: 'user_cun_ren.html',
-					id: 'user_cun_ren.html',
+			});
+
+			function perload() {
+
+				var subWebview_index = mui.preload({
+					url: 'index.html',
+					id: 'index.html',
 				});
-				
-				var subWebview_tq = mui.preload({
-					url: 'tianqi1.html',
-					id: 'tianqi1.html',
-				});
-				
-				var subWebview_hj = mui.preload({
-					url: 'user_huji_list.html',
-					id: 'user_huji_list.html',
-				});
-				
-				
-				
-				var subWebview_ri = mui.preload({
-					url: 'user_riji_list.html',
-					id: 'user_riji_list.html',
-				});
-				
-				var subWebview_jl = mui.preload({
-					url: 'user_zf_history.html',
-					id: 'user_zf_history.html',
-				});
-				
-				var subWebview_jh = mui.preload({
-					url: 'user_zf_jihua_list.html',
-					id: 'user_zf_jihua_list.html',
-				});
-				
-				var subWebview_jh_add = mui.preload({
-					url: 'user_zf_set.html',
-					id: 'user_zf_set.html',
-				});
-				
-				//
-				var subWebview_jh_add = mui.preload({
-					url: 'user_zf_zuijin.html',
-					id: 'user_zf_zuijin.html',
-				});
-				
-				var subWebview_zf_wei = mui.preload({
-					url: 'user_zf_wei.html',
-					id: 'user_zf_wei.html',
-				});
-				
-				
+
 			}
-			
-		
-</script>
+		</script>
 	</body>
+
 </html>

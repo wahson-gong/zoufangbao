@@ -5,10 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>选择入户家庭</title>
-		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
-		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
-		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
+		
 	</head>
 
 	<body>
@@ -119,6 +116,10 @@
 			</div>
 		</div>
 
+<link rel="stylesheet" type="text/css" href="css/jcx.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="css/mui.poppicker.css" />
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
@@ -129,6 +130,9 @@
 		<script src="js/uploadimage/demoa.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			//初始化
+			$('.header-h1').text(localStorage.user_zf_add_wei_allxingming + '家走访记录');
+			
 			var webview_detailA = null;
 			var webview_detailB = null;
 			document.addEventListener('plusready', function() {
@@ -143,17 +147,16 @@
 				net_yno();
 				document.getElementById("jiluren").value = JSON.parse(localStorage.ubase).msg[0].xingming;
 				document.getElementById("huhao").value = localStorage.user_zf_add_wei_huhao;
-				$('.header-h1').text(localStorage.user_zf_add_wei_allxingming + '家走访记录');
 				document.getElementById("huzhuxingming").value = localStorage.user_zf_add_wei_allxingming;
-if(localStorage.net == 'false'){
-	app.user =JSON.parse(localStorage.zf_rhry);
-}else{
-	//入户人员
-	getData(false, 'get', web_url() + '/?type=search&t=user&number=100&page=1' + rizi() + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
-		app.user = JSON.parse(result.msg);
-		setParam('zf_rhry',result.msg);
-	});
-}
+				if(localStorage.net == 'false') {
+					app.user = JSON.parse(localStorage.zf_rhry);
+				} else {
+					//入户人员
+					getData(true, 'get', web_url() + '/?type=search&t=user&number=100&page=1' + rizi() + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun, '', function(result) {
+						app.user = JSON.parse(result.msg);
+						setParam('zf_rhry', result.msg);
+					});
+				}
 				webview_detailA = plus.webview.getWebviewById(home_id());
 				webview_detailB = plus.webview.getWebviewById('user_zf_wei.html');
 			});
@@ -274,21 +277,23 @@ if(localStorage.net == 'false'){
 
 				var url1 = web_url() + '/?type=add&t=zoufangjilu';
 				var data1 = 'zoufangqingkuang=' + zoufangqingkuang + '&cunzaidewenti=' + cunzaidewenti + '&zutu=' + zutu + '&ruhurenyuan=' + ruhurenyuan + '&huhao=' + huhao + '&bianhao=' + bianhao + '&jiluren=' + jiluren + '&huzhuxingming=' + huzhuxingming + '&jihuabianhao=0&status=' + status + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + '&suoshuzu=' + JSON.parse(localStorage.ubase).msg[0].suoshuzu + "&yonghuming=" + localStorage.yonghuming + rizi() + "&dtime=" + timeA();
-				
-				var data_url=url1+'&'+data1;
-				if(localStorage.net=='false'){
-					var data_add=JSON.parse(localStorage.data_add);
-					var add_list=data_add.list;
-					var add_count=parseInt(data_add.count);
-					data_add.count=add_count+1;
-					var add_listA={"url":data_url};
+
+				var data_url = url1 + '&' + data1;
+				if(localStorage.net == 'false') {
+					var data_add = JSON.parse(localStorage.data_add);
+					var add_list = data_add.list;
+					var add_count = parseInt(data_add.count);
+					data_add.count = add_count + 1;
+					var add_listA = {
+						"url": data_url
+					};
 					add_list.push(add_listA);
-					data_add.list=add_list;
-					setParam('data_add',JSON.stringify(data_add));
+					data_add.list = add_list;
+					setParam('data_add', JSON.stringify(data_add));
 					plus.nativeUI.closeWaiting();
 					mui.toast('提交成功！');
 					mui.back();
-				}else{
+				} else {
 					getData(false, 'post', url1, data1, function(result) {
 						mui.fire(webview_detailA, 'user_zf_add_wei', localStorage.yonghuming);
 						mui.fire(webview_detailB, 'user_zf_add_wei', localStorage.yonghuming);

@@ -26,25 +26,29 @@
 				</div>
 			</div>
 			<div class="paixu" style="z-index: 999999;top: 44px;">
-				<p data-type="huzhuxingming">名称排序</p>
+				<p data-type="allxingming">名称排序</p>
 				<p data-type="hujileixing">类型排序</p>
-				<p data-type="menpaihao">门牌号排序</p>
+				<p data-type="huhao">门牌号排序</p>
 			</div>
 
 			<div class="mui-views" id="app" style="height: auto;top: 44px;">
 				<div class="mui-views-r box-sizing" style="padding-bottom: 35px;">
-					<!--<div v-bind:class="[isActive ? activeClass : '', errorClass]">
+					<div v-bind:class="[isActive ? activeClass : '', errorClass]">
 						<div class="table">
 							<div class="table-cell"><span class="mui-spinnerA"></span></div>
 						</div>
-					</div>-->
+					</div>
 					<div class="mui-views-r">
 
 						<div class="wrapper" id="wrapper">
 							<ul>
-								<li v-for="li in list ">
+								<li v-for="(li,index) in list" :data-index="index" :id="'xz'+li.huhao"  @click="xhuanzhe(li.huhao,li.hujileixing,li.allxingming)">
 									<div class="renyuan-bar pad-lr-15">
-										<label class="renyuan-p" :data-id="li.id" :data-huhao="li.huhao" :data-allxingming="li.allxingming"> <div class="rdo-cov" :data-type = "li.hujileixing" :data-value="li.huhao" ></div> <span class="ys5">{{li.allxingming}}家</span>&nbsp;&nbsp;<span class="ys4">{{li.menpaihao}}-{{li.hujileixing}}</span></label>
+										<label class="renyuan-p"> 
+											<div class="rdo-cov act" v-if="li.bl=='no'"></div>
+											<div class="rdo-cov" v-else=""></div>
+											<span class="ys5">{{li.allxingming}}家</span>&nbsp;&nbsp;<span class="ys4">{{li.menpaihao}}-{{li.hujileixing}}</span>
+										</label>
 									</div>
 								</li>
 							</ul>
@@ -107,10 +111,10 @@
 			});
 		</script>
 		<script type="text/javascript">
+			var up_data = "";
 			var type = "convert(allxingming using gbk)";
-
 			if(localStorage.huji_zf_paixu_set == undefined) {
-				setParam('huji_zf_paixu_set', 'dtime');
+				setParam('huji_zf_paixu_set', type);
 			}
 			var page = 1;
 			var num = 20;
@@ -122,12 +126,15 @@
 					list: [],
 					isActive: false,
 					activeClass: 'active',
-					errorClass: 'status',
-					paixu:'huzhuxingming',
-				}
+					errorClass: 'status pst1',
+					paixu:'allxingming',
+				},
+				methods: {
+					xhuanzhe: function(huhao, hx,allxingming) {
+						xhuanzhe('#xz'+huhao,huhao,hx,allxingming);
+					}
+				},
 			});
-
-			
 
 			setTimeout(function() {
 				refresher.init({
@@ -140,6 +147,8 @@
 			}, 200);
 
 			function Refresh() {
+				$('.zf-set-btm-p').text('请选择户籍');
+				up_data='';
 				app.isActive = false;
 				net_yno();
 				page = 1;
@@ -166,12 +175,22 @@
 			function AscrollEnd() {
 
 			}
-
+			function data_dd(dlist){
+				var ttype = $('.paixu p.on').data('type');
+				var ndata = [];
+				if(ttype != '' && ttype != undefined) {
+					ndata = getPyData(dlist, ttype, 'yes');
+				} else {
+					ndata = dlist;
+				}
+				return ndata;
+			}
 			function beautyshuju(num, page, yno, u1) {
 				if(localStorage.net == 'false') {
 					if(localStorage.on_user_ry_set != undefined) {
-						app.list = JSON.parse(localStorage.on_user_ry_set);
-						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
+						var oldData = JSON.parse(localStorage.on_user_ry_set);
+						app.list=data_dd(oldData);
+						document.getElementById("wrapper").setAttribute('data-pagenum', oldData.length);
 					} else {
 						document.getElementById("wrapper").setAttribute('data-pagenum', 0);
 					}
@@ -188,23 +207,6 @@
 						}
 					});
 				} else {
-					if(localStorage.on_user_ry_set != undefined && page == 1 && localStorage.huji_zf_paixu_set == 'dtime') {
-						app.list = JSON.parse(localStorage.on_user_ry_set);
-						document.getElementById("wrapper").setAttribute('data-pagenum', app.list.length);
-						app.$nextTick(function() {
-							if(yno != 'no') {
-								setTimeout(function() {
-									wrapper.refresh();
-									app.isActive = true;
-								}, 300);
-							} else {
-								setTimeout(function() {
-									app.isActive = true;
-								}, 300);
-							}
-						});
-					}
-
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
 					if(pagenum >= num || page == 1) {
@@ -217,6 +219,7 @@
 								}
 								pagenum = 0;
 							} else {
+								data=data_listB(data);
 								if(page == 1) {
 									app.list = data;
 								} else {
@@ -246,33 +249,27 @@
 				}
 
 			}
-
+			function data_listB(data1){
+				for(var i = 0; i < data1.length; i++) {
+					data1[i].bl = 'yes';
+				}
+				return data1;
+			}
 			$('.paixu p').click(function() {
 				$(this).addClass('on').siblings('p').removeClass('on');
 				$('.paixu').removeClass('on');
-				
-//				type = $(this).data('type');
-//				if(type == 'huzhuxingming') {
-//					orderby = 'asc';
-//					setParam('huji_zf_paixu_set', 'convert(allxingming using gbk)');
-//				} else {
-//					orderby = 'asc';
-//					setParam('huji_zf_paixu_set', type);
-//				}
-//				Refresh();
+				app.list=data_dd(app.list);
 			});
-			var up_data = "";
+			
 
-			function xhuanzhe(obj) {
-				$('.rdo-cov').removeClass('act');
-				$(obj).find('.rdo-cov').addClass('act');
-				if($(obj).find('.rdo-cov').hasClass('act')) {
-					var id = $(obj).data('id');
-					var huhao = $(obj).data('huhao');
-					var allxingming = $(obj).data('allxingming');
+			function xhuanzhe(obj,huhao,leixing,allxingming) {
+				app.list=data_listB(app.list);
+				var index=parseInt($(obj).data('index'));
+				app.list[index].bl='no';
+				if(app.list[index].bl=='no') {
 					var txt = $(obj).find('.ys5').text();
 					$('.zf-set-btm-p').text(txt);
-					up_data = '{"id":"' + id + '","huhao":"' + huhao + '","allxingming":"' + allxingming + '","jia":"' + txt + '"}';
+					up_data = '{"id":"' + huhao + '","huhao":"' + huhao + '","allxingming":"' + allxingming + '","jia":"' + txt + '"}';
 				}
 			}
 			//时间
@@ -283,7 +280,7 @@
 			$('.zf-set-btm-btn').click(function() {
 				//JSON.parse(up_data)
 				if(up_data == '') {
-					alert('请选择户籍');
+					mui.toast('请选择户籍');
 					return false;
 				}
 				mui.fire(webview_detail, 'user_ry_set', JSON.parse(up_data));
@@ -302,7 +299,7 @@
 					bt = bt.replace(/\s+/g, '');
 					if(bt == '') {
 						u1 = '';
-						//alert('请输入搜索关键字');
+						//mui.toast('请输入搜索关键字');
 						//return false;
 					} else {
 						u1 = "&sqlvalue=allxingming{like}%27{bfb}" + bt + "{bfb}%27";
@@ -317,12 +314,12 @@
 					$('.search').removeClass('on');
 				}
 			}
-			mui('.wrapper').on('tap', '.renyuan-p', function() {
-				xhuanzhe(this);
-			});
-			mui('.wrapper').on('longtap', '.renyuan-p', function() {
-				xhuanzhe(this);
-			});
+//			mui('.wrapper').on('tap', '.renyuan-p', function() {
+//				xhuanzhe(this);
+//			});
+//			mui('.wrapper').on('longtap', '.renyuan-p', function() {
+//				xhuanzhe(this);
+//			});
 		</script>
 	</body>
 

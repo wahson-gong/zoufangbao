@@ -15,7 +15,7 @@
 			<div class="header hdA">
 				<div class="header-A1 clearfix">
 					<a class="head-box head-back head-backA fl mui-action-back"></a>
-					<a onclick="return linkA(this)" data-href="user_riji_add.html" class="head-box head-title fr">新增</a>
+					<a onclick="return add_riji()" class="head-box head-title fr">新增</a>
 					<div class="header-h1">我的民情日记</div>
 				</div>
 			</div>
@@ -217,9 +217,30 @@
 					});
 				}
 			}
-		</script>
-		<script type="text/javascript">
-			//console.log(getDateDiff('2017-08-21 22:46:43'))
+			function add_riji()
+			{
+				var riji_list = JSON.parse(getParam("on_user_riji_list"));
+				var myDate = new Date();
+				var today = myDate.getFullYear() + "-" + Number(myDate.getMonth() + 1) + "-" + myDate.getDate();
+				console.log(today);
+				for(var i = 0; i < riji_list.length; i++) {
+					var riji_dtime = riji_list[i].dtime1;
+					if(riji_dtime.indexOf(today) == 0) {
+						console.log("今日已添加日记，直接修改");
+						net_yno();
+						if(localStorage.net == 'false') {
+							mui.toast('请检查网络');
+							return false;
+						} else {
+							localStorage.setItem('user_riji_add1_id', riji_list[i].id);
+							openWindows("user_riji_add1.html");
+return false;
+						}
+					}
+
+				}
+				openWindows("user_riji_add.html");
+			}
 		</script>
 	</body>
 
