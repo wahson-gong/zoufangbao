@@ -131,6 +131,9 @@
 	<script src="js/uploadimage/demoa.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+	$("#ruhurenyuan").val(localStorage.xingming);
+	$("#bianhao").val(JSON.parse(localStorage.ubase).msg[0].id);
+
     	var webview_detailJ = null;
     	var webview_detailA = null;
     	var webview_detailB = null;
@@ -144,6 +147,8 @@
 		});
 		mui.plusReady(function() {
 			plus.nativeUI.closeWaiting();mui.currentWebview.show();
+			
+			
 			webview_detailJ = plus.webview.getWebviewById('user_zf_jihua_list.html');
 			webview_detailA = plus.webview.getWebviewById(home_id());
 			webview_detailB = plus.webview.getWebviewById('user_zf_history.html');

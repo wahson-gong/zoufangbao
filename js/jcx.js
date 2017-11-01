@@ -190,8 +190,8 @@ function onNetChange() {　　 //获取当前网络类型
 function home_id() {
 	//	return 'HBuilder';
 	//	return 'H547E21F3';
-	//	return 'index.html';
-	return localStorage.home;
+		return 'index.html';
+	//return localStorage.home;
 }
 
 function wx_time() {

@@ -504,7 +504,8 @@
 					"images/bicon-7.png",
 					"images/bicon-14.png",
 					"images/bicon-3.png",
-					"images/wutu.jpg"
+					"images/wutu.jpg",
+					"images/10.1_03.png"
 				],
 				"priority": 5,
 				"refer": [
@@ -1089,7 +1090,8 @@
 					"images/bicon-14.png",
 					"images/bicon-3.png",
 					"images/wutu.jpg",
-					"images/cicon-1.png"
+					"images/cicon-1.png",
+					"images/10.1_03.png"
 				],
 				"refer": [
 					"user_ry_set.html",
@@ -1485,7 +1487,8 @@
 					"images/bicon-3.png",
 					"js/iscroll.min.js",
 					"css/jcx.css",
-					"images/icon-left.png"
+					"images/icon-left.png",
+					"images/10.1_03.png"
 				],
 				"refer": [],
 				"priority": 0

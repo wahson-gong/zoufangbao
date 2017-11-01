@@ -79,6 +79,15 @@
 								<input type="hidden" name="renyuanleibie" />
 							</div>
 						</div>
+						
+						<div class="bk-li ">
+							<div class="bk-lt">
+								<img src="images/10.1_03.png" class="bk-lt-icon" />
+								<input onblur="form_ck_ghy()" type="text" class="bk-lt-pt" placeholder="身份证号码" name="shenfenzhenghao" id="shenfenzhenghao" />
+							</div>
+						</div>
+						
+						
 						<!--出生日期-->
 						<div class="bk-li b1">
 							<div class="bk-lt">
@@ -114,12 +123,7 @@
 							</div>
 						</div>
 
-						<div class="bk-li ">
-							<div class="bk-lt">
-								<img src="images/bicon-5.png" class="bk-lt-icon" />
-								<input type="text" class="bk-lt-pt" placeholder="身份证号码" name="shenfenzhenghao" id="shenfenzhenghao" />
-							</div>
-						</div>
+						
 
 						<div class="bk-li">
 							<div class="bk-lt">
@@ -782,10 +786,14 @@
 				var isSfz = from_zz('身份证');
 				var shenfenzhenghao = $("input[name='shenfenzhenghao']").val();
 				shenfenzhenghao = shenfenzhenghao.replace(/\s+/g, '');
-				if(!isSfz.test(shenfenzhenghao) && shenfenzhenghao != "") {
+				if(!isSfz.test(shenfenzhenghao) || shenfenzhenghao == "") {
 					mui.toast("请正确填写身份证号");
 					return false;
-				}
+				} 
+				 if(!check_sfz())
+				 {
+				 	return;
+				 }
 
 				var renyuanleibie = '';
 				if($('#renyuanleibie .bk-dt').hasClass('don')) {
@@ -945,20 +953,62 @@
 				return obj[param] || '';
 			};
 			
-			function form_ck_ghy()
-			{
+			
+			function form_ck_ghy() {
 				var xingming = document.getElementById("xingming").value;
 				xingming = xingming.replace(/\s+/g, '');
 				if(xingming == '') {
 					mui.toast('请填写姓名');
 					return false;
 				}
- 
-				var minzu = document.getElementById("minzu").value;
-				if(minzu == '') {
-					mui.toast('请选择民族');
+
+				//				var minzu = document.getElementById("minzu").value;
+				//				if(minzu == '') {
+				//					mui.toast('请选择民族');
+				//					return false;
+				//				}
+
+				var isSfz = from_zz('身份证');
+				var shenfenzhenghao = $("input[name='shenfenzhenghao']").val();
+				shenfenzhenghao = shenfenzhenghao.replace(/\s+/g, '');
+				if(!isSfz.test(shenfenzhenghao) || shenfenzhenghao == "") {
+					mui.toast("请正确填写身份证号");
 					return false;
+				} else {
+					check_sfz();
 				}
+			}
+			//var cityData3=JSON.parse(localStorage.add_sanji);
+			function check_sfz() {
+				hiden_jp();
+				mui.toast("身份证号查询中...");
+				var bool=false;
+				var shenfenzhenghao = $("input[name='shenfenzhenghao']").val();
+				var url_b = web_url() + "/?type=search&t=renyuan&liemingcheng=id&shenfenzhenghao=" + shenfenzhenghao;
+				getData(false, 'get', url_b, '', function(result) {
+					if(result.msg != '[]') {
+						mui.toast("身份证号已存在，请正确填写身份证号");
+						plus.nativeUI.closeWaiting();
+						bool=false;
+					}else
+					{
+						bool= true;
+					}
+				});
+				return bool;
+				
+			}
+			
+			//隐藏键盘
+			function hiden_jp(){
+				
+				var Context = plus.android.importClass("android.content.Context");
+                        var InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+                        var main = plus.android.runtimeMainActivity();
+                        var imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if(imm.isActive()){
+                                imm.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT); 
+                            }
 			}
 			//var cityData3=JSON.parse(localStorage.add_sanji);
 		</script>

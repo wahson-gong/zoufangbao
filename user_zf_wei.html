@@ -130,11 +130,13 @@
 				} else {
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
+					//console.log(web_url() + '/?type=changqiweizoufang&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + rizi());
 					if(pagenum >= num || page == 1) {
 						getData(true, 'get', web_url() + '/?type=changqiweizoufang&number=' + num + '&page=' + page + '&suoshucun=' + JSON.parse(localStorage.ubase).msg[0].suoshucun + rizi(), '', function(result) {
 							if(result.msg == 'null') {
 								document.getElementById("wrapper").setAttribute('data-pagenum', '0');
 								wrapper.refresh();
+								  app.isActive = true;
 								return false;
 							}
 

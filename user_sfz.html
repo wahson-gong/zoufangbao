@@ -25,7 +25,7 @@
 						<div class="sfz-pic mar-b-10 pst-r tct bg-c1" id="tu" onclick="return tx_ck()">
 							<div class="pst-a wh-100 p-lt br-10">
 								<div class="table " id="sfz_bg">
-									<div  class="table-cell ft-14 c-333">点击上传图片/拍照</div>
+									<div class="table-cell ft-14 c-333">点击上传图片/拍照</div>
 								</div>
 							</div>
 						</div>
@@ -61,7 +61,7 @@
 									<div class="clearfix">
 										<div class="ft-a">公民身份证号</div>
 										<!--<div class="ft-b" id="shenfenzhenghao"></div>-->
-										<input type="text" class="ft-b b3"  id="shenfenzhenghao" />
+										<input type="text" class="ft-b b3" id="shenfenzhenghao" />
 									</div>
 									<div class="clearfix">
 										<div class="ft-a">签发机关</div>
@@ -118,63 +118,62 @@
 
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			
+			//扫描类型
+			var type = "";
 			//intent 实例
-		var Intent = null;
-		//main activity
-		var main = null;
-		
-		//清楚上次的缓存
-			delParam("sfz");delParam("cx_data");
-		
+			var Intent = null;
+			//main activity
+			var main = null;
+
+			//清楚上次的缓存
+			delParam("sfz");
+			delParam("cx_data");
+
 			mui.init({
 				swipeBack: true
 			});
-			
+
 			mui.plusReady(function() {
-			Intent = plus.android.importClass("android.content.Intent");
-			// 获取主Activity
-			main = plus.android.runtimeMainActivity();
+				Intent = plus.android.importClass("android.content.Intent");
+				// 获取主Activity
+				main = plus.android.runtimeMainActivity();
 
-			//接收广播
-			var receiver = plus.android.implements('io.dcloud.android.content.BroadcastReceiver', {
-				onReceive: function(context, intent) { //实现onReceiver回调函数
-					plus.android.importClass(intent);
-//					mui.toast("监听广播传递的action"+intent.getAction());
-//					mui.toast("广播传递的参数"+intent.getStringExtra("RESULT"));
+				//接收广播
+				var receiver = plus.android.implements('io.dcloud.android.content.BroadcastReceiver', {
+					onReceive: function(context, intent) { //实现onReceiver回调函数
+						plus.android.importClass(intent);
+						//					mui.toast("监听广播传递的action"+intent.getAction());
+						//					mui.toast("广播传递的参数"+intent.getStringExtra("RESULT"));
 
-					//获取广播中的参数
-					//mui.toast(intent.getStringExtra("RESULT"));
-					var result = JSON.parse(intent.getStringExtra("RESULT"));
-					if(result.msg.xingbie!=""||result.msg.xingbie!=null)
-					{
-						result.msg.minzu=result.msg.minzu+"族";
+						//获取广播中的参数
+						//mui.toast(intent.getStringExtra("RESULT"));
+						var result = JSON.parse(intent.getStringExtra("RESULT"));
+						if(result.msg.xingbie != "" || result.msg.xingbie != null) {
+							result.msg.minzu = result.msg.minzu + "族";
+						}
+						if(result.msg.chushengriqi != "" || result.msg.chushengriqi != null) {
+							result.msg.chushengriqi = result.msg.chushengriqi.replace("年", "-").replace("月", "-").replace("日", "-");
+						}
+
+						setParam('sfz', JSON.stringify(result.msg));
+						$("#shenfenzhengdizhi").val(result.msg.shenfenzhengdizhi);
+						$("#chushengriqi").val(result.msg.chushengriqi);
+						$("#xingming").val(result.msg.xingming);
+						$("#shenfenzhenghao").val(result.msg.shenfenzhenghao);
+						$("#xingbie").val(result.msg.xingbie);
+						$("#minzu").val(result.msg.minzu);
+
+						type = "nfc";
+						//销毁广播，视具体情况选择是否销毁广播
+						//main.unregisterReceiver(receiver);
 					}
-					if(result.msg.chushengriqi!=""||result.msg.chushengriqi!=null)
-					{
-						result.msg.chushengriqi=result.msg.chushengriqi.replace("年","-").replace("月","-").replace("日","-");
-					}
-					
-					
-		            setParam('sfz', JSON.stringify(result.msg));
-					$("#shenfenzhengdizhi").val(result.msg.shenfenzhengdizhi);
-					$("#chushengriqi").val(result.msg.chushengriqi);
-					$("#xingming").val(result.msg.xingming);
-					$("#shenfenzhenghao").val(result.msg.shenfenzhenghao);
-					$("#xingbie").val(result.msg.xingbie);
-					$("#minzu").val(result.msg.minzu);
-					//销毁广播，视具体情况选择是否销毁广播
-					//main.unregisterReceiver(receiver);
-				}
+				});
+				var IntentFilter = plus.android.importClass('android.content.IntentFilter');
+				var filter = new IntentFilter();
+				filter.addAction("SCANNING_IDCARD_RESULT"); //  监听广播传递的action
+				main.registerReceiver(receiver, filter); //注册监听				
+
 			});
-			var IntentFilter = plus.android.importClass('android.content.IntentFilter');
-			var filter = new IntentFilter();
-			filter.addAction("SCANNING_IDCARD_RESULT"); //  监听广播传递的action
-			main.registerReceiver(receiver, filter); //注册监听				
-
-			 
-		});
-			
 
 			function tx_ck() {
 				mui('#picture').popover('toggle');
@@ -195,21 +194,20 @@
 			function search_sfz() {
 				//上传头像
 				imgupgrade();
-				
+
 				var img_url = $("#touxiang").val();
-				if(img_url==""||img_url==null)
-				{
+				if(img_url == "" || img_url == null) {
 					mui.toast("请选择或上传图片");
 					return false;
 				}
-				
+
 				//识别
 				plus.nativeUI.showWaiting("身份证识别中...");
 				getData(true, 'get', web_url() + '/?type=shenfenzhengshibie&img_url=' + web_url() + "/" + img_url, '', function(result) {
-                    plus.nativeUI.closeWaiting();
+					plus.nativeUI.closeWaiting();
 					console.log(web_url() + '/?type=shenfenzhengshibie&img_url=' + web_url() + "/" + img_url);
 					console.log(JSON.stringify(result.msg));
-					 
+
 					setParam('sfz', JSON.stringify(result.msg));
 					$("#shenfenzhengdizhi").val(result.msg.shenfenzhengdizhi);
 					$("#chushengriqi").val(result.msg.chushengriqi);
@@ -223,19 +221,20 @@
 			//查询人员
 			function cx_ry() {
 				var img_url = $("#touxiang").val();
-				if(img_url==""||img_url==null)
-				{
-					mui.toast("请选择或上传图片");
-					return false;
+				if(type != "nfc") {
+					if(img_url == "" || img_url == null) {
+						mui.toast("请选择或上传图片");
+						return false;
+					}
+
 				}
-				
-//				if($("#shenfenzhenghao").val()==""||$("#shenfenzhenghao").val()==null)
-//				{
-//					mui.toast("身份证号不能为空");
-//					return false;
-//				}
-				
-				
+
+				//				if($("#shenfenzhenghao").val()==""||$("#shenfenzhenghao").val()==null)
+				//				{
+				//					mui.toast("身份证号不能为空");
+				//					return false;
+				//				}
+
 				var xm = $("#xingming").val();
 				var sfzh = $("#shenfenzhenghao").val();
 				var cx_data = {
@@ -247,32 +246,32 @@
 			}
 			//新增人员
 			function xz_ry() {
-              var img_url = $("#touxiang").val();
-				if(img_url==""||img_url==null)
-				{
-					mui.toast("请选择或上传图片");
-					return false;
+				var img_url = $("#touxiang").val();
+				if(type != "nfc") {
+					if(img_url == "" || img_url == null) {
+						mui.toast("请选择或上传图片");
+						return false;
+					}
+
 				}
-				var sfz_str=getParam("sfz");
-				if(sfz_str==""||sfz_str==null)
-				{
+
+				var sfz_str = getParam("sfz");
+				if(sfz_str == "" || sfz_str == null) {
 					mui.toast("没有身份证信息");
 					return false;
 				}
-                openWindows('user_renyuan_add_sfz.html');
+				openWindows('user_renyuan_add_sfz.html');
 			}
-			
-			
-			 // 安卓版调用第三方程序
-            function launchApp() {
-                if(plus.os.name == "Android") {
-                    plus.runtime.launchApplication({
-                        pname: "cn.com.senter.mobilereader",
-                    });
 
-                }
-            }
-			 
+			// 安卓版调用第三方程序
+			function launchApp() {
+				if(plus.os.name == "Android") {
+					plus.runtime.launchApplication({
+						pname: "cn.com.senter.mobilereader",
+					});
+
+				}
+			}
 		</script>
 	</body>
 

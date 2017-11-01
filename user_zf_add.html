@@ -129,6 +129,9 @@
 		<script src="js/uploadimage/demoa.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			$("#ruhurenyuan").val(localStorage.xingming);
+	$("#bianhao").val(JSON.parse(localStorage.ubase).msg[0].id);
+	
 			var webview_detailA = null;
 			var webview_detailB = null;
 			var webview_detailC = null;
@@ -221,17 +224,17 @@
 				$('#ruhurenyuan').on('click', function() {
 					$('.mui-poppicker').addClass('mui-active');
 				});
-				$('.mui-poppicker-btn-cancel').on('click', function() {
-					$('.btn-zu').removeClass('blue');
-					$('#ruhurenyuan').val('');
-					$('#bianhao').val('');
-					$('.mui-poppicker').removeClass('mui-active');
-				});
-				$('.mui-poppicker-btn-ok').on('click', function() {
-					$('#ruhurenyuan').val(ruhurenyuan_txt);
-					$('#bianhao').val(bianhao_txt);
-					$('.mui-poppicker').removeClass('mui-active');
-				});
+			$('.mui-poppicker-btn-cancel').on('click',function(){
+//			$('.btn-zu').removeClass('blue');
+//			$('#ruhurenyuan').val('');
+//			$('#bianhao').val('');
+			$('.mui-poppicker').removeClass('mui-active');
+		});
+		$('.mui-poppicker-btn-ok').on('click',function(){
+			$('#ruhurenyuan').val(ruhurenyuan_txt);
+			$('#bianhao').val(bianhao_txt);
+			$('.mui-poppicker').removeClass('mui-active');
+		});
 
 			function bianhao(obj) {
 				$(obj).toggleClass('blue');

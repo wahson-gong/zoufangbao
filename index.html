@@ -129,7 +129,7 @@
 
 									<div class="pad-tb-5" v-cloak>
 										<div class="list-d1 list-d2 clearfix pad-lr-15" v-for="li in wei_zf" @click="zf_wei_nk(li.huji.id,li.huji.huhao,li.huji.allxingming)">
-											<p class="list-d1-t t_l fl">{{li.cun.u1}}-{{li.huji.allxingming}}家</p>
+											<p class="list-d1-t t_l fl">{{li.huji.allxingming}}家</p>
 											<p class="list-d1-t t_c fl">{{li.huji.hujileixing}}</p>
 											<p class="list-d1-t t_r fl">{{li.huji.newtime}}</p>
 										</div>
@@ -563,7 +563,8 @@
 			}
 			//时间
 			function cq_time(data) {
-				var n = data.length;
+				try{
+					var n = data.length;
 				var stime = timeA();
 				for(var i = 0; i < n; i++) {
 					var tm = data[i].huji;
@@ -574,6 +575,10 @@
 					}
 					data[i].huji.newtime = getDateDiff(tm.dtime);
 				}
+				}catch(e){
+					//TODO handle the exception
+				}
+				
 				return data;
 			}
 			//时间

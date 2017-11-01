@@ -104,6 +104,7 @@
 
 				webview_detail = plus.webview.getWebviewById('user_zf_jihua_list.html');
 				webview_detailA = plus.webview.getWebviewById(home_id());
+				webview_detail_index = plus.webview.getWebviewById('index.html');
 			});
 
 			var app = new Vue({
@@ -133,6 +134,7 @@
 			var pagenum = num;
 			var webview_detail = null;
 			var webview_detailA = null;
+			var webview_detail_index=null;
 			var orderby = 'asc';
 			var type = 'convert(allxingming using gbk)';
 			document.addEventListener('plusready', function() {
@@ -236,6 +238,7 @@
 						}
 					});
 				} else {
+					app.isActive = true;
 					pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 					pagenum = parseInt(pagenum);
 					if(pagenum >= num || page == 1) {
@@ -448,8 +451,10 @@
 
 				}
 				//add end
+				
 				mui.fire(webview_detail, 'user_zf_set', localStorage.yonghuming);
 				mui.fire(webview_detailA, 'user_zf_set', localStorage.yonghuming);
+				mui.fire(webview_detail_index, 'user_zf_set', localStorage.yonghuming);
 				plus.nativeUI.closeWaiting();
 				mui.toast('计划添加成功');
 				mui.back();
