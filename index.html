@@ -15,9 +15,14 @@
 		/*.mui-poppicker-btn-cancel{
 				display: none;
 			}*/
+			.news-hot-h-container{
+			    padding: 0 6px;
+			}
+			
 	</style>
 
 	<body>
+		
 		<div class="gengxin-bar" id="gengxin-bar">
 			<div class="table">
 				<div class="table-cell">
@@ -41,12 +46,16 @@
 				</div>
 				<div class="mui-views" style="height: auto;top: 44px;">
 					<div class="mui-views-r">
-
+						
+						
 						<div class="wrapper" id="wrapper">
 							<ul style="list-style: none;">
 								<li style="list-style: none;">
 
 									<div class="banner TU_A1 pst-r">
+										<!--add by linker banner磨砂玻璃效果-->
+										<img src="images/banner.jpg" style="position: absolute;height: 100%;width: 100%;filter: blur(1px);" />
+										<!--add by linker end-->
 										<div class="mui-views">
 											<div class="table">
 												<div class="table-cell pad-lr-15">
@@ -143,14 +152,26 @@
 									</div>
 
 									<div class="bg-ys2 pad-lr-15 pad-tb-10" v-cloak>
-										<a class="dbk news-hot" v-for="li in news" @click="news_nk(li.id)" style="padding-bottom: 10px;">
+										<!--edit by linker 首页新闻块修改，在本页增加了添加了内部样式表，原样式已注释-->
+										<!--<a class="dbk news-hot" v-for="li in news" @click="news_nk(li.id)" style="padding-bottom: 10px;">
 											<div class="news-hm-img dbk mar-b-10 bg_tu" style="padding-bottom: 50%;position: relative;">
 												<div class="pst-a wh-100 p-lt" :style="'background-image: url('+li.suolutu+')'"></div>
 											</div>
 											<p class="news-hot-h1 c-666">{{li.biaoti}}</p>
 											<p class="news-hot-h2 c-999">{{li.dtime}}</p>
 											<p class="news-hot-h3 c-999 over-two">{{li.jianjie}}</p>
+										</a>-->
+										<a class="dbk news-hot" v-for="li in news" @click="news_nk(li.id)" style="padding-bottom: 10px;margin: 10px 0;box-shadow: 0px 0px 4px #666666;">
+											<div class="news-hm-img dbk mar-b-10 bg_tu" style="padding-bottom: 50%;position: relative;">
+												<div class="pst-a wh-100 p-lt" :style="'background-image: url('+li.suolutu+')'"></div>
+											</div>
+											<div class="news-hot-h-container">
+												<p class="news-hot-h1 c-666">{{li.biaoti}}<span class="news-hot-h2 c-999" style="float: right;">{{li.dtime}}</span></p>
+												<p class="news-hot-h3 c-999 over-two">{{li.jianjie}}</p>
+												<!--<p class="news-hot-h2 c-999"></p>-->
+											</div>
 										</a>
+										<!--edit by linker end-->
 									</div>
 								</li>
 							</ul>
@@ -900,28 +921,56 @@
 						var cityData3 = JSON.parse(localStorage.dataA_dizhiA.replace(/undefined/g, "[]"));
 						var cityPicker3 = new mui.PopPicker();
 						cityPicker3.setData(cityData3);
+						
+						if(localStorage.login_suoshuzu_txt != null || localStorage.login_suoshuzu_txt != ''){
+							for(var i = 0; i < cityData3.length; i++){
+								if(localStorage.login_suoshuzu_txt == cityData3[i].text){
+									cityPicker3.pickers[0].setSelectedIndex(i);
+									//找到就跳出循环
+									break;
+								}
+							}
+						}
+						
 						//alert(getParam("login_suoshuzu_txt"));
 						
 						var showCityPickerButton = document.getElementById('suozaidiqu');
 						showCityPickerButton.addEventListener('tap', function(event) {
-							cityPicker3.pickers[0].setSelectedValue(getParam("login_suoshuzu_txt"));
+							
 							cityPicker3.show(function(items) {
 								if(_getParam(items[0], 'value') == '') {
 									mui.toast('请选项组');
 									return false;
 								} else {
-									var data = JSON.parse(localStorage.ubase);
-									app.user_suoshuzu = _getParam(items[0], 'text');
-									setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
-									data.msg[0].suoshuzu = _getParam(items[0], 'value');
-									setParam('ubase', JSON.stringify(data));
-									var data1 = '&suoshuzu=' + _getParam(items[0], 'value');
-									user_edit(data1);
+									//添加加载中
+									var nwaiting = plus.nativeUI.showWaiting();
+		                    	    mui.toast("提交中，请稍后...");
+									var data1 = '';
+									(function () { 
+										data = JSON.parse(localStorage.ubase);
+										app.user_suoshuzu = _getParam(items[0], 'text');
+										setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+										data.msg[0].suoshuzu = _getParam(items[0], 'value');
+										setParam('ubase', JSON.stringify(data));
+										data1 = '&suoshuzu=' + _getParam(items[0], 'value');
+									} ()); 
+									
+									user_edit(data1,true,nwaiting);
 									app.edit_num = JSON.parse(localStorage.data_edit).count;
 								}
 							});
 						}, false);
-
+						
+//						var items = cityPicker3.getSelectedItems();
+//						
+//						var data = JSON.parse(localStorage.ubase);
+//						app.user_suoshuzu = _getParam(items[0], 'text');
+//						setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+//						data.msg[0].suoshuzu = _getParam(items[0], 'value');
+//						setParam('ubase', JSON.stringify(data));
+//						var data1 = '&suoshuzu=' + _getParam(items[0], 'value');
+//						user_edit(data1);
+//						app.edit_num = JSON.parse(localStorage.data_edit).count;
 					}
 				});
 			}

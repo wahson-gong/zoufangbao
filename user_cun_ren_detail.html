@@ -538,6 +538,169 @@
 				getData(true, 'get', web_url() + '/?type=search&t=renyuan&id=' + localStorage.user_cun_ren_detail_id, '', function(result) {
 					app.renyuan = JSON.parse(result.msg)[0];
 					
+					//by linker 将pickerview设置为初始默认值
+					//by linker 民族设置默认,优化了picker数据的设置
+					//by linker 构造选择器
+					var minzuPicker = new mui.PopPicker({
+						button:['取消','确定']
+					});
+					//by linker 设置数据
+					var minzuPickerData = [{value:"",text:"请选择民族"},{value:"汉族",text:"汉族"},{value:"维吾尔族",text:"维吾尔族"},{value:"回族",text:"回族"},{value:"哈萨克族",text:"哈萨克族"},{value:"蒙古族",text:"蒙古族"},{value:"柯尔克孜族",text:"柯尔克孜族"},{value:"乌兹别克族",text:"乌兹别克族"},{value:"俄罗斯族",text:"俄罗斯族"},{value:"锡伯族",text:"锡伯族"},{value:"藏族",text:"藏族"},{value:"布依族",text:"布依族"},{value:"侗族",text:"侗族"},{value:"瑶族",text:"瑶族"},{value:"朝鲜族",text:"朝鲜族"},{value:"白族",text:"白族"},{value:"哈尼族",text:"哈尼族"},{value:"满族",text:"满族"},{value:"黎族",text:"黎族"},{value:"傣族",text:"傣族"},{value:"畲族",text:"畲族"},{value:"傈僳族",text:"傈僳族"},{value:"仡佬族",text:"仡佬族"},{value:"东乡族",text:"东乡族"},{value:"高山族",text:"高山族"},{value:"拉祜族",text:"拉祜族"},{value:"水族",text:"水族"},{value:"佤族",text:"佤族"},{value:"纳西族",text:"纳西族"},{value:"羌族",text:"羌族"},{value:"土族",text:"土族"},{value:"仫佬族",text:"仫佬族"},{value:"苗族",text:"苗族"},{value:"壮族",text:"壮族"},{value:"达斡尔族",text:"达斡尔族"},{value:"景颇族",text:"景颇族"},{value:"毛南族",text:"毛南族"},{value:"撒拉族",text:"撒拉族"},{value:"布朗族",text:"布朗族"},{value:"塔吉克族",text:"塔吉克族"},{value:"阿昌族",text:"阿昌族"},{value:"普米族",text:"普米族"},{value:"鄂温克族",text:"鄂温克族"},{value:"怒族",text:"怒族"},{value:"京族",text:"京族"},{value:"基诺族",text:"基诺族"},{value:"德昂族",text:"德昂族"},{value:"保安族",text:"保安族"},{value:"彝族",text:"彝族"},{value:"裕固族",text:"裕固族"},{value:"土家族",text:"土家族"},{value:"门巴族",text:"门巴族"},{value:"鄂伦春族",text:"鄂伦春族"},{value:"独龙族",text:"独龙族"},{value:"塔塔尔族",text:"塔塔尔族"},{value:"赫哲族",text:"赫哲族"},{value:"珞巴族",text:"珞巴族"}];
+					
+					minzuPicker.setData(minzuPickerData);
+					minzuPicker.pickers[0].setSelectedValue(app.renyuan.minzu, 400);
+					
+					document.getElementById('minzu').addEventListener('tap',function(event){
+						var inputPicker = this; 
+						
+						minzuPicker.show(function(items){
+							console.log(items[0].value);
+							inputPicker.value = items[0].value;
+							//form_ck_ghy();
+						})
+					},false);
+				
+					
+					//by linker 构造选择器
+					var zhongdianleibiePicker = new mui.PopPicker({
+						button:['取消','确定']
+					});
+					
+					//by linker 设置数据
+					var zhongdianleibiePickerPickerData = [
+					{value:"",text:"请选择重点类别"},
+					{value:"危安类刑满释放人员及其家属",text:"危安类刑满释放人员及其家属"},
+					{value:"野阿訇",text:"野阿訇"},
+					{value:"野阿吉",text:"野阿吉"},
+					{value:"涉“六条线”人员的徒子徒孙",text:"涉“六条线”人员的徒子徒孙"},
+					{value:"本地持“瓦哈比”思想传承人员",text:"本地持“瓦哈比”思想传承人员"},
+					{value:"曾被教育转化的人员",text:"曾被教育转化的人员"},
+					{value:"境外“回流”人员",text:"境外“回流”人员"},
+					{value:"被判处死刑、被击毙、自爆身亡人员的亲属",text:"被判处死刑、被击毙、自爆身亡人员的亲属"},
+					{value:"国保三、四、五类人员",text:"国保三、四、五类人员"},
+					{value:"长期外出务工突然返乡人员",text:"长期外出务工突然返乡人员"},
+					{value:"严打以来曾被判处管制、拘役纳入社区矫治的人员",text:"严打以来曾被判处管制、拘役纳入社区矫治的人员"},
+					{value:"涉“7.5”“7.6”案件刑释解教、解脱人员及其家属",text:"涉“7.5”“7.6”案件刑释解教、解脱人员及其家属"},
+					{value:"过去使用智能手机，现在突然不用手机或改用非智能手机的人员",text:"<div style='font-size:10px;'>过去使用智能手机，现在突然不用手机或改用非智能手机的人员<div>"},
+					{value:"不与左邻右舍来往，平时很少走正门、行为诡秘的人员",text:"不与左邻右舍来往，平时很少走正门、行为诡秘的人员"},
+					{value:"过去热衷于向清真寺捐钱捐物或替清真寺收钱收物的人员",text:"过去热衷于向清真寺捐钱捐物或替清真寺收钱收物的人员"},
+					{value:"无正当理由突然变卖家产外出特别是举家外出人员",text:"无正当理由突然变卖家产外出特别是举家外出人员"},
+					{value:"家庭用电异常的人员",text:"家庭用电异常的人员"},
+					{value:"违反计划生育，超生的人员",text:"违反计划生育，超生的人员"},
+					{value:"懂电焊、制爆技术的人员",text:"懂电焊、制爆技术的人员"},
+					{value:"无正当理由不愿享受各类惠民政策、不参加基础组织安排的各类活动",text:"<div style='font-size:10px'>无正当理由不愿享受各类惠民政策、不参加基础组织安排的各类活动</div>"}];
+					
+					zhongdianleibiePicker.setData(zhongdianleibiePickerPickerData);
+					zhongdianleibiePicker.pickers[0].setSelectedValue(app.renyuan.zhongdianleibie);
+					//by linker 设置监听
+					document.getElementById('zhongdianleibie').addEventListener('tap',function(event){
+						var inputPicker = this;
+						zhongdianleibiePicker.show(function(items){
+							console.log(items[0].value);
+							inputPicker.value = items[0].value;
+							//form_ck_ghy();
+						})
+					},false);
+					
+					//by linker 设置日期picker，并设置默认值
+					//by linker 有个问题：身份证到期时间，input中的值并非是app.renyuan.shenfenzhengdaoqiriqi中的值
+					var btns = mui('.btn');　
+					btns.each(function(i, btn) {
+						btn.addEventListener('tap', function() {
+							var result = $(this).attr('id');
+							var year = new Date().getFullYear(); //年
+							var month = new Date().getMonth() + 1; //月
+							var day = new Date().getDate(); //日
+							//截止的时间
+							if($("#" + result).attr("data-endTime")) {
+								year = parseInt(year) + parseInt($("#" + result).attr("data-endTime"));
+							}
+							var dtPicker = new mui.DtPicker({
+								"type": "date",
+								"beginYear": 1900,
+								"endYear": year,
+								"endMonth": month,
+								"endDay": day
+							});
+							//开始的时间
+							console.log($("#" + result).attr("data-startTime"));
+							if($("#" + result).attr("data-startTime") == "now_time") {
+								console.log(year + "-" + month + "-" + day);
+								dtPicker.setSelectedValue(year + "-" + month + "-" + day);
+								
+							} else {
+								console.log(app.renyuan.shenfenzhengdaoqiriqi);
+								var selectedVal = '';
+								if(i == 0){
+									if(app.renyuan.chushengriqi != null){
+										selectedVal = app.renyuan.chushengriqi.substr(0,10);
+									}else{
+										selectedVal = '1900-01-01';
+									}
+									
+								}else if(i == 1){
+									if(app.renyuan.shenfenzhengqianfariqi != null){
+									    selectedVal = app.renyuan.shenfenzhengqianfariqi.substr(0,10);
+									}else{
+										selectedVal = '1960-01-01';
+									}
+								}else if(i == 2){
+									if(app.renyuan.shenfenzhengdaoqiriqi != null){
+									    selectedVal = app.renyuan.shenfenzhengdaoqiriqi.substr(0,10);
+									}else{
+										selectedVal = '1960-01-01';
+									}
+								}
+								dtPicker.setSelectedValue(selectedVal);
+							}
+		
+							　　
+							dtPicker.show(function(rs) {
+								//btn.val(rs.text);
+								document.getElementById(result).value = rs.text;
+								if(result == 'chushengriqi') {
+									$('#nianling').val(nianling(rs.text));
+								}　　　　　　
+								dtPicker.dispose();
+							});　
+						}, false);
+					});
+					
+					if(app.renyuan.suozaidiqu != null){
+						var temp_suozaidi = app.renyuan.suozaidiqu.split('-');
+						var c1length = cityData3.length;
+						for(var i = 0; i < c1length; i++){
+							if(temp_suozaidi[0] == cityData3[i].text){
+								cityPicker3.pickers[0].setSelectedIndex(i);
+								c1length = cityData3[i].children.length;
+								for(var j = 0; j < c1length; j++){
+									if(temp_suozaidi[1] == cityData3[i].children[j].text){
+										cityPicker3.pickers[1].setSelectedIndex(j);
+								        c1length = cityData3[i].children[j].children.length;
+								        for(var k = 0; k < c1length; k++){
+								        	console.log(temp_suozaidi[2] +"=="+ cityData3[i].children[j].children[k].text)
+								        	if(temp_suozaidi[2] == cityData3[i].children[j].children[k].text){
+								        		cityPicker3.pickers[2].setSelectedIndex(k);
+									        	//跳出区级遍历
+									        	break;
+								        	}
+								        }
+										//跳出市级遍历
+										break;
+									}
+								}
+								//跳出省级遍历
+								break;
+							}
+						}
+				    }//edit by linker end
+				
+					
+					
+					//by linker 结束
+					
+					
+					
 					//$("#minzu option[value='" + app.renyuan.minzu + "']").attr("selected", true);
 					//民族和重点类别的选中值
 					 
@@ -569,6 +732,9 @@
 					})
 				});
 				cityPicker3.setData(cityData3);
+				//edit by linker 默认选择失败,因为没有索引编号,无法设置
+				
+				
 				webview_detail = plus.webview.getWebviewById('user_cun_ren.html');
 				//长按取消单选
 				var classObj = document.getElementsByClassName('bk-dt');
@@ -610,42 +776,7 @@
 			document.getElementById('suozaihuji').addEventListener('tap', function() {
 				openWindows('user_ry_set.html');
 			});
-			var btns = mui('.btn');　
-			btns.each(function(i, btn) {　　
-				btn.addEventListener('tap', function() {
-					var result = $(this).attr('id');
-					var year = new Date().getFullYear(); //年
-					var month = new Date().getMonth() + 1; //月
-					var day = new Date().getDate(); //日
-					//截止的时间
-					if($("#" + result).attr("data-endTime")) {
-						year = parseInt(year) + parseInt($("#" + result).attr("data-endTime"));
-					}
-					var dtPicker = new mui.DtPicker({
-						"type": "date",
-						"beginYear": 1900,
-						"endYear": year,
-						"endMonth": month,
-						"endDay": day
-					});
-					//开始的时间
-					if($("#" + result).attr("data-startTime") == "now_time") {
-						dtPicker.setSelectedValue(year + "-" + month + "-" + day);
-					} else {
-						dtPicker.setSelectedValue("1960-01-01");
-					}
-
-					　　
-					dtPicker.show(function(rs) {
-						//btn.val(rs.text);
-						document.getElementById(result).value = rs.text;
-						if(result == 'chushengriqi') {
-							$('#nianling').val(nianling(rs.text));
-						}　　　　　　
-						dtPicker.dispose();
-					});　
-				}, false);
-			});
+			
 			var sr = document.getElementById("chushengriqi").value;
 			
 			if(sr!=""&& sr!=null)
@@ -667,66 +798,6 @@
 					cityResult3.value = _getParam(items[0], 'text') + "-" + _getParam(items[1], 'text') + "-" + _getParam(items[2], 'text');
 				});
 			}, false);
-
-
-//构造选择器
-			var minzuPicker = new mui.PopPicker({
-				button:['取消','确定']
-			});
-			//设置数据
-			var minzuPickerData = [{value:"",text:"请选择名族"},{value:"汉族",text:"汉族"},{value:"维吾尔族",text:"维吾尔族"},{value:"回族",text:"回族"},{value:"哈萨克族",text:"哈萨克族"},{value:"蒙古族",text:"蒙古族"},{value:"柯尔克孜族",text:"柯尔克孜族"},{value:"乌兹别克族",text:"乌兹别克族"},{value:"俄罗斯族",text:"俄罗斯族"},{value:"锡伯族",text:"锡伯族"},{value:"藏族",text:"藏族"},{value:"布依族",text:"布依族"},{value:"侗族",text:"侗族"},{value:"瑶族",text:"瑶族"},{value:"朝鲜族",text:"朝鲜族"},{value:"白族",text:"白族"},{value:"哈尼族",text:"哈尼族"},{value:"满族",text:"满族"},{value:"黎族",text:"黎族"},{value:"傣族",text:"傣族"},{value:"畲族",text:"畲族"},{value:"傈僳族",text:"傈僳族"},{value:"仡佬族",text:"仡佬族"},{value:"东乡族",text:"东乡族"},{value:"高山族",text:"高山族"},{value:"拉祜族",text:"拉祜族"},{value:"水族",text:"水族"},{value:"佤族",text:"佤族"},{value:"纳西族",text:"纳西族"},{value:"羌族",text:"羌族"},{value:"土族",text:"土族"},{value:"仫佬族",text:"仫佬族"},{value:"苗族",text:"苗族"},{value:"壮族",text:"壮族"},{value:"达斡尔族",text:"达斡尔族"},{value:"景颇族",text:"景颇族"},{value:"毛南族",text:"毛南族"},{value:"撒拉族",text:"撒拉族"},{value:"布朗族",text:"布朗族"},{value:"塔吉克族",text:"塔吉克族"},{value:"阿昌族",text:"阿昌族"},{value:"普米族",text:"普米族"},{value:"鄂温克族",text:"鄂温克族"},{value:"怒族",text:"怒族"},{value:"京族",text:"京族"},{value:"基诺族",text:"基诺族"},{value:"德昂族",text:"德昂族"},{value:"保安族",text:"保安族"},{value:"彝族",text:"彝族"},{value:"裕固族",text:"裕固族"},{value:"土家族",text:"土家族"},{value:"门巴族",text:"门巴族"},{value:"鄂伦春族",text:"鄂伦春族"},{value:"独龙族",text:"独龙族"},{value:"塔塔尔族",text:"塔塔尔族"},{value:"赫哲族",text:"赫哲族"},{value:"珞巴族",text:"珞巴族"}];
-			
-			document.getElementById('minzu').addEventListener('tap',function(event){
-				var inputPicker = this;
-				minzuPicker.setData(minzuPickerData);
-				minzuPicker.show(function(items){
-					console.log(items[0].value);
-					inputPicker.value = items[0].value;
-					//form_ck_ghy();
-				})
-			},false);
-			
-			
-			//构造选择器
-			var zhongdianleibiePicker = new mui.PopPicker({
-				button:['取消','确定']
-			});
-			
-			
-			
-			//设置数据
-			var zhongdianleibiePickerPickerData = [
-			{value:"",text:"请选择重点类别"},
-			{value:"危安类刑满释放人员及其家属",text:"危安类刑满释放人员及其家属"},
-			{value:"野阿訇",text:"野阿訇"},
-			{value:"野阿吉",text:"野阿吉"},
-			{value:"涉“六条线”人员的徒子徒孙",text:"涉“六条线”人员的徒子徒孙"},
-			{value:"本地持“瓦哈比”思想传承人员",text:"本地持“瓦哈比”思想传承人员"},
-			{value:"曾被教育转化的人员",text:"曾被教育转化的人员"},
-			{value:"境外“回流”人员",text:"境外“回流”人员"},
-			{value:"被判处死刑、被击毙、自爆身亡人员的亲属",text:"被判处死刑、被击毙、自爆身亡人员的亲属"},
-			{value:"国保三、四、五类人员",text:"国保三、四、五类人员"},
-			{value:"长期外出务工突然返乡人员",text:"长期外出务工突然返乡人员"},
-			{value:"严打以来曾被判处管制、拘役纳入社区矫治的人员",text:"严打以来曾被判处管制、拘役纳入社区矫治的人员"},
-			{value:"涉“7.5”“7.6”案件刑释解教、解脱人员及其家属",text:"涉“7.5”“7.6”案件刑释解教、解脱人员及其家属"},
-			{value:"过去使用智能手机，现在突然不用手机或改用非智能手机的人员",text:"<div style='font-size:10px;'>过去使用智能手机，现在突然不用手机或改用非智能手机的人员<div>"},
-			{value:"不与左邻右舍来往，平时很少走正门、行为诡秘的人员",text:"不与左邻右舍来往，平时很少走正门、行为诡秘的人员"},
-			{value:"过去热衷于向清真寺捐钱捐物或替清真寺收钱收物的人员",text:"过去热衷于向清真寺捐钱捐物或替清真寺收钱收物的人员"},
-			{value:"无正当理由突然变卖家产外出特别是举家外出人员",text:"无正当理由突然变卖家产外出特别是举家外出人员"},
-			{value:"家庭用电异常的人员",text:"家庭用电异常的人员"},
-			{value:"违反计划生育，超生的人员",text:"违反计划生育，超生的人员"},
-			{value:"懂电焊、制爆技术的人员",text:"懂电焊、制爆技术的人员"},
-			{value:"无正当理由不愿享受各类惠民政策、不参加基础组织安排的各类活动",text:"<div style='font-size:10px'>无正当理由不愿享受各类惠民政策、不参加基础组织安排的各类活动</div>"}];
-			
-			document.getElementById('zhongdianleibie').addEventListener('tap',function(event){
-				var inputPicker = this;
-				zhongdianleibiePicker.setData(zhongdianleibiePickerPickerData);
-				zhongdianleibiePicker.show(function(items){
-					console.log(items[0].value);
-					inputPicker.value = items[0].value;
-					//form_ck_ghy();
-				})
-			},false);
 			
 			
 			$('.bk-dd .bk-dt').click(function() {

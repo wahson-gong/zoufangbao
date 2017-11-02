@@ -19,7 +19,7 @@
 		<div class="mui-views" style="height: auto;top: 44px;">
 			<div class="mui-views-r">
 				
-				<div class="pad-tb-5">
+				<div class="pad-tb-5"> 
 					
 					<div class="renyuan-bar renyuan-div pad-lr-15 clearfix">
 						<input type="text" class="renyuan-input fr" id="xingming" placeholder="请输入姓名" value="" />
@@ -83,7 +83,8 @@
 				data.msg[0].xingming = xm;
 				setParam('ubase', JSON.stringify(data));
 				var data1="&xingming="+xm;
-				user_edit(data1);
+				var nwaiting = plus.nativeUI.showWaiting();
+				user_edit(data1,true,nwaiting);
 			}
 
 			function data_two(id) {
@@ -123,21 +124,49 @@
 			var cityData3 = JSON.parse(localStorage.dataA_dizhiA.replace(/undefined/g,"[]"));
 			var cityPicker3 = new mui.PopPicker();
 			cityPicker3.setData(cityData3);
+			
+			console.log(localStorage.login_suoshuzu_txt);
+			if(localStorage.login_suoshuzu_txt != null || localStorage.login_suoshuzu_txt != ''){
+				for(var i = 0; i < cityData3.length; i++){
+					if(localStorage.login_suoshuzu_txt == cityData3[i].text){
+						cityPicker3.pickers[0].setSelectedIndex(i);
+						//找到就跳出循环
+						break;
+					}
+				}
+			}
+			
 			var showCityPickerButton = document.getElementById('suozaidiqu');
 			showCityPickerButton.addEventListener('tap', function(event) {
 				cityPicker3.show(function(items) {
+					console.log(items[0]['text']);
 					if(_getParam(items[0], 'value') == '') {
 						mui.toast('请选项组');
 						return false;
 					} else {
-						mui.fire(webview_detail, 'user_geren_set', _getParam(items[0], 'text'));
-						var data = JSON.parse(localStorage.ubase);
-						setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
-						data.msg[0].suoshuzu = _getParam(items[0], 'value');
-						setParam('ubase', JSON.stringify(data));
-						var data1='&suoshuzu=' + _getParam(items[0], 'value');
-						user_edit(data1);
-						document.getElementById("suozaidiqu").value=localStorage.login_suoshuzu_txt;
+//						mui.fire(webview_detail, 'user_geren_set', _getParam(items[0], 'text'));
+//						var data = JSON.parse(localStorage.ubase);
+//						setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+//						data.msg[0].suoshuzu = _getParam(items[0], 'value');
+//						setParam('ubase', JSON.stringify(data));
+//						var data1='&suoshuzu=' + _getParam(items[0], 'value');
+//						user_edit(data1);
+//						document.getElementById("suozaidiqu").value=localStorage.login_suoshuzu_txt;
+                        //添加加载中
+                    	var nwaiting = plus.nativeUI.showWaiting();
+						mui.toast("提交中，请稍后...");
+						var data1 = '';
+						(function () {
+							mui.fire(webview_detail, 'user_geren_set', _getParam(items[0], 'text'));
+							var data = JSON.parse(localStorage.ubase);
+							setParam('login_suoshuzu_txt', _getParam(items[0], 'text'));
+							localStorage.login_suoshuzu_txt = _getParam(items[0], 'text');
+							data.msg[0].suoshuzu = _getParam(items[0], 'value');
+							setParam('ubase', JSON.stringify(data));
+							data1='&suoshuzu=' + _getParam(items[0], 'value');
+							document.getElementById("suozaidiqu").value=localStorage.login_suoshuzu_txt;
+						} ());
+						user_edit(data1,true,nwaiting);
 					}
 				});
 			}, false);

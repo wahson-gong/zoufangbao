@@ -6,6 +6,7 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>新闻列表</title>
 		
+
 	</head>
 
 	<body>
@@ -25,18 +26,29 @@
 					</div>-->
 					<div class="pst-r w-100 h-100 bg-ys2" v-cloak>
 						<div class="wrapper" id="wrapper" data-pagenum='10'>
-							<ul class="yistB">
-								<li class="yistB" v-for="li in news" :data-id="li.id" onclick="return news_nk(this)">
-									<div class="yistB_tu bg_tu">
+							<!--edit by linker 重构了新闻列表的样式，css样式构建为内部样式表-->
+							<ul class="yistB" style="padding:10px; padding-top: 4px;">
+								<li class="yistB" v-for="li in news" :data-id="li.id" onclick="return news_nk(this)" style="padding: 0;">
+									<!--修改前的样式-->
+									<!--<div class="yistB_ tu bg_tu">
 										<div class="wh-100 bg_tu" :style="'background-image:url('+img_href+li.suolutu+');'"></div>
 									</div>
 									<div class="yistB_tt">
 										<p class="h1 mar-b-5 over-one">{{li.biaoti}}</p>
 										<p class="h2 over-three mar-b-5">{{li.jianjie}}</p>
 										<p class="h3">{{li.newtime}}</p>
+									</div>-->
+									 
+									<div class="linker_news_container">
+										<img class="linker_news_img" :src="img_href+li.suolutu" />
+										<div class="yistB_tt linker_news_text_containair">
+											<p class="h1 mar-b-5 over-one">{{li.biaoti}}</p>
+											<p class="h2 over-three mar-b-5" style="height: 36px;">{{li.jianjie}}</p>
+											<p class="h3">{{li.newtime}}</p>
+										</div>
 									</div>
 								</li>
-							</ul>
+							<!--edit by linker end-->
 						</div>
 					</div>
 
@@ -47,6 +59,22 @@
 		<link rel="stylesheet" type="text/css" href="css/jcx.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/pullToRefresh.css" />
+		
+		<!--add by linker-->
+		<style>
+			.linker_news_container{
+				height: 80px;margin: 8px 12px;position: relative;
+			}
+			
+			.linker_news_img{
+				width: 80px; height: 80px;border-radius: 8px;
+			}
+			
+			.linker_news_text_containair{
+				position: absolute;height: 60px;width: calc(100% - 102px);top: 0;right: 0;padding: 0 11px;
+			}
+		</style>
+		
 		
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>

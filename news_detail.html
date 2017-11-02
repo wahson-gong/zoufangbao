@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			<div class="mui-views" style="height: auto;top: 44px;">
-				<div class="mui-views-r">
+				<div class="mui-views-r" id="wrapper">
 
 					<div class="pad-tb-5 pad-lr-10" v-cloak>
 
@@ -38,7 +38,10 @@
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jcx.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			document.addEventListener('plusready', function() {
+			//添加加载中
+			$("#wrapper").append('<div id="linker-loading" class="table-cell status" style="position: absolute;padding: 50% 0;"><span class="mui-spinnerA"></span></div>');
+			
+			document.addEventListener('plusready', function() { 
 				//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
 			});
 			mui.init({
@@ -67,6 +70,7 @@
 			});
 		</script>
 		<script type="text/javascript">
+			
 			$('.pad-tb-5').click(function() {
 				location.href = 'news_vedio.html';
 			});
@@ -79,13 +83,17 @@
 					content: '',
 				},
 				updated: function() {
-					console.log('dom结构变化！');
-					var iframe = document.querySelector('iframe');
+					//加载完成，去除加载中
+					$("#wrapper").children('#linker-loading').remove();
+					
+					var iframe = document.querySelector('iframe'); 
 					iframe.onload = function() {
+						console.log('update');
+						
 						var iframeW = iframe.contentWindow;
-						iframeW.addEventListener('click', function(e) {
+						iframeW.addEventListener('click', function(e) { 
 							var target = e.target;
-							for(; target && target !== document; target = target.parentNode) {
+							for(; target && target !== document; target = target.parentNode) { 
 								if(target.tagName == 'BUTTON' && target.title == '切换全屏') {
 									if(window.innerHeight > window.innerWidth) {
 										//进入全屏 此时应该改变 按钮的样式，原站应该有对应的css，我没找到，你自己找找，找不到的话，就自己做吧；

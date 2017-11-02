@@ -96,7 +96,7 @@
 				//				plus.nativeUI.closeWaiting();
 				//				mui.currentWebview.show();
 
-				beautyshuju(num, page, 'no', '');
+				beautyshuju(num, page, 'no', '&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun);
 				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 				if(pagenum != '0') {
 					page++;
@@ -177,7 +177,7 @@
 				$('.zf-set-btm-p').text('请选择走访人家');
 				net_yno();
 				page = 1;
-				beautyshuju(num, page, 'yes', '');
+				beautyshuju(num, page, 'yes', '&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun);
 				pagenum = num;
 				document.getElementById("wrapper").setAttribute('data-pagenum', pagenum);
 				if(pagenum != 0) {
@@ -186,7 +186,7 @@
 			}
 
 			function Load() {
-				beautyshuju(num, page, 'yes', '');
+				beautyshuju(num, page, 'yes', '&suoshucun='+JSON.parse(localStorage.ubase).msg[0].suoshucun);
 				pagenum = document.getElementById("wrapper").getAttribute('data-pagenum');
 				if(pagenum != '0') {
 					page++;

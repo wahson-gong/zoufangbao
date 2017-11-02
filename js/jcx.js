@@ -16,8 +16,8 @@ function GetUrlParam(name) {
 	if(r != null) return unescape(r[2]);
 	return null;
 }
-//user
-function user_edit(data1) {
+//user 添加了一个同步异步flag，只在特定的首页更改组的时候使用，其他时候不适用 ---by linker
+function user_edit(data1, linker_syn_falg, waitingEle) {
 	net_yno();
 	var url1 = web_url() + '/?type=edit&t=user&yonghuming=' + localStorage.yonghuming + '&id=' + JSON.parse(localStorage.ubase).msg[0].id;
 	if(localStorage.net == 'false') {
@@ -37,8 +37,16 @@ function user_edit(data1) {
 		plus.nativeUI.closeWaiting();
 		mui.toast('已保存！');
 	} else {
-		getData(false, 'post', url1, data1, function(msg) {
+		//添加if --by linker
+		if(linker_syn_falg == null){
+			linker_syn_falg = false;
+		}
+		getData(linker_syn_falg, 'post', url1, data1, function(msg) {
 			mui.toast('提交成功！');
+			//添加if --by linker
+			if(linker_syn_falg){
+				waitingEle.close();
+			}
 		});
 	}
 }

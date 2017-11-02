@@ -156,7 +156,9 @@
 					<!-- Add Pagination -->
 					<div class="swiper-pagination" style="bottom: 0px;font-size: 17px;line-height: 44px;color: #fff;"></div>
 					<!--Add close-->
-					<img class="close-img" src="images/close.png" />
+					<!--add by linker为关闭图片查看的按钮图标增加了背景色和内边距-->
+					<img class="close-img" src="images/close.png" style="padding: 6px;background-color: rgba(0,0,0,0.6);"/>
+					<!--add by linker end-->
 				</div>
 			</div>
 		</div>
@@ -516,7 +518,7 @@
 				var cunzaidewenti = document.getElementById("cunzaidewenti").value;
 				cunzaidewenti = cunzaidewenti.replace(/\s+/g, '');
 				if(cunzaidewenti == '') {
-					mui.toast('请填写入存在问题情况！');
+					mui.toast('请填写存在问题情况！');
 					return false;
 				}
 				var ruhurenyuan = document.getElementById("ruhurenyuan").value;
